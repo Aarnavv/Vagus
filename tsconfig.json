@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "watch": true,
+    "allowJs": true,
+    "strict": false,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    // "outDir": "src/js/",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*.tsx"
+  ]
+}
