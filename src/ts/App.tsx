@@ -1,12 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Hex from "./Hex";
+import HexBoard from "./HexBoard";
 
 function App() {
   return (
-    <div>
-      <Hex/>
-    </div>
+      <HexBoard/>
   );
 }
 

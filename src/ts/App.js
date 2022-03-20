@@ -1,7 +1,6 @@
 import * as React from "react";
-import Hex from "./Hex";
+import HexBoard from "./HexBoard";
 function App() {
-    return (React.createElement("div", null,
-        React.createElement(Hex, null)));
+    return (React.createElement(HexBoard, null));
 }
 export default App;

@@ -1,12 +1,22 @@
+.hex-board {
+  width: 75%;
+  height: 90vh;
+  margin: 5vh 0 5vh auto;
+  /* padding: 0.7vh 0.3vh; */
+  overflow: hidden;
+  background-color: #fff;
+}
+
+
 .hexagon {
   top: 30vh;
   left: 40%;
   position: absolute;
   margin: 0 auto;
-  background-color: dodgerblue;
-  border-radius: 10px;
-  width: 100px; 
-  height: 63px;
+  background-color: #404c5dce;
+  border-radius: 1.5px;
+  width: 15px; 
+  height: 10px;
   box-sizing: border-box;
   transition: all 1s;
   border: 0.4vh solid transparent;
@@ -19,7 +29,7 @@
   position: absolute;
   top: -0.5vh;
   left: -0.5vh;
-  background-color: dodgerblue;
+  background-color: #404c5dce;
   border-radius: inherit;
   height: 100%;
   width: 100%;
