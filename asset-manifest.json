@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Rimor/static/css/main.3d0579f3.css",
-    "main.js": "/Rimor/static/js/main.d5b6159a.js",
+    "main.css": "/Rimor/static/css/main.9f984377.css",
+    "main.js": "/Rimor/static/js/main.dc0b2eda.js",
     "index.html": "/Rimor/index.html",
-    "main.3d0579f3.css.map": "/Rimor/static/css/main.3d0579f3.css.map",
-    "main.d5b6159a.js.map": "/Rimor/static/js/main.d5b6159a.js.map"
+    "main.9f984377.css.map": "/Rimor/static/css/main.9f984377.css.map",
+    "main.dc0b2eda.js.map": "/Rimor/static/js/main.dc0b2eda.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d0579f3.css",
-    "static/js/main.d5b6159a.js"
+    "static/css/main.9f984377.css",
+    "static/js/main.dc0b2eda.js"
   ]
 }
