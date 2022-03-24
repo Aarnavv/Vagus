@@ -1,10 +1,22 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import HexBoard from "./HexBoard";
+import SquareBoard from "./SquareBoard";
+import '../css/app.css';
+
 
 function App() {
   return (
-      <HexBoard/>
+    <React.Fragment>
+      <div className="App">
+        <div className="header">
+
+        </div>
+        <div className="content">
+          <div className="left-cmd"></div>
+          <SquareBoard />
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 

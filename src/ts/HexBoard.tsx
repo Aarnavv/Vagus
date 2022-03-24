@@ -53,14 +53,14 @@ export default class HexBoard extends Component {
     let yVar;
     for (let i = 0; i < 30; i++) {
       if (i % 2 == 0) {
-        yVar = -7;
+        yVar = -8;
         for (let i = 0; i < 30; i++) {
           content.push(<Hex x={xVar} y={yVar} />)
           yVar += 22.5;
         }
       }
       else {
-        yVar = 3.5;
+        yVar = 2.75;
         for (let i = 0; i < 30; i++) {
           content.push(<Hex x={xVar} y={yVar} />)
           yVar += 22.5;
