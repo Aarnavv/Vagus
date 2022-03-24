@@ -17,18 +17,23 @@ import '../css/hex.css';
 // }
 // export default Hex;
 
-export default class Hex extends Component {
-  xVar: string = ""
-  yVar: string = ""
-  constructor(props: any) {
-    super(props);
-    this.xVar = props.x;
-    this.yVar = props.y;
-  }
+type coords = {
+  x: number,
+  y: number
+}
+
+export default class Hex extends React.Component<coords> {
+  // xVar: string = ""
+  // yVar: string = ""
+  // constructor(props: any) {
+  //   super(props);
+  //   this.xVar = props.x;
+  //   this.yVar = props.y;
+  // }
   styles = {
     hexagon: {
-      left: this.xVar,
-      top: this.yVar,
+      left: this.props.x + "px",
+      top: this.props.y + "px",
     } as React.CSSProperties
   }
   render() {

@@ -1,8 +1,12 @@
 body, html {
-  background-color: #262a34;
-  height: 100%;
+  background-color: #262A33;
+  height: 90vh;
+  padding: 0;
+  margin: 0;
 }
 
 #root {
-  height: 100vh;
+  height: 90vh;
+  padding: 0;
+  margin: 0;
 }

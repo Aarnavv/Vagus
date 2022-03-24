@@ -1,42 +1,36 @@
 .hex-board {
-  width: 75%;
-  height: 90vh;
-  margin: 5vh 0 5vh auto;
-  /* padding: 0.7vh 0.3vh; */
+  width: 614px;
+  height: 663.22px;
+  margin: 47px auto;
+  position: relative;
   overflow: hidden;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
-
 .hexagon {
-  top: 30vh;
-  left: 40%;
   position: absolute;
-  margin: 0 auto;
-  background-color: #404c5dce;
-  border-radius: 1.5px;
-  width: 15px; 
-  height: 10px;
+  background-color: #434B57;
+  border-radius: 2px;
+  width: 21px; 
+  height: 14px;
   box-sizing: border-box;
   transition: all 1s;
   border: 0.4vh solid transparent;
+  transform: rotate(90deg);
 }
 
-/* Creating pseudo-class */
 .hexagon:before, .hexagon:after {
   content: "";
   border: inherit;
   position: absolute;
   top: -0.5vh;
-  left: -0.5vh;
-  background-color: #404c5dce;
+  left: -0.4vh;
+  background-color: #434B57;
   border-radius: inherit;
   height: 100%;
   width: 100%;
 }
 
-/* Align them in such a way
-that they form a hexagon */
 .hexagon:before {
   transform: rotate(60deg);
 }
