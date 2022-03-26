@@ -1,2 +1,0 @@
-.square-board{overflow:hidden;position:relative;width:79vw}.square{background-color:#434b57;border:.4vh solid transparent;box-sizing:border-box;height:21px;position:absolute;transition:all 1s;width:21px}.header{height:7vh;width:100vw}.content,.header{border-bottom:2px solid #434b57}.content{display:flex;flex-direction:row;height:92.5vh;width:100%}.left-cmd{border-right:2px solid #434b57;width:21vw}body,html{background-color:#262a33}#root,body,html{height:90vh;margin:0;padding:0}
-/*# sourceMappingURL=main.b1eeafc0.css.map*/
