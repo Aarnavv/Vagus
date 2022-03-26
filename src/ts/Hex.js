@@ -1,13 +1,6 @@
 import * as React from "react";
 import '../css/hex.css';
 export default class Hex extends React.Component {
-    // xVar: string = ""
-    // yVar: string = ""
-    // constructor(props: any) {
-    //   super(props);
-    //   this.xVar = props.x;
-    //   this.yVar = props.y;
-    // }
     styles = {
         hexagon: {
             left: this.props.x + "px",
@@ -15,6 +8,10 @@ export default class Hex extends React.Component {
         }
     };
     render() {
-        return (React.createElement("div", { className: "hexagon", id: "hexagon", style: this.styles.hexagon }));
+        return (React.createElement("div", null,
+            React.createElement("div", { className: "hexagon", id: "hexagon", style: this.styles.hexagon },
+                React.createElement("div", { className: "rect n-s" }),
+                React.createElement("div", { className: "rect nw-se" }),
+                React.createElement("div", { className: "rect sw-ne" }))));
     }
 }

@@ -13,7 +13,8 @@ function App() {
         </div>
         <div className="content">
           <div className="left-cmd"></div>
-          <SquareBoard />
+          <HexBoard />
+          {/* <SquareBoard /> */}
         </div>
       </div>
     </React.Fragment>
