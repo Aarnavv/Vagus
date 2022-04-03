@@ -1,5 +1,5 @@
 .hex-board {
-  height: 706.22px;
+  /* height: 706.22px; */
   position: relative;
   overflow: hidden;
   width: 79vw;
@@ -37,6 +37,7 @@
   position: absolute;
   height:25px;
   width:15px;
+  transition: all 0.1s;
 }
 
 .rect {
@@ -46,6 +47,7 @@
   height:23px;
   width:13.9px;
   border-radius:1px;
+  transition: all 0.1s;
 }
 
 .rect:after {
@@ -54,13 +56,16 @@
   position:absolute;
   transform:rotate(-30deg);
   width:15px;
+  transition: all 0.1s;
 }
 
 .nw-se {
   transform:rotateZ(60deg);
+  transition: all 0.1s;
 }
 
 .sw-ne {
+  transition: all 0.1s;
   transform:rotateZ(-60deg);
 }
 

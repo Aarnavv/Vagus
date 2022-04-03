@@ -7,11 +7,20 @@ export default class Hex extends React.Component {
             top: this.props.y + "px",
         }
     };
+    anim1 = () => {
+        document.getElementById("ns" + this.props.id).style.backgroundColor = '#1B8BCD';
+        document.getElementById("nwse" + this.props.id).style.backgroundColor = '#1B8BCD';
+        document.getElementById("swne" + this.props.id).style.backgroundColor = '#1B8BCD';
+    };
+    norAnim1 = () => {
+        document.getElementById("ns" + this.props.id).style.backgroundColor = '#434B57';
+        document.getElementById("nwse" + this.props.id).style.backgroundColor = '#434B57';
+        document.getElementById("swne" + this.props.id).style.backgroundColor = '#434B57';
+    };
     render() {
-        return (React.createElement("div", null,
-            React.createElement("div", { className: "hexagon", id: "hexagon", style: this.styles.hexagon },
-                React.createElement("div", { className: "rect n-s" }),
-                React.createElement("div", { className: "rect nw-se" }),
-                React.createElement("div", { className: "rect sw-ne" }))));
+        return (React.createElement("div", { className: "hexagon", id: "hexagon", style: this.styles.hexagon },
+            React.createElement("div", { className: "rect n-s", id: "ns" + this.props.id, onMouseEnter: this.anim1, onMouseLeave: this.norAnim1 }),
+            React.createElement("div", { className: "rect nw-se", id: "nwse" + this.props.id, onMouseEnter: this.anim1, onMouseLeave: this.norAnim1 }),
+            React.createElement("div", { className: "rect sw-ne", id: "swne" + this.props.id, onMouseEnter: this.anim1, onMouseLeave: this.norAnim1 })));
     }
 }

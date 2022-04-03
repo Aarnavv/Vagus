@@ -1,24 +1,24 @@
-import * as React from "react";
+import React from "react";
 import HexBoard from "./HexBoard";
 import SquareBoard from "./SquareBoard";
+import Navbar from "./Navbar";
 import '../css/app.css';
 
 
-function App() {
-  return (
-    <React.Fragment>
-      <div className="App">
-        <div className="header">
-
+export default class App extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        <div className="App">
+          <div className="content">
+            <div className="left-cmd">
+              <Navbar />
+            </div>
+            <HexBoard />
+            {/* <SquareBoard /> */}
+          </div>
         </div>
-        <div className="content">
-          <div className="left-cmd"></div>
-          <HexBoard />
-          {/* <SquareBoard /> */}
-        </div>
-      </div>
-    </React.Fragment>
-  );
+      </React.Fragment >
+    );
+  }
 }
-
-export default App;
