@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
-  border-bottom: 2px solid #434B57;
+  /* border-bottom: 2px solid #434B57; */
   /* justify-content: center;
   align-items: center; */
 }
