@@ -9,27 +9,32 @@
 }
 
 .header {
-  height: 7%;
+  height: 8%;
   font-weight: 500;
   text-align: center;
   border-bottom: 1px solid #434B57;
+  padding-left: 7px;
+  text-align: left;
 }
 
 .title {
   font-size: 1.5rem;
+  padding: 5px 0 0 0;
 }
 
 .description {
   font-size: .75rem;
+  padding:3px 0 3px 0;
 }
 
 .project {
-  height: 2.8%;
-  border-bottom: 1px solid #434B57;
+  height: 3%;
   background-color: #323844;
+  border-bottom: 1px solid #434B57;
   font-size: 0.75rem;
   font-weight: 300;
-  padding: 4px 3px 0 15px;
+  padding: 3px 10px;
+  align-items: center;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -48,36 +53,60 @@
   gap: 5px;
 }
 
-.drops {
-  height: 89.3%;
+.folder-panel {
+  padding: 5px 0 0 0;
+  height: 87%;
+  overflow-y: auto;
 }
 
-.drop {
-  padding: 0 0 3px 10px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 2.5px;
-  margin-top: 0.8%;
+.folder-panel::-webkit-scrollbar{
+  width:5px;
+}
+
+.folder-panel::-webkit-scrollbar-thumb{
+  background:#ffffff42;
+  border-radius: 100vw;
+}
+
+.folder-panel::-webkit-scrollbar-thumb:hover{
+  background:#ffffff60;
+}
+
+.folder-panel::-webkit-scrollbar-track{
+  background:#7f808200;
 }
 
 .arrow {
-  margin-top: 2.5px;
+  transition: all 0.5s;
 }
 
-.bold-it {
-  font-weight: 700;
+.arrow:hover {
+  transform: rotate(-90deg);
 }
 
-.drop-title {
+.folder-id{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  max-width:270px;
+  align-items:center;
+  gap:5px;
+}
+
+.folder{
+  padding: 0 0 1px 10px;
+  display: flex;
+  flex-direction: column;
+  max-width:270px;
+  gap: 5px;
+  margin-left: 7px;
+  margin-top: 1%;
+  cursor:pointer;
+}
+
+.folder-title {
   font-size: 0.75rem;
   font-weight: 300;
-}
-
-.line {
-  border-left: 1px solid #434B57;
-  width: 96.5%;
-  margin-left: 3.5%;
 }
 
 .file-name {
@@ -86,24 +115,26 @@
   margin: 0;
 }
 
-.drop-file {
-  padding: 0 0 3px 30px;
+.file {
+  max-width:200px;
+  padding: 0 0 3px 18px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 5.5px;
+  gap: 5px;
 }
 
-.read-me {
-  margin-top: 3%;
+.file:hover {
+  color: #D5756C;
 }
 
-.drop-read {
-  padding: 0 0 3px 20px;
+.folder-less-file {
+  max-width:200px;
+  padding: 0 0 3px 15px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 5.5px;
+  gap: 5px;
 }
 
 @media (max-width: 1168px) {
@@ -111,6 +142,7 @@
     font-size: 14px;
   }
 }
+
 @media (max-width: 1068px) {
   html {
     font-size: 12px;

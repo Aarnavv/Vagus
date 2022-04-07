@@ -15,13 +15,13 @@ export default class Hex extends React.Component<props> {
     } as React.CSSProperties
   }
   
-  anim1 = () => {
+  hover = () => {
     document.getElementById("ns" + this.props.id).style.backgroundColor = '#1B8BCD';
     document.getElementById("nwse" + this.props.id).style.backgroundColor = '#1B8BCD';
     document.getElementById("swne" + this.props.id).style.backgroundColor = '#1B8BCD';
   }
 
-  norAnim1 = () => {
+  Unhover = () => {
     document.getElementById("ns" + this.props.id).style.backgroundColor = '#434B57';
     document.getElementById("nwse" + this.props.id).style.backgroundColor = '#434B57';
     document.getElementById("swne" + this.props.id).style.backgroundColor = '#434B57';
@@ -30,10 +30,10 @@ export default class Hex extends React.Component<props> {
   render() {
     return (
       <div className="hexagon" id="hexagon" style={this.styles.hexagon} >
-        {/* <div  className="hexagon" id="hexagon" onMouseEnter={this.anim} onMouseLeave={this.norAnim} style={this.styles.hexagon} > */}
-        <div className="rect n-s" id={"ns" + this.props.id} onMouseEnter={this.anim1} onMouseLeave={this.norAnim1}></div>
-        <div className="rect nw-se" id={"nwse" + this.props.id} onMouseEnter={this.anim1} onMouseLeave={this.norAnim1}></div>
-        <div className="rect sw-ne" id={"swne" + this.props.id} onMouseEnter={this.anim1} onMouseLeave={this.norAnim1}></div>
+        {/* <div  className="hexagon" id="hexagon" onMouseEnter={this.anim} onMouseLeave={this.UnAnim} style={this.styles.hexagon} > */}
+        <div className="rect n-s" id={"ns" + this.props.id} onMouseEnter={this.hover} onMouseLeave={this.Unhover}></div>
+        <div className="rect nw-se" id={"nwse" + this.props.id} onMouseEnter={this.hover} onMouseLeave={this.Unhover}></div>
+        <div className="rect sw-ne" id={"swne" + this.props.id} onMouseEnter={this.hover} onMouseLeave={this.Unhover}></div>
       </div>
     );
   }
