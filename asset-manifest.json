@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/Rimor/static/css/main.bb39a4af.css",
-    "main.js": "/Rimor/static/js/main.5ef0e152.js",
-    "index.html": "/Rimor/index.html",
-    "main.bb39a4af.css.map": "/Rimor/static/css/main.bb39a4af.css.map",
-    "main.5ef0e152.js.map": "/Rimor/static/js/main.5ef0e152.js.map"
+    "main.css": "/Vagus/static/css/main.bb39a4af.css",
+    "main.js": "/Vagus/static/js/main.5ef0e152.js",
+    "index.html": "/Vagus/index.html",
+    "main.bb39a4af.css.map": "/Vagus/static/css/main.bb39a4af.css.map",
+    "main.5ef0e152.js.map": "/Vagus/static/js/main.5ef0e152.js.map"
   },
   "entrypoints": [
     "static/css/main.bb39a4af.css",
