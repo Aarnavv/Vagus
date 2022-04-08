@@ -15,7 +15,7 @@ export function FolderComponent(props) {
         setIsExpanded(!isExpanded);
         setTimeout(() => {
             document.getElementById(id).style.transform = value;
-        }, 10);
+        }, 1);
     };
     return (React.createElement("div", { className: props.divClassName },
         React.createElement("div", { className: "folder-id" },

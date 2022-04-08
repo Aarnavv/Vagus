@@ -18,7 +18,7 @@ export default class HexBoard extends React.Component {
     let idVar = 0;
 
     let width = 0.79 * (window.screen.availWidth);
-    let height = window.screen.availHeight - 100;
+    let height = window.screen.availHeight;
     let cols = Math.round(width / 22);
     let rows = Math.round(height / 24.5);
 
@@ -28,7 +28,7 @@ export default class HexBoard extends React.Component {
         for (let i = 0; i < rows; i++) {
           idVar++;
           content.push(<Hex x={xVar} y={yVar} id={idVar.toString()} key={idVar.toString()} />)
-          yVar += 24.5;
+          yVar += 23.5;
         }
       }
       else {
@@ -36,10 +36,10 @@ export default class HexBoard extends React.Component {
         for (let i = 0; i < rows; i++) {
           idVar++;
           content.push(<Hex x={xVar} y={yVar} id={idVar.toString()} key={idVar.toString()} />)
-          yVar += 24.5;
+          yVar += 23.5;
         }
       }
-      xVar += 22;
+      xVar += 21;
     }
     return content;
   }

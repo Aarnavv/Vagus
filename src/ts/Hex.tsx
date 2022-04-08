@@ -22,9 +22,9 @@ export default class Hex extends React.Component<props> {
   }
 
   Unhover = () => {
-    document.getElementById("ns" + this.props.id).style.backgroundColor = '#434B57';
-    document.getElementById("nwse" + this.props.id).style.backgroundColor = '#434B57';
-    document.getElementById("swne" + this.props.id).style.backgroundColor = '#434B57';
+    document.getElementById("ns" + this.props.id).style.backgroundColor = '#282C34';
+    document.getElementById("nwse" + this.props.id).style.backgroundColor = '#282C34';
+    document.getElementById("swne" + this.props.id).style.backgroundColor = '#282C34';
   }
 
   render() {

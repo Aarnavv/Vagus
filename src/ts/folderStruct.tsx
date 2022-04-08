@@ -18,7 +18,7 @@ export function FolderComponent(props: any) {
         setIsExpanded(!isExpanded);
         setTimeout(() => {
             document.getElementById(id).style.transform = value;
-        }, 10)
+        }, 1)
     }
     return (
         <div className={props.divClassName}>

@@ -39,7 +39,7 @@ export default class Navbar extends React.Component {
               </FolderComponent>
               <FolderComponent colorOfFolder="#67BBFF" text="addableNodes" divClassName="folder folder-drop" arrowID="addable-arrow">
                 <div className="folder-drop-inner">
-                  <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weigthNode.io" divID="io-1" />
+                  <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weightNode.io" divID="io-1" />
                   <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-2" />
                   <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-3" />
                 </div>
@@ -54,9 +54,9 @@ export default class Navbar extends React.Component {
               </FolderComponent>
               <FolderComponent colorOfFolder="#E5C07B" text="speeds" divClassName="folder folder-drop" arrowID="speeds-arrow">
                 <div className="folder-drop-inner">
-                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="100percent.sys" divID="sys-1" />
+                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="25percent.sys" divID="sys-1" />
                   <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="50percent.sys" divID="sys-2" />
-                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="25percent.sys" divID="sys-3" />
+                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="100percent.sys" divID="sys-3" />
                 </div>
               </FolderComponent>
             </FolderComponent>

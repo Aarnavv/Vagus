@@ -1,37 +1,10 @@
 .hex-board {
-  /* height: 706.22px; */
   position: relative;
   overflow: hidden;
   width: 79vw;
   position: relative;
   overflow: hidden;
 }
-
-/* .hexagon {
-  position: absolute;
-  background-color: #434B57;
-  border-radius: 2px;
-  width: 21px; 
-  height: 14px;
-  box-sizing: border-box;
-  box-shadow: 0px 0px 0px 1px #434b571d;
-  transition: all 0.1s;
-  border: 0.4vh solid transparent;
-  transform: rotate(90deg);
-}
-
-.hexagon:before, .hexagon:after {
-  content: "";
-  border: inherit;
-  position: absolute;
-  top: -0.375vh;
-  left: -0.4vh;
-  background-color: #434B57;
-  transition: all 0.1s;
-  border-radius: inherit;
-  height: 100%;
-  width: 100%;
-} */
 
 .hexagon {
   position: absolute;
@@ -42,7 +15,7 @@
 
 .rect {
   position:absolute;
-  background-color: #434B57;
+  background-color: #282C34;
   box-sizing:border-box;
   height:23px;
   width:13.9px;
@@ -75,16 +48,9 @@
 
 @keyframes hexagon-pulsate{
   0% {
-    background-color: #434B57;
+    background-color: #282C34;
   }
   100% {
     background-color: #1B8BCD;
   }
 }
-
-/* .hexagon:before {
-  transform: rotate(60deg);
-}
-.hexagon:after {
-  transform: rotate(-60deg);
-} */
