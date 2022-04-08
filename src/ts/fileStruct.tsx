@@ -43,10 +43,6 @@ const setColor = (divClass: string, id: string, text) => {
         case "bat":changeMaze(text);break;
         case "sys":changeSpeed(text);break;
     }
-    console.log(currentSpeed);
-    console.log(currentMaze);
-    console.log(currentAddableNode);
-    console.log(currentAlgorithm);
 }
 
 export function TSXFile(props: any) {

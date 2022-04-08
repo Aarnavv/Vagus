@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/navbar.css';
 import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
-import { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed } from "./GlobalState";
+import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
 const setColor = (divClass, id, text) => {
     var files = document.querySelectorAll(divClass);
     for (var i = 0; i < files.length; i++) {
@@ -27,10 +27,6 @@ const setColor = (divClass, id, text) => {
             changeSpeed(text);
             break;
     }
-    console.log(currentSpeed);
-    console.log(currentMaze);
-    console.log(currentAddableNode);
-    console.log(currentAlgorithm);
 };
 export function TSXFile(props) {
     return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => setColor('.tsx-file', props.divID, props.text) },
