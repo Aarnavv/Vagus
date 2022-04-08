@@ -20,7 +20,7 @@ export default class HexBoard extends React.Component {
     let width = 0.79 * (window.screen.availWidth);
     let height = window.screen.availHeight;
     let cols = Math.round(width / 22);
-    let rows = Math.round(height / 24.5);
+    let rows = Math.round(height / 24.5)-3;
 
     for (let i = 0; i < cols; i++) {
       if (i % 2 == 0) {

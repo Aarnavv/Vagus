@@ -7,10 +7,10 @@ const setColor = (divClass, id, text) => {
     for (var i = 0; i < files.length; i++) {
         var ele = files[i];
         ele.style.backgroundColor = "#21252B";
-        ele.style.borderInline = "";
+        ele.style.borderLeft = "";
     }
     document.getElementById(id).style.backgroundColor = "#4b4e5578";
-    document.getElementById(id).style.borderInline = "1px solid #4b4e55";
+    document.getElementById(id).style.borderLeft = "1.5px solid #0062a8";
     var ext = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
     switch (ext) {

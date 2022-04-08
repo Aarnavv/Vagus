@@ -14,13 +14,9 @@ import {
     STARTNode, ENDNode, WEIGHTNode
 } from "../svgIcons/fileSVGIconComponent";
 import {
-    currentAddableNode,
     changeAddableNode,
-    currentAlgorithm,
     changeAlgorithm,
-    currentMaze,
     changeMaze,
-    currentSpeed,
     changeSpeed
 } from "./GlobalState";
 
@@ -29,10 +25,10 @@ const setColor = (divClass: string, id: string, text) => {
     for (var i = 0; i < files.length; i++) {
         var ele = files[i] as HTMLElement;
         ele.style.backgroundColor = "#21252B";
-        ele.style.borderInline = "";
+        ele.style.borderLeft = "";
     }
     document.getElementById(id).style.backgroundColor = "#4b4e5578";
-    document.getElementById(id).style.borderInline = "1px solid #4b4e55";
+    document.getElementById(id).style.borderLeft = "1.5px solid #0062a8";
 
     var ext: string = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
