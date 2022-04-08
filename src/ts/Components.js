@@ -1,5 +1,4 @@
 // import React from "react";
-
 // function hide(id) {
 //   switch (id) {
 //     case "master-drop":
@@ -52,7 +51,6 @@
 //       break;
 //   }
 // }
-
 // export function Arrow(props) {
 //   return (
 //     <svg className="arrow" id={props.idName} onClick={() => hide(props.idName)} width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +58,6 @@
 //     </svg>
 //   );
 // }
-
 // export function RedFolder() {
 //   return (
 //     <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +65,6 @@
 //     </svg>
 //   )
 // }
-
 // export function LightRedFolder() {
 //   return (
 //     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +72,6 @@
 //     </svg>
 //   )
 // }
-
 // export function BlueFolder() {
 //   return (
 //     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +79,6 @@
 //     </svg>
 //   )
 // }
-
 // export function GreenFolder() {
 //   return (
 //     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +86,6 @@
 //     </svg>
 //   )
 // }
-
 // export function YellowFolder() {
 //   return (
 //     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +93,6 @@
 //     </svg>
 //   )
 // }
-
 // export function NormalFile() {
 //   return (
 //     <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -109,16 +101,14 @@
 //     </svg >
 //   )
 // }
-
 // export function READMEIcon() {
 //   return (
-    // <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //   <path d="M15 7.49996C15 11.6421 11.6421 15 7.5 15C3.35786 15 0 11.6421 0 7.49996C0 3.35782 3.35786 -4.48555e-05 7.5 -4.48555e-05C11.6421 -4.48555e-05 15 3.35782 15 7.49996Z" fill="#0094FF" />
-    //   <path d="M7.14127 10.1326V5.90257H7.93327V10.1326H7.14127ZM7.53727 4.81357C7.39927 4.81357 7.27927 4.76857 7.17727 4.67857C7.08127 4.58257 7.03327 4.46557 7.03327 4.32757C7.03327 4.18957 7.08127 4.07257 7.17727 3.97657C7.27927 3.88057 7.39927 3.83257 7.53727 3.83257C7.66927 3.83257 7.78627 3.88057 7.88827 3.97657C7.99027 4.07257 8.04127 4.18957 8.04127 4.32757C8.04127 4.46557 7.99027 4.58257 7.88827 4.67857C7.78627 4.76857 7.66927 4.81357 7.53727 4.81357Z" fill="#173B5C" />
-    // </svg>
+// <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+//   <path d="M15 7.49996C15 11.6421 11.6421 15 7.5 15C3.35786 15 0 11.6421 0 7.49996C0 3.35782 3.35786 -4.48555e-05 7.5 -4.48555e-05C11.6421 -4.48555e-05 15 3.35782 15 7.49996Z" fill="#0094FF" />
+//   <path d="M7.14127 10.1326V5.90257H7.93327V10.1326H7.14127ZM7.53727 4.81357C7.39927 4.81357 7.27927 4.76857 7.17727 4.67857C7.08127 4.58257 7.03327 4.46557 7.03327 4.32757C7.03327 4.18957 7.08127 4.07257 7.17727 3.97657C7.27927 3.88057 7.39927 3.83257 7.53727 3.83257C7.66927 3.83257 7.78627 3.88057 7.88827 3.97657C7.99027 4.07257 8.04127 4.18957 8.04127 4.32757C8.04127 4.46557 7.99027 4.58257 7.88827 4.67857C7.78627 4.76857 7.66927 4.81357 7.53727 4.81357Z" fill="#173B5C" />
+// </svg>
 //   )
 // }
-
 // export function ProjectIcon() {
 //   return (
 //     <svg className="svg-img" width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +119,6 @@
 //     </svg>
 //   )
 // }
-
 // export function StopIcon() {
 //   return (
 //     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +128,6 @@
 //     </svg>
 //   )
 // }
-
 // export function UndoIcon() {
 //   return (
 //     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -148,7 +136,6 @@
 //     </svg>
 //   )
 // }
-
 // export function PlayIcon() {
 //   return (
 //     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">

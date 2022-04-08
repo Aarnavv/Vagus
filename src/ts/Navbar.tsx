@@ -24,55 +24,55 @@ export default class Navbar extends React.Component {
         </div>
         <div className="folder-panel">
           <FolderComponent colorOfFolder="#EF5350" text="Vagus-master" divClassName="folder" arrowID="vagus-master-arrow">
-            <FolderComponent colorOfFolder="#EF5350" text="advanced-control-panel" divClassName="folder" arrowID="advanced-cp-arrow" >
-              <FolderComponent colorOfFolder="#D5756C" text="algorithms" divClassName="folder" arrowID="algorithms-arrow" >
-                <div>
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="aStarSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="djikstrasSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="bellmanFord.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="floydWarshallSearch.tsx" />
-                  <TSXFile divClassName="file" pClassName="tsx-name file-name" text="johnsonsAlgorithm.tsx" />
+            <FolderComponent colorOfFolder="#EF5350" text="advanced-control-panel" divClassName="folder folder-drop" arrowID="advanced-cp-arrow" >
+              <FolderComponent colorOfFolder="#D5756C" text="algorithms" divClassName="folder folder-drop" arrowID="algorithms-arrow" >
+                <div className="folder-drop-inner">
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="djikstrasSearch.tsx" divID="tsx-2" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bellmanFord.tsx" divID="tsx-3" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-4" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-5" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" divID="tsx-6" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="floydWarshallSearch.tsx" divID="tsx-7" />
+                  <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="johnsonsAlgorithm.tsx" divID="tsx-8" />
                 </div>
               </FolderComponent>
-              <FolderComponent colorOfFolder="#67BBFF" text="addableNodes" divClassName="folder" arrowID="addable-arrow">
-                <div>
-                  <IOFile divClassName="file" pClassName="node-name file-name" text="weigthNode.io" />
-                  <IOFile divClassName="file" pClassName="node-name file-name" text="bombNode.io" />
-                  <IOFile divClassName="file" pClassName="node-name file-name" text="wallNode.io" />
+              <FolderComponent colorOfFolder="#67BBFF" text="addableNodes" divClassName="folder folder-drop" arrowID="addable-arrow">
+                <div className="folder-drop-inner">
+                  <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weigthNode.io" divID="io-1" />
+                  <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-2" />
+                  <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-3" />
                 </div>
               </FolderComponent>
-              <FolderComponent colorOfFolder="#4CAF50" text="mazes" divClassName="folder" arrowID="mazes-arrow">
-                <div>
-                  <BATFile divClassName="file" pClassName="maze-name file-name" text="none.bat" />
-                  <BATFile divClassName="file" pClassName="maze-name file-name" text="gridMaze.bat" />
-                  <BATFile divClassName="file" pClassName="maze-name file-name" text="randomMaze.bat" />
-                  <BATFile divClassName="file" pClassName="maze-name file-name" text="diagonalCutMaze.bat" />
+              <FolderComponent colorOfFolder="#4CAF50" text="mazes" divClassName="folder folder-drop" arrowID="mazes-arrow">
+                <div className="folder-drop-inner">
+                  <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
+                  <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="gridMaze.bat" divID="bat-2" />
+                  <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="randomMaze.bat" divID="bat-3" />
+                  <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="diagonalCutMaze.bat" divID="bat-4" />
                 </div>
               </FolderComponent>
-              <FolderComponent colorOfFolder="#E5C07B" text="speeds" divClassName="folder" arrowID="speeds-arrow">
-                <div>
-                  <SYSFile divClassName="file" pClassName="speed-1 file-name" text="100percent.sys" />
-                  <SYSFile divClassName="file" pClassName="speed-1 file-name" text="50percent.sys" />
-                  <SYSFile divClassName="file" pClassName="speed-1 file-name" text="25percent.sys" />
+              <FolderComponent colorOfFolder="#E5C07B" text="speeds" divClassName="folder folder-drop" arrowID="speeds-arrow">
+                <div className="folder-drop-inner">
+                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="100percent.sys" divID="sys-1" />
+                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="50percent.sys" divID="sys-2" />
+                  <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="25percent.sys" divID="sys-3" />
                 </div>
               </FolderComponent>
             </FolderComponent>
-            <FolderComponent colorOfFolder="#EF5350" text="legend" divClassName="folder" arrowID="legend-arrow">
-              <div>
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="bombNode.gui" type="bomb" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="shortestPathNode.gui" type="shortest-path" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="wallNode.gui" type="wall" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="visitedNode.gui" type="visited" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="unvisitedNode.gui" type="unvisited" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="startNode.gui" type="start-node" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="endNode.gui" type="end-node" />
-                <GUIFile divClassName="file" pClassName="legend-1 file-name" text="weightNode.gui" type="weight" />
+            <FolderComponent colorOfFolder="#EF5350" text="legend" divClassName="folder folder-drop" arrowID="legend-arrow">
+              <div className="folder-drop-inner">
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="bombNode.gui" type="bomb" divID="gui-1" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="shortestPathNode.gui" type="shortest-path" divID="gui-2" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="wallNode.gui" type="wall" divID="gui-3" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="visitedNode.gui" type="visited" divID="gui-4" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="unvisitedNode.gui" type="unvisited" divID="gui-5" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="startNode.gui" type="start-node" divID="gui-6" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="endNode.gui" type="end-node" divID="gui-7" />
+                <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
               </div>
             </FolderComponent>
-            <MDFile divClassName="folder-less-file file" pClassName="file-name" text="README.md" />
+            <MDFile divClassName="folder-less-file file folder-drop-inner md-file" pClassName="file-name" text="README.md" divID="md-1" />
           </FolderComponent>
         </div>
       </div>

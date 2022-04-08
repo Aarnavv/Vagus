@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Folder } from '../svgIcons/folderSVGIconComponent';
-import {ArrowIcon} from '../svgIcons/arrowSVGIcons';
+import { ArrowIcon } from '../svgIcons/arrowSVGIcons';
 import '../css/navbar.css';
 
 export function FolderComponent(props: any) {
@@ -25,8 +25,10 @@ export function FolderComponent(props: any) {
             <div className="folder-id">
                 {isExpanded && <ArrowIcon id={props.arrowID} onClick={() => changeState(props.arrowID, "rotate(-90deg)")} />}
                 {!isExpanded && <ArrowIcon id={props.arrowID} onClick={() => changeState(props.arrowID, "rotate(0deg)")} />}
-                <Folder fill={props.colorOfFolder} />
-                <div className="folder-title">{props.text}{topLevel && <InsideText />}</div>
+                {isExpanded && <Folder fill={props.colorOfFolder} onClick={() => changeState(props.arrowID, "rotate(-90deg)")} />}
+                {!isExpanded && <Folder fill={props.colorOfFolder} onClick={() => changeState(props.arrowID, "rotate(0deg)")} />}
+                {isExpanded && <div className="folder-title" onClick={() => changeState(props.arrowID, "rotate(-90deg)")}>{props.text}{topLevel && <InsideText />}</div>}
+                {!isExpanded && <div className="folder-title" onClick={() => changeState(props.arrowID, "rotate(0deg)")}>{props.text}{topLevel && <InsideText />}</div>}
             </div>
             {isExpanded && props.children}
         </div>
