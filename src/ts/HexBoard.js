@@ -19,7 +19,7 @@ export default class HexBoard extends React.Component {
                 yVar = -12;
                 for (let i = 0; i < rows; i++) {
                     idVar++;
-                    content.push(React.createElement(Hex, { x: xVar, y: yVar, id: idVar.toString() }));
+                    content.push(React.createElement(Hex, { x: xVar, y: yVar, id: idVar.toString(), key: idVar.toString() }));
                     yVar += 24.5;
                 }
             }
@@ -27,7 +27,7 @@ export default class HexBoard extends React.Component {
                 yVar = 0.2;
                 for (let i = 0; i < rows; i++) {
                     idVar++;
-                    content.push(React.createElement(Hex, { x: xVar, y: yVar, id: idVar.toString() }));
+                    content.push(React.createElement(Hex, { x: xVar, y: yVar, id: idVar.toString(), key: idVar.toString() }));
                     yVar += 24.5;
                 }
             }
