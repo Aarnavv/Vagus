@@ -23,7 +23,7 @@ export default class HexBoard extends React.Component {
     let rows = Math.round(height / 24.5)-3;
 
     for (let i = 0; i < cols; i++) {
-      if (i % 2 == 0) {
+      if (i % 2 === 0) {
         yVar = -12;
         for (let i = 0; i < rows; i++) {
           idVar++;

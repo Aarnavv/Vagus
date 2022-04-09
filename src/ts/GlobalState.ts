@@ -1,6 +1,6 @@
 import {AlgoType, MazeType, NodeType, SpeedType} from "./Types";
 
-let currentAddableNode: NodeType = NodeType.normal;
+let currentAddableNode:NodeType = NodeType.normal;
 let currentAlgorithm: AlgoType = AlgoType.aStarSearch;
 let currentMaze: MazeType = MazeType.none;
 let currentSpeed: SpeedType = SpeedType.percent100;

@@ -1,18 +1,19 @@
 import React from 'react';
 import '../css/navbar.css';
 import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
-import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
+import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed, } from "./GlobalState";
 const setColor = (divClass, id, text) => {
-    var files = document.querySelectorAll(divClass);
-    for (var i = 0; i < files.length; i++) {
-        var ele = files[i];
+    const files = document.querySelectorAll(divClass);
+    for (let i = 0; i < files.length; i++) {
+        const ele = files[i];
         ele.style.backgroundColor = "#21252B";
         ele.style.borderLeft = "";
     }
     document.getElementById(id).style.backgroundColor = "#4b4e5578";
     document.getElementById(id).style.borderLeft = "1.5px solid #0062a8";
-    var ext = text.substring(text.lastIndexOf(".") + 1);
+    const ext = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
+    console.log(text);
     switch (ext) {
         case "tsx":
             changeAlgorithm(text);
@@ -64,7 +65,6 @@ export function GUIFile(props) {
             case 'start-node': return React.createElement(STARTNode, null);
             case 'end-node': return React.createElement(ENDNode, null);
             case 'weight': return React.createElement(WEIGHTNode, null);
-            default: return React.createElement("p", null, "bee-woop the algorithm has failed you :|");
         }
     }
     return (React.createElement("div", { className: props.divClassName, id: props.divID },

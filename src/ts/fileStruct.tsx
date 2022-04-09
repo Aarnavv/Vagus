@@ -17,22 +17,22 @@ import {
     changeAddableNode,
     changeAlgorithm,
     changeMaze,
-    changeSpeed
+    changeSpeed,
 } from "./GlobalState";
 
 const setColor = (divClass: string, id: string, text) => {
-    var files = document.querySelectorAll(divClass);
-    for (var i = 0; i < files.length; i++) {
-        var ele = files[i] as HTMLElement;
+    const files = document.querySelectorAll(divClass);
+    for (let i = 0; i < files.length; i++) {
+        const ele = files[i] as HTMLElement;
         ele.style.backgroundColor = "#21252B";
         ele.style.borderLeft = "";
     }
     document.getElementById(id).style.backgroundColor = "#4b4e5578";
     document.getElementById(id).style.borderLeft = "1.5px solid #0062a8";
 
-    var ext: string = text.substring(text.lastIndexOf(".") + 1);
+    const ext: string = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
-
+    console.log(text);
     switch (ext) {
         case "tsx":changeAlgorithm(text);break;
         case "io":changeAddableNode(text);break;
@@ -97,7 +97,6 @@ export function GUIFile(props: any) {
             case 'start-node': return <STARTNode />;
             case 'end-node': return <ENDNode />;
             case 'weight': return <WEIGHTNode />;
-            default: return <p>bee-woop the algorithm has failed you :|</p>;
         }
     }
     return (
