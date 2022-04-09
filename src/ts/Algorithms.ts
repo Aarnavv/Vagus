@@ -74,30 +74,30 @@ class Algorithms<T>{
         return bfsCollector;
     }
 }
-
-const graph = new Graph<number>((a, b): number => {
-    return a === b ? 0 : a < b? -1 :1 ;
-});
-graph.addNode(1);
-graph.addNode(2);
-graph.addNode(3);
-graph.addNode(4);
-graph.addNode(5);
-graph.addNode(6);
-graph.addNode(7);
-graph.addNode(8);
-graph.addNode(9);
-graph.addNode(10);
-graph.addEdge(1, 2, 0);
-graph.addEdge(1, 5, 0);
-graph.addEdge(1, 9, 0);
-graph.addEdge(2, 3, 0);
-graph.addEdge(3, 4, 0);
-graph.addEdge(5, 6, 0);
-graph.addEdge(5, 7, 0);
-graph.addEdge(6, 8, 0);
-graph.addEdge(9, 10, 0);
-graph.addEdge(9, 0, 0);
-graph.rmNode( 0);
+//
+// const graph = new Graph<number>((a, b): number => {
+//     return a === b ? 0 : a < b? -1 :1 ;
+// });
+// graph.addNode(1);
+// graph.addNode(2);
+// graph.addNode(3);
+// graph.addNode(4);
+// graph.addNode(5);
+// graph.addNode(6);
+// graph.addNode(7);
+// graph.addNode(8);
+// graph.addNode(9);
+// graph.addNode(10);
+// graph.addEdge(1, 2, 0);
+// graph.addEdge(1, 5, 0);
+// graph.addEdge(1, 9, 0);
+// graph.addEdge(2, 3, 0);
+// graph.addEdge(3, 4, 0);
+// graph.addEdge(5, 6, 0);
+// graph.addEdge(5, 7, 0);
+// graph.addEdge(6, 8, 0);
+// graph.addEdge(9, 10, 0);
+// graph.addEdge(9, 0, 0);
+// graph.rmNode( 0);
 
 
