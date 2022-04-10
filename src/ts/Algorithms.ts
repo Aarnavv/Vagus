@@ -163,7 +163,7 @@ class Algorithms<T> {
 
     }
 
-    internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
+    private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
         let dist: Map<T, number> = new Map();
         let visited: Map<T, boolean> = new Map();
         let prev: Map<T, T> = new Map();
@@ -194,6 +194,19 @@ class Algorithms<T> {
         }
         return [dist, prev];
     }
+
+    randomWalk(start :T , end:T):T[]{
+        let src : T =start;
+        let path:T[] =[] ;
+        const V = this.graph.nodes.size;
+        while(true) {
+            let node=this.graph.nodes.get(src);
+            path.push(src);
+            if(src===end) return path;
+            src =node.getAdjNodes()[Math.floor(Math.random()*node.getAdjNodes().length)].dest.getData();
+
+        }
+    }
 }
 
 const graph = new Graph<number>((a, b): number => {
@@ -216,4 +229,4 @@ graph.addEdge(5 , 4 , 2);
 graph.addEdge(5 , 6 , 5);
 
 const algo = new Algorithms<number>(graph);
-console.log(algo.bellmanFord(1, 6)[0]);
+console.log(algo.randomWalk(1, 6));

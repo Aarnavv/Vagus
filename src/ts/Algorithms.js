@@ -209,6 +209,18 @@ var Algorithms = /** @class */ (function () {
         }
         return [dist, prev];
     };
+    Algorithms.prototype.internalRandomWalk = function (start, end) {
+        var src = start;
+        var path = [];
+        var V = this.graph.nodes.size;
+        while (true) {
+            var node = this.graph.nodes.get(src);
+            path.push(src);
+            if (src === end)
+                return path;
+            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
+        }
+    };
     return Algorithms;
 }());
 var graph = new Graph_1["default"](function (a, b) {
@@ -229,4 +241,4 @@ graph.addEdge(4, 6, 1);
 graph.addEdge(5, 4, 2);
 graph.addEdge(5, 6, 5);
 var algo = new Algorithms(graph);
-console.log(algo.bellmanFord(1, 6)[0]);
+console.log(algo.internalRandomWalk(1, 6));
