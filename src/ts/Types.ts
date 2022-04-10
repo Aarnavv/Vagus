@@ -8,7 +8,7 @@ export enum NodeType {
 }
 
 export enum AlgoType {
-    djikstrasSearch='djiktras-algo',
+    djikstrasSearch='djiktras-algo',//this will be djikstras-algo
     aStarSearch='aStar-algo',
     bellmanFord='bellmanFord-algo',
     breadthFirstSearch='bfs-algo',
