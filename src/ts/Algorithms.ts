@@ -1,6 +1,6 @@
 import Node from "./Node";
 import Graph from './Graph';
-import {PriorityQueue} from "@datastructures-js/priority-queue";
+import { PriorityQueue } from "@datastructures-js/priority-queue";
 
 
 class Algorithms<T> {
@@ -78,7 +78,7 @@ class Algorithms<T> {
         return bfsCollector;
     }
 
-    dijkstras(start: T, end: T):[T[] ,Map<T,number> , Map<T , T>]{
+    dijkstras(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
         const [dist, prev] = this.internalDijkstras(start, end);
         // the rest is just finding the path to use.
         let path: T[] = [];
@@ -87,10 +87,10 @@ class Algorithms<T> {
         return [path, dist, prev];
     }
 
-    aStar(start: T, end: T):[T[] ,Map<T,number> , Map<T , T>]{
+    aStar(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
         const [dist, prev] = this.internalAStar(start, end);
         // this is just to reconstruct the path for a*;
-        let path: T [] = [];
+        let path: T[] = [];
         if (dist.get(end) === Infinity) return [path, dist, prev];
         for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
         return [path, dist, prev];
@@ -107,9 +107,9 @@ class Algorithms<T> {
         let PQ = new PriorityQueue<{ label: T, heuristic: number }>((_this, _that) => {
             return _this.heuristic < _that.heuristic ? -1 : _this.heuristic === _that.heuristic ? 0 : 1;
         });
-        PQ.enqueue({label: start, heuristic: 0});
+        PQ.enqueue({ label: start, heuristic: 0 });
         while (!PQ.isEmpty()) {
-            const {label, heuristic} = PQ.dequeue();
+            const { label, heuristic } = PQ.dequeue();
             visited.set(label, true);
             if (dist.get(label) < heuristic)
                 continue;
@@ -121,7 +121,7 @@ class Algorithms<T> {
                     if (newHeuristic < dist.get(dest)) {
                         prev.set(dest, label);
                         dist.set(dest, newHeuristic);
-                        PQ.enqueue({label: dest, heuristic: newHeuristic})
+                        PQ.enqueue({ label: dest, heuristic: newHeuristic })
                     }
                 }
             })
@@ -140,9 +140,9 @@ class Algorithms<T> {
         let PQ = new PriorityQueue<{ label: T, minDist: number }>((a, b) => {
             return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
         });
-        PQ.enqueue({label: start, minDist: 0});
+        PQ.enqueue({ label: start, minDist: 0 });
         while (!PQ.isEmpty()) {
-            const {label, minDist} = PQ.dequeue();
+            const { label, minDist } = PQ.dequeue();
             visited.set(label, true);
             if (dist.get(label) < minDist)
                 continue;
@@ -153,7 +153,7 @@ class Algorithms<T> {
                     if (newDist < dist.get(dest)) {
                         prev.set(dest, label);
                         dist.set(dest, newDist);
-                        PQ.enqueue({label: dest, minDist: newDist});
+                        PQ.enqueue({ label: dest, minDist: newDist });
                     }
                 }
             });

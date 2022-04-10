@@ -13,7 +13,24 @@
   transition: all 0.1s;
 }
 
-.rect {
+.icon {
+  fill: #282C34;
+}
+
+.icon:hover {
+  animation: icon-pulsate 0.2s 1 linear forwards;
+}
+
+@keyframes icon-pulsate {
+  0% {
+      fill: #282C34;
+  }
+  100% {
+      fill: #1B8BCD;
+  }
+}
+
+/* .rect {
   position:absolute;
   background-color: #282C34;
   box-sizing:border-box;
@@ -53,4 +70,4 @@
   100% {
     background-color: #1B8BCD;
   }
-}
+} */
