@@ -209,10 +209,9 @@ var Algorithms = /** @class */ (function () {
         }
         return [dist, prev];
     };
-    Algorithms.prototype.internalRandomWalk = function (start, end) {
+    Algorithms.prototype.randomWalk = function (start, end) {
         var src = start;
         var path = [];
-        var V = this.graph.nodes.size;
         while (true) {
             var node = this.graph.nodes.get(src);
             path.push(src);
@@ -220,6 +219,9 @@ var Algorithms = /** @class */ (function () {
                 return path;
             src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
         }
+    };
+    Algorithms.prototype.biDirectional = function (start, end) {
+        return [this.bfs(start, end), this.bfs(end, start)];
     };
     return Algorithms;
 }());
@@ -241,4 +243,6 @@ graph.addEdge(4, 6, 1);
 graph.addEdge(5, 4, 2);
 graph.addEdge(5, 6, 5);
 var algo = new Algorithms(graph);
-console.log(algo.internalRandomWalk(1, 6));
+algo.biDirectional(1, 6)[0].forEach(function (node) { return console.log(node.getData()); });
+console.log("=================================");
+algo.biDirectional(1, 6)[1].forEach(function (node) { return console.log(node.getData()); });

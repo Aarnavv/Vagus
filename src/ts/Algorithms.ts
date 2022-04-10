@@ -160,7 +160,6 @@ class Algorithms<T> {
             })
         }
         return [dist , prev];
-
     }
 
     private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
@@ -198,7 +197,6 @@ class Algorithms<T> {
     randomWalk(start :T , end:T):T[]{
         let src : T =start;
         let path:T[] =[] ;
-        const V = this.graph.nodes.size;
         while(true) {
             let node=this.graph.nodes.get(src);
             path.push(src);
@@ -206,6 +204,10 @@ class Algorithms<T> {
             src =node.getAdjNodes()[Math.floor(Math.random()*node.getAdjNodes().length)].dest.getData();
 
         }
+    }
+    //i will have to sit down and fine tune BFS and DFS
+    biDirectional(start :T , end :T ){
+        return [this.bfs( start , end ) , this.bfs(end , start)];
     }
 }
 
@@ -229,4 +231,6 @@ graph.addEdge(5 , 4 , 2);
 graph.addEdge(5 , 6 , 5);
 
 const algo = new Algorithms<number>(graph);
-console.log(algo.randomWalk(1, 6));
+algo.biDirectional(1 ,6)[0].forEach((node)=>console.log(node.getData()));
+console.log("=================================");
+algo.biDirectional(1 ,6)[1].forEach((node)=>console.log(node.getData()));
