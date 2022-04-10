@@ -28,7 +28,7 @@ const setColor = (divClass: string, id: string, text) => {
         ele.style.borderLeft = "";
     }
     document.getElementById(id).style.backgroundColor = "#4b4e5578";
-    document.getElementById(id).style.borderLeft = "1.5px solid #0062a8";
+    document.getElementById(id).style.borderLeft = "2.5px solid #67bbff";
 
     const ext: string = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));

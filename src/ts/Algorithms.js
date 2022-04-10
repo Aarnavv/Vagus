@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var Graph_1 = require("./Graph");
+var priority_queue_1 = require("@datastructures-js/priority-queue");
 var Algorithms = /** @class */ (function () {
     function Algorithms(_assignGraph) {
         this.graph = _assignGraph;
@@ -74,27 +75,53 @@ var Algorithms = /** @class */ (function () {
         bfsCollector.splice(at + 1);
         return bfsCollector;
     };
-    Algorithms.prototype.djikstrasAlgorithm = function (start, end) {
-        var _a = this.internalDjikstrasAlgorithm(start), dist = _a[0], prev = _a[1];
+    Algorithms.prototype.dijkstras = function (start, end) {
+        var _a = this.internalDijkstras(start, end), dist = _a[0], prev = _a[1];
+        console.table(prev);
         var path = [];
         if (dist.get(end) === Infinity)
             return path;
-        for (var at = end; end !== null; at = prev.get(at)) {
-            path.push(at);
-        }
-        path.reverse();
+        for (var at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
         return path;
     };
-    Algorithms.prototype.internalDjikstrasAlgorithm = function (start) {
+    Algorithms.prototype.internalDijkstras = function (start, end) {
+        var dist = new Map();
         var visited = new Map();
-        var distances = new Map();
         var prev = new Map();
         this.graph.nodes.forEach(function (node) {
-            node.getData() !== start ? distances.set(node.getData(), Infinity) : distances.set(node.getData(), 0);
-            visited.set(node.getData(), false);
-            prev.set(node.getData(), null);
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
-        console.table(visited);
+        var PQ = new priority_queue_1.PriorityQueue(function (a, b) {
+            return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
+        });
+        PQ.enqueue({ label: start, minDist: 0 });
+        var _loop_1 = function () {
+            var _a = PQ.dequeue(), label = _a.label, minDist = _a.minDist;
+            visited.set(label, true);
+            if (dist.get(label) < minDist)
+                return "continue";
+            this_1.graph.nodes.get(label).getAdjNodes().forEach(function (edge) {
+                var dest = edge.dest.getData();
+                if (!visited.has(dest)) {
+                    var newDist = dist.get(label) + edge.cost;
+                    if (newDist < dist.get(dest)) {
+                        prev.set(dest, label);
+                        dist.set(dest, newDist);
+                        PQ.enqueue({ label: dest, minDist: newDist });
+                    }
+                }
+            });
+            if (label === end)
+                return { value: [dist, prev] };
+        };
+        var this_1 = this;
+        while (!PQ.isEmpty()) {
+            var state_1 = _loop_1();
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+        return [dist, prev];
     };
     return Algorithms;
 }());
@@ -111,15 +138,17 @@ graph.addNode(7);
 graph.addNode(8);
 graph.addNode(9);
 graph.addNode(10);
-graph.addEdge(1, 2, 0);
-graph.addEdge(1, 5, 0);
-graph.addEdge(1, 9, 0);
-graph.addEdge(2, 3, 0);
-graph.addEdge(3, 4, 0);
-graph.addEdge(5, 6, 0);
-graph.addEdge(5, 7, 0);
-graph.addEdge(6, 8, 0);
-graph.addEdge(9, 10, 0);
-graph.addEdge(9, 0, 0);
+graph.addEdge(1, 2, 1);
+graph.addEdge(1, 5, 2);
+graph.addEdge(1, 9, 3);
+graph.addEdge(2, 3, 4);
+graph.addEdge(3, 4, 5);
+graph.addEdge(5, 6, 6);
+graph.addEdge(5, 7, 7);
+graph.addEdge(6, 8, 8);
+graph.addEdge(9, 10, 9);
+graph.addEdge(9, 0, 10);
 graph.rmNode(0);
-console.log(graph.toString());
+var algo = new Algorithms(graph);
+var path = '';
+console.log(algo.dijkstras(10, 1));

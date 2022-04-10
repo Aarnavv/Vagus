@@ -57,13 +57,6 @@ var Graph = /** @class */ (function () {
                 dest.rmAdjNode(source);
         }
     };
-    Graph.prototype.toString = function () {
-        var graphMetaData = 'Graph:{' + '\n   numberOfNodes:' + this.numberOfNodes() + ',\n   Nodes:[\n';
-        this.nodes.forEach(function (node) {
-            graphMetaData += '        ' + node.toString() + '     ]';
-        });
-        return graphMetaData + '}';
-    };
     return Graph;
 }());
 exports["default"] = Graph;

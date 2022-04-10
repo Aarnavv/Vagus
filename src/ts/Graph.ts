@@ -3,6 +3,7 @@ import Node from "./Node";
 export default class Graph<T> {
     nodes: Map<T, Node<T>> = new Map();
     comparator: (a: T, b: T) => number;
+    isCyclic:boolean;
     isUndirected: boolean;
 
     constructor(comparator: (a: T, b: T) => number) {

@@ -1,6 +1,7 @@
 import Node from "./Node";
 import Graph from './Graph';
 import {AlgoType} from "./Types";
+import {ICompare, PriorityQueue} from "@datastructures-js/priority-queue";
 
 
 class Algorithms<T>{
@@ -10,7 +11,6 @@ class Algorithms<T>{
         this.graph=_assignGraph;
         this.comparator=this.graph.comparator;
     }
-
 
     private internalDFS(node: Node<T>, visited: Map<T, boolean>, dfsCollector: Node<T>[]): void {
         if (!node) return;
@@ -73,31 +73,75 @@ class Algorithms<T>{
         bfsCollector.splice(at+1);
         return bfsCollector;
     }
-}
-//
-// const graph = new Graph<number>((a, b): number => {
-//     return a === b ? 0 : a < b? -1 :1 ;
-// });
-// graph.addNode(1);
-// graph.addNode(2);
-// graph.addNode(3);
-// graph.addNode(4);
-// graph.addNode(5);
-// graph.addNode(6);
-// graph.addNode(7);
-// graph.addNode(8);
-// graph.addNode(9);
-// graph.addNode(10);
-// graph.addEdge(1, 2, 0);
-// graph.addEdge(1, 5, 0);
-// graph.addEdge(1, 9, 0);
-// graph.addEdge(2, 3, 0);
-// graph.addEdge(3, 4, 0);
-// graph.addEdge(5, 6, 0);
-// graph.addEdge(5, 7, 0);
-// graph.addEdge(6, 8, 0);
-// graph.addEdge(9, 10, 0);
-// graph.addEdge(9, 0, 0);
-// graph.rmNode( 0);
 
+    dijkstras(start :T , end:T ){
+        const [dist , prev] = this.internalDijkstras(start , end);
+        // the rest is just finding the path to use.
+        let path:T[]=[];
+        if(dist.get(end)===Infinity) return [path ,dist , prev];
+        for(let at :T = end; at !==undefined ; at= prev.get(at)) path.unshift(at);
+        return [path,dist,prev];
+    }
+
+    private internalDijkstras(start : T, end:T) : [Map<T,number> , Map<T , T>]{
+        let dist:Map<T,number> = new Map();
+        let visited:Map<T ,boolean> = new Map();
+        let prev:Map<T , T> = new Map();
+        this.graph.nodes.forEach((node)=>{
+            node.getData()!==start? dist.set(node.getData() , Infinity): dist.set(start , 0);
+        });
+        let PQ= new PriorityQueue<{label:T , minDist : number}>((a , b)=>{
+            return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1 ;
+        });
+        PQ.enqueue({label:start ,minDist : 0});
+        while(!PQ.isEmpty()){
+            const {label , minDist }=PQ.dequeue();
+            visited.set(label,true);
+            if(dist.get(label) < minDist)
+                continue;
+            this.graph.nodes.get(label).getAdjNodes().forEach((edge)=>{
+                const dest=edge.dest.getData();
+                if (!visited.has(dest)){
+                    let newDist = dist.get(label) + edge.cost;
+                    if (newDist < dist.get(dest)) {
+                        prev.set(dest , label);
+                        dist.set(dest, newDist);
+                        PQ.enqueue({label: dest, minDist: newDist});
+                    }
+                }
+            });
+            if(label===end) return [dist,prev];
+        }
+        return [dist,prev];
+    }
+
+}
+
+const graph = new Graph<number>((a, b): number => {
+    return a === b ? 0 : a < b? -1 :1 ;
+});
+graph.addNode(1);
+graph.addNode(2);
+graph.addNode(3);
+graph.addNode(4);
+graph.addNode(5);
+graph.addNode(6);
+graph.addNode(7);
+graph.addNode(8);
+graph.addNode(9);
+graph.addNode(10);
+graph.addEdge(1, 2, 1);
+graph.addEdge(1, 5, 2);
+graph.addEdge(1, 9, 3);
+graph.addEdge(2, 3, 4);
+graph.addEdge(3, 4, 5);
+graph.addEdge(5, 6, 6);
+graph.addEdge(5, 7, 7);
+graph.addEdge(6, 8, 8);
+graph.addEdge(9, 10, 9);
+graph.addEdge(9, 0, 10);
+graph.rmNode(0);
+const algo = new Algorithms<number>(graph);
+let path:string='';
+console.log(algo.dijkstras(10 ,1));
 
