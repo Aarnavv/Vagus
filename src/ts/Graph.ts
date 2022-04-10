@@ -3,7 +3,7 @@ import Node from "./Node";
 export default class Graph<T> {
     nodes: Map<T, Node<T>> = new Map();
     comparator: (a: T, b: T) => number;
-    isCyclic:boolean;
+    isCyclic: boolean;
     isUndirected: boolean;
 
     constructor(comparator: (a: T, b: T) => number) {
@@ -11,23 +11,28 @@ export default class Graph<T> {
         this.isUndirected = true;
     }
 
-    numberOfNodes():number{
+    setNodeCoords(data: T, {x, y}: { x: number, y: number }) {
+        this.nodes.get(data).setCoords(x, y);
+    }
+
+    numberOfNodes(): number {
         return this.nodes.size;
     }
 
-    nodesPresent():Map<T,Node <T>>{
+    nodesPresent(): Map<T, Node<T>> {
         return this.nodes;
     }
 
-    nodeExists(data :T):boolean{
-        return this.nodes.get(data)!==undefined;
+    nodeExists(data: T): boolean {
+        return this.nodes.get(data) !== undefined;
     }
-    edgeExists(source:T,destination:T):boolean{
+
+    edgeExists(source: T, destination: T): boolean {
         const src = this.nodes.get(source);
-        const at :number =src.getAdjNodes().findIndex((edge)=>{
-            return edge.dest.getData()===destination;
+        const at: number = src.getAdjNodes().findIndex((edge) => {
+            return edge.dest.getData() === destination;
         });
-        return at>=0;
+        return at >= 0;
     }
 
     addNode(data: T): Node<T> {
@@ -48,7 +53,7 @@ export default class Graph<T> {
         return nodeToRm;
     }
 
-    addEdge(source: T, destination: T, cost: number) {
+    addEdge(source: T, destination: T, cost: number): void {
         let src = this.addNode(source);
         let dest = this.addNode(destination);
 
@@ -61,7 +66,12 @@ export default class Graph<T> {
         const dest = this.nodes.get(destination);
         if (src && dest) {
             src.rmAdjNode(destination);
-            if (this.isUndirected) dest.rmAdjNode(source);
+            if (this.isUndirected)
+                dest.rmAdjNode(source);
         }
+    }
+
+    distBw(_this: Node<T>, _that: Node<T>): number {
+        return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
     }
 }
