@@ -2,8 +2,8 @@ import Edge from './Edge';
 
 
 export default class Node<T> {
-    private readonly data: T;
-    private readonly adjNodes: Edge<T>[];
+    private readonly data: T; //id
+    private readonly adjNodes: Edge<T>[]; //adjacent nodes
     private xCoord: number = 0;
     private yCoord: number = 0;
 

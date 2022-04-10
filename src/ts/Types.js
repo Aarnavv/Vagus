@@ -15,7 +15,10 @@ export var AlgoType;
     AlgoType["breadthFirstSearch"] = "bfs-algo";
     AlgoType["depthFirstSearch"] = "dfs-algo";
     AlgoType["biDirectionalSearch"] = "bd-algo";
+<<<<<<< HEAD
     AlgoType["randomWalk"] = "rand-algo";
+=======
+>>>>>>> 7952439da96ecbb68927f1d6f270cecd899bbfe9
 })(AlgoType || (AlgoType = {}));
 export var MazeType;
 (function (MazeType) {
