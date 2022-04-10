@@ -8,19 +8,19 @@ var Algorithms = /** @class */ (function () {
         this.comparator = this.graph.comparator;
     }
     Algorithms.prototype.internalDFS = function (node, visited, dfsCollector) {
-        var _this = this;
+        var _this_1 = this;
         if (!node)
             return;
         visited.set(node.getData(), true);
         dfsCollector.push(node);
         node.getAdjNodes().forEach(function (edge) {
             if (!visited.has(edge.dest.getData())) {
-                _this.internalDFS(edge.dest, visited, dfsCollector);
+                _this_1.internalDFS(edge.dest, visited, dfsCollector);
             }
         });
     };
     Algorithms.prototype.dfs = function (start, end) {
-        var _this = this;
+        var _this_1 = this;
         var visited = new Map();
         var dfsCollector = [];
         var finishIndex = this.graph.nodes.get(end);
@@ -28,7 +28,7 @@ var Algorithms = /** @class */ (function () {
             return [];
         this.graph.nodes.get(start).getAdjNodes().forEach(function (edge) {
             if (!visited.has(edge.dest.getData())) {
-                _this.internalDFS(edge.dest, visited, dfsCollector);
+                _this_1.internalDFS(edge.dest, visited, dfsCollector);
             }
         });
         var at = dfsCollector.findIndex(function (node) { return node.getData() === end; });
@@ -58,7 +58,7 @@ var Algorithms = /** @class */ (function () {
         }
     };
     Algorithms.prototype.bfs = function (start, end) {
-        var _this = this;
+        var _this_1 = this;
         var visited = new Map();
         var bfsCollector = [];
         var finishIndex = this.graph.nodes.get(end);
@@ -66,7 +66,7 @@ var Algorithms = /** @class */ (function () {
             return [];
         this.graph.nodes.get(start).getAdjNodes().forEach(function (edge) {
             if (!visited.has(edge.dest.getData())) {
-                _this.internalBFS(edge.dest, visited, bfsCollector);
+                _this_1.internalBFS(edge.dest, visited, bfsCollector);
             }
         });
         var at = bfsCollector.findIndex(function (node) { return node.getData() === end; });
@@ -77,13 +77,63 @@ var Algorithms = /** @class */ (function () {
     };
     Algorithms.prototype.dijkstras = function (start, end) {
         var _a = this.internalDijkstras(start, end), dist = _a[0], prev = _a[1];
-        console.table(prev);
+        // the rest is just finding the path to use.
         var path = [];
         if (dist.get(end) === Infinity)
-            return path;
+            return [path, dist, prev];
         for (var at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
-        return path;
+        return [path, dist, prev];
+    };
+    Algorithms.prototype.aStar = function (start, end) {
+        var _a = this.internalAStar(start, end), dist = _a[0], prev = _a[1];
+        // this is just to reconstruct the path for vs;
+        var path = [];
+        if (dist.get(end) === Infinity)
+            return [path, dist, prev];
+        for (var at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+        return [path, dist, prev];
+    };
+    Algorithms.prototype.internalAStar = function (start, end) {
+        var _this_1 = this;
+        var dist = new Map();
+        var visited = new Map();
+        var prev = new Map();
+        this.graph.nodes.forEach(function (node) {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+        });
+        var finish = this.graph.nodes.get(end);
+        var PQ = new priority_queue_1.PriorityQueue(function (_this, _that) {
+            return _this.heuristic < _that.heuristic ? -1 : _this.heuristic === _that.heuristic ? 0 : 1;
+        });
+        PQ.enqueue({ label: start, heuristic: 0 });
+        var _loop_1 = function () {
+            var _a = PQ.dequeue(), label = _a.label, heuristic = _a.heuristic;
+            visited.set(label, true);
+            if (dist.get(label) < heuristic)
+                return "continue";
+            this_1.graph.nodes.get(label).getAdjNodes().forEach(function (edge) {
+                var dest = edge.dest.getData();
+                if (!visited.has(dest)) {
+                    var newHeuristic = dist.get(label) + (0.8 * _this_1.graph.distBw(_this_1.graph.nodes.get(edge.dest.getData()), finish) + 0.2 * edge.cost);
+                    if (newHeuristic < dist.get(dest)) {
+                        prev.set(dest, label);
+                        dist.set(dest, newHeuristic);
+                        PQ.enqueue({ label: dest, heuristic: newHeuristic });
+                    }
+                }
+            });
+            if (label === end)
+                return { value: [dist, prev] };
+        };
+        var this_1 = this;
+        while (!PQ.isEmpty()) {
+            var state_1 = _loop_1();
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+        return [dist, prev];
     };
     Algorithms.prototype.internalDijkstras = function (start, end) {
         var dist = new Map();
@@ -96,12 +146,12 @@ var Algorithms = /** @class */ (function () {
             return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
         });
         PQ.enqueue({ label: start, minDist: 0 });
-        var _loop_1 = function () {
+        var _loop_2 = function () {
             var _a = PQ.dequeue(), label = _a.label, minDist = _a.minDist;
             visited.set(label, true);
             if (dist.get(label) < minDist)
                 return "continue";
-            this_1.graph.nodes.get(label).getAdjNodes().forEach(function (edge) {
+            this_2.graph.nodes.get(label).getAdjNodes().forEach(function (edge) {
                 var dest = edge.dest.getData();
                 if (!visited.has(dest)) {
                     var newDist = dist.get(label) + edge.cost;
@@ -115,11 +165,11 @@ var Algorithms = /** @class */ (function () {
             if (label === end)
                 return { value: [dist, prev] };
         };
-        var this_1 = this;
+        var this_2 = this;
         while (!PQ.isEmpty()) {
-            var state_1 = _loop_1();
-            if (typeof state_1 === "object")
-                return state_1.value;
+            var state_2 = _loop_2();
+            if (typeof state_2 === "object")
+                return state_2.value;
         }
         return [dist, prev];
     };
@@ -150,5 +200,4 @@ graph.addEdge(9, 10, 9);
 graph.addEdge(9, 0, 10);
 graph.rmNode(0);
 var algo = new Algorithms(graph);
-var path = '';
-console.log(algo.dijkstras(10, 1));
+console.log(algo.aStar(10, 2)[0]);

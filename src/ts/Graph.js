@@ -7,6 +7,10 @@ var Graph = /** @class */ (function () {
         this.comparator = comparator;
         this.isUndirected = true;
     }
+    Graph.prototype.setNodeCoords = function (data, _a) {
+        var x = _a.x, y = _a.y;
+        this.nodes.get(data).setCoords(x, y);
+    };
     Graph.prototype.numberOfNodes = function () {
         return this.nodes.size;
     };
@@ -56,6 +60,9 @@ var Graph = /** @class */ (function () {
             if (this.isUndirected)
                 dest.rmAdjNode(source);
         }
+    };
+    Graph.prototype.distBw = function (_this, _that) {
+        return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
     };
     return Graph;
 }());
