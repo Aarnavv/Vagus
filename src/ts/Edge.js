@@ -5,8 +5,12 @@ var Edge = /** @class */ (function () {
         this.dest = dest;
         this.cost = cost;
     }
-    Edge.prototype.changeCost = function (_newCost) { this.cost = _newCost; };
-    Edge.prototype.changeDest = function (_newDest) { this.dest = _newDest; };
+    Edge.prototype.changeCost = function (_newCost) {
+        this.cost = _newCost;
+    };
+    Edge.prototype.changeDest = function (_newDest) {
+        this.dest = _newDest;
+    };
     Edge.prototype.toString = function () {
         return '{dest:' + this.dest + ', cost:' + this.cost + '}';
     };

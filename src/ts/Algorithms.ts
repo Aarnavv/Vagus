@@ -1,6 +1,7 @@
 import Node from "./Node";
 import Graph from './Graph';
 import {PriorityQueue} from "@datastructures-js/priority-queue";
+import Edge from "./Edge";
 
 
 class Algorithms<T> {
@@ -130,21 +131,39 @@ class Algorithms<T> {
         return [dist, prev];
     }
 
-    private internalBellmanFord(start :T , end : T){
-        let dist:Map<T , number> = new Map();
-
-        this.graph.nodes.forEach((node)=>{
-            node.getData() ===start ? dist.set(node.getData () , Infinity) : dist.set(start , 0);
-        });
-        const V : number = this.graph.nodes.size;
-        for(let v=0 ; v < V-1 ; v ++ ){
-            this.graph.nodes.forEach((node)=>{
-                node.getAdjNodes();
-            })
-        }
+    bellmanFord(start :T , end :T ):[T[] , Map<T, number > , Map<T,T >]{
+        const [dist , prev] = this.internalBellmanFord(start , end);
+        console.log(prev);
+        let path:T[] = [];
+        if(dist.get(end)===Infinity) return [path , dist , prev];
+        for(let at = end ; at !==undefined ; at=prev.get(at)) path.unshift(at);
+        return [path , dist , prev];
     }
 
-    private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
+    private internalBellmanFord(start :T , end : T):[Map<T , number> , Map<T, T>]{
+        let dist:Map<T , number> = new Map();
+        let edgeList:Map<T, Edge<T>[]> = new Map();
+        let prev:Map<T , T> = new Map();
+        this.graph.nodes.forEach((node)=>{
+            node.getData() !==start ? dist.set(node.getData () , Infinity) : dist.set(start , 0);
+            edgeList.set(node.getData() , node.getAdjNodes());
+        });
+        const V= this.graph.nodes.size;
+        for(let v = 0; v < V -1 ; v ++ ) {
+            this.graph.nodes.forEach((node) => {
+                node.getAdjNodes().forEach((edge) => {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData() , node.getData());
+                    }
+                })
+            })
+        }
+        return [dist , prev];
+
+    }
+
+    internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
         let dist: Map<T, number> = new Map();
         let visited: Map<T, boolean> = new Map();
         let prev: Map<T, T> = new Map();
@@ -180,27 +199,21 @@ class Algorithms<T> {
 const graph = new Graph<number>((a, b): number => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
+
 graph.addNode(1);
 graph.addNode(2);
 graph.addNode(3);
 graph.addNode(4);
 graph.addNode(5);
 graph.addNode(6);
-graph.addNode(7);
-graph.addNode(8);
-graph.addNode(9);
-graph.addNode(10);
-graph.addEdge(1, 2, 1);
-graph.addEdge(1, 5, 2);
-graph.addEdge(1, 9, 3);
-graph.addEdge(2, 3, 4);
-graph.addEdge(3, 4, 5);
-graph.addEdge(5, 6, 6);
-graph.addEdge(5, 7, 7);
-graph.addEdge(6, 8, 8);
-graph.addEdge(9, 10, 9);
-graph.addEdge(9, 0, 10);
-graph.rmNode(0);
-const algo = new Algorithms<number>(graph);
-console.log(algo.aStar(10, 2)[0]);
+graph.addEdge(1 , 2 , 2);
+graph.addEdge(1 , 3 , 3);
+graph.addEdge(2, 4 , 7);
+graph.addEdge(3 , 2 , 1);
+graph.addEdge(3 , 5 , 3);
+graph.addEdge(4 , 6, 1);
+graph.addEdge(5 , 4 , 2);
+graph.addEdge(5 , 6 , 5);
 
+const algo = new Algorithms<number>(graph);
+console.log(algo.bellmanFord(1, 6)[0]);

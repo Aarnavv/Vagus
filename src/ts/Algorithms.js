@@ -31,7 +31,9 @@ var Algorithms = /** @class */ (function () {
                 _this_1.internalDFS(edge.dest, visited, dfsCollector);
             }
         });
-        var at = dfsCollector.findIndex(function (node) { return node.getData() === end; });
+        var at = dfsCollector.findIndex(function (node) {
+            return node.getData() === end;
+        });
         if (at < 0)
             return dfsCollector;
         dfsCollector.splice(at + 1);
@@ -69,7 +71,9 @@ var Algorithms = /** @class */ (function () {
                 _this_1.internalBFS(edge.dest, visited, bfsCollector);
             }
         });
-        var at = bfsCollector.findIndex(function (node) { return node.getData() === end; });
+        var at = bfsCollector.findIndex(function (node) {
+            return node.getData() === end;
+        });
         if (at < 0)
             return bfsCollector;
         bfsCollector.splice(at + 1);
@@ -87,7 +91,7 @@ var Algorithms = /** @class */ (function () {
     };
     Algorithms.prototype.aStar = function (start, end) {
         var _a = this.internalAStar(start, end), dist = _a[0], prev = _a[1];
-        // this is just to reconstruct the path for vs;
+        // this is just to reconstruct the path for a*;
         var path = [];
         if (dist.get(end) === Infinity)
             return [path, dist, prev];
@@ -116,6 +120,7 @@ var Algorithms = /** @class */ (function () {
             this_1.graph.nodes.get(label).getAdjNodes().forEach(function (edge) {
                 var dest = edge.dest.getData();
                 if (!visited.has(dest)) {
+                    //the below thing is the heuristic, it give 80% weight to distance and 20% weight to cost.
                     var newHeuristic = dist.get(label) + (0.8 * _this_1.graph.distBw(_this_1.graph.nodes.get(edge.dest.getData()), finish) + 0.2 * edge.cost);
                     if (newHeuristic < dist.get(dest)) {
                         prev.set(dest, label);
@@ -132,6 +137,37 @@ var Algorithms = /** @class */ (function () {
             var state_1 = _loop_1();
             if (typeof state_1 === "object")
                 return state_1.value;
+        }
+        return [dist, prev];
+    };
+    Algorithms.prototype.bellmanFord = function (start, end) {
+        var _a = this.internalBellmanFord(start, end), dist = _a[0], prev = _a[1];
+        console.log(prev);
+        var path = [];
+        if (dist.get(end) === Infinity)
+            return [path, dist, prev];
+        for (var at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+        return [path, dist, prev];
+    };
+    Algorithms.prototype.internalBellmanFord = function (start, end) {
+        var dist = new Map();
+        var edgeList = new Map();
+        var prev = new Map();
+        this.graph.nodes.forEach(function (node) {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+            edgeList.set(node.getData(), node.getAdjNodes());
+        });
+        var V = this.graph.nodes.size;
+        for (var v = 0; v < V - 1; v++) {
+            this.graph.nodes.forEach(function (node) {
+                node.getAdjNodes().forEach(function (edge) {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData(), node.getData());
+                    }
+                });
+            });
         }
         return [dist, prev];
     };
@@ -184,20 +220,13 @@ graph.addNode(3);
 graph.addNode(4);
 graph.addNode(5);
 graph.addNode(6);
-graph.addNode(7);
-graph.addNode(8);
-graph.addNode(9);
-graph.addNode(10);
-graph.addEdge(1, 2, 1);
-graph.addEdge(1, 5, 2);
-graph.addEdge(1, 9, 3);
-graph.addEdge(2, 3, 4);
-graph.addEdge(3, 4, 5);
-graph.addEdge(5, 6, 6);
-graph.addEdge(5, 7, 7);
-graph.addEdge(6, 8, 8);
-graph.addEdge(9, 10, 9);
-graph.addEdge(9, 0, 10);
-graph.rmNode(0);
+graph.addEdge(1, 2, 2);
+graph.addEdge(1, 3, 3);
+graph.addEdge(2, 4, 7);
+graph.addEdge(3, 2, 1);
+graph.addEdge(3, 5, 3);
+graph.addEdge(4, 6, 1);
+graph.addEdge(5, 4, 2);
+graph.addEdge(5, 6, 5);
 var algo = new Algorithms(graph);
-console.log(algo.aStar(10, 2)[0]);
+console.log(algo.bellmanFord(1, 6)[0]);

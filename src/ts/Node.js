@@ -3,22 +3,17 @@ exports.__esModule = true;
 var Edge_1 = require("./Edge");
 var Node = /** @class */ (function () {
     function Node(data, comparator, x, y) {
-        if (x === void 0) {
-            x = 0;
-        }
-        if (y === void 0) {
-            y = 0;
-        }
+        if (x === void 0) { x = 0; }
+        if (y === void 0) { y = 0; }
         this.xCoord = 0;
         this.yCoord = 0;
         this.data = data;
         this.comparator = comparator;
         this.adjNodes = [];
         this.adjNodes.push(new Edge_1["default"](this, 0));
-        this.xCoord = x;
-        this.yCoord = y;
+        this.setX(x);
+        this.setY(y);
     }
-
     Node.prototype.setX = function (x) {
         if (typeof x === "string")
             this.xCoord = parseFloat(x);
@@ -55,12 +50,11 @@ var Node = /** @class */ (function () {
     };
     Node.prototype.rmAdjNode = function (data) {
         var _this = this;
-        var index = this.adjNodes.findIndex(function (node) {
-            return _this.comparator(node.dest.data, data) === 0;
-        });
+        var index = this.adjNodes.findIndex(function (node) { return _this.comparator(node.dest.data, data) === 0; });
         if (index > -1) {
             return this.adjNodes.splice(index, 1)[0].dest;
-        } else
+        }
+        else
             return null;
     };
     Node.prototype.toString = function () {
@@ -77,3 +71,4 @@ var Node = /** @class */ (function () {
     return Node;
 }());
 exports["default"] = Node;
+//
