@@ -1,3 +1,22 @@
+:root {
+  --white: #ffffff;
+  --cmd-bg: #21252B;
+  --cmd-border: #434B57;
+  --project-bg: #323844;
+  --moz-sb-color: #4b4e5578;
+  --sb-color: #ffffff42;
+  --sb-color-hover: #ffffff60;
+  --sb-color-track: #7f808200;
+  --file-hover: #2C313A;
+  --alg-folder: #D5756C;
+  --node-folder: #67BBFF;
+  --maze-folder: #4CAF50;
+  --speed-folder: #E5C07B;
+  --legend-folder: #EF5350;
+  --hex-color: #282C34;
+  --hex-color-hover: #1B8BCD;
+}
+
 .content {
   width: 100%;
   height: 100vh;
@@ -7,5 +26,5 @@
 
 .left-cmd {
   width: 30vw;
-  border-right: 2px solid #434B57;
+  border-right: 0.75px solid #434B57;
 }

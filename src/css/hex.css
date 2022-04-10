@@ -14,7 +14,7 @@
 }
 
 .icon {
-  fill: #282C34;
+  fill: var(--hex-color);
 }
 
 .icon:hover {
@@ -23,10 +23,10 @@
 
 @keyframes icon-pulsate {
   0% {
-      fill: #282C34;
+      fill: var(--hex-color);
   }
   100% {
-      fill: #1B8BCD;
+      fill: var(--hex-color-hover);
   }
 }
 

@@ -1,43 +1,27 @@
 import React from 'react';
 import '../css/navbar.css';
-import {
-    TSXIcon,
-    IOIcon,
-    BATIcon,
-    SYSIcon,
-    MDIcon,
-    BOMBNode,
-    SHORTESTPATHNode,
-    VISITEDNode,
-    WALLNode,
-    UNVISITEDNode,
-    STARTNode, ENDNode, WEIGHTNode
-} from "../svgIcons/fileSVGIconComponent";
-import {
-    changeAddableNode,
-    changeAlgorithm,
-    changeMaze,
-    changeSpeed,
-} from "./GlobalState";
+import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
+import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
+import { FILEBG, FILEBGSELECTED, FILEBORDER } from "./GlobalState"
 
 const setColor = (divClass: string, id: string, text) => {
     const files = document.querySelectorAll(divClass);
     for (let i = 0; i < files.length; i++) {
         const ele = files[i] as HTMLElement;
-        ele.style.backgroundColor = "#21252B";
+        ele.style.backgroundColor = FILEBG;
         ele.style.borderLeft = "";
     }
-    document.getElementById(id).style.backgroundColor = "#4b4e5578";
-    document.getElementById(id).style.borderLeft = "2.5px solid #67bbff";
+    document.getElementById(id).style.backgroundColor = FILEBGSELECTED;
+    document.getElementById(id).style.borderLeft = `2.5px solid ${FILEBORDER}`;
 
     const ext: string = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
     console.log(text);
     switch (ext) {
-        case "tsx":changeAlgorithm(text);break;
-        case "io":changeAddableNode(text);break;
-        case "bat":changeMaze(text);break;
-        case "sys":changeSpeed(text);break;
+        case "tsx": changeAlgorithm(text); break;
+        case "io": changeAddableNode(text); break;
+        case "bat": changeMaze(text); break;
+        case "sys": changeSpeed(text); break;
     }
 }
 
