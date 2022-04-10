@@ -35,7 +35,7 @@ export default class Graph<T> {
         return at >= 0;
     }
 
-    addNode(data: T): Node<T> {
+    addNode(data: T): Node<T>{
         let node = this.nodes.get(data);
         if (node) return node;
         node = new Node(data, this.comparator);
@@ -56,7 +56,6 @@ export default class Graph<T> {
     addEdge(source: T, destination: T, cost: number): void {
         let src = this.addNode(source);
         let dest = this.addNode(destination);
-
         src.addAdjNode(dest, cost);
         if (this.isUndirected) dest.addAdjNode(src, cost);
     }
@@ -72,6 +71,6 @@ export default class Graph<T> {
     }
 
     distBw(_this: Node<T>, _that: Node<T>): number {
-        return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+        return  Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
     }
 }

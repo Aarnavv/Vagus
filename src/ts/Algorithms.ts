@@ -130,6 +130,20 @@ class Algorithms<T> {
         return [dist, prev];
     }
 
+    private internalBellmanFord(start :T , end : T){
+        let dist:Map<T , number> = new Map();
+
+        this.graph.nodes.forEach((node)=>{
+            node.getData() ===start ? dist.set(node.getData () , Infinity) : dist.set(start , 0);
+        });
+        const V : number = this.graph.nodes.size;
+        for(let v=0 ; v < V-1 ; v ++ ){
+            this.graph.nodes.forEach((node)=>{
+                node.getAdjNodes();
+            })
+        }
+    }
+
     private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
         let dist: Map<T, number> = new Map();
         let visited: Map<T, boolean> = new Map();
