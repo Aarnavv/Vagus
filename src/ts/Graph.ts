@@ -9,7 +9,7 @@ export default class Graph<T> {
 
   constructor(comparator: (a: T, b: T) => number) {
     this.comparator = comparator;
-    this.isUndirected = true;
+    this.isUndirected = false;
   }
 
   setNodeCoords(data: T, { x, y }: { x: number, y: number }) {
@@ -38,10 +38,12 @@ export default class Graph<T> {
 
   addNode(data: T): Node<T> {
     let node = this.nodes.get(data);
-    if (node) return node;
-    node = new Node(data, this.comparator);
-    this.nodes.set(data, node);
-    return node;
+    if (node !== undefined) return node;
+    else {
+      node = new Node(data, this.comparator);
+      this.nodes.set(data, node);
+      return node;
+    }
   }
 
   rmNode(data: T): Node<T> | null {

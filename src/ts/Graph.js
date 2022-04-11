@@ -7,7 +7,7 @@ export default class Graph {
     isUndirected;
     constructor(comparator) {
         this.comparator = comparator;
-        this.isUndirected = true;
+        this.isUndirected = false;
     }
     setNodeCoords(data, { x, y }) {
         this.nodes.get(data).setCoords(x, y);
@@ -30,11 +30,13 @@ export default class Graph {
     }
     addNode(data) {
         let node = this.nodes.get(data);
-        if (node)
+        if (node !== undefined)
             return node;
-        node = new Node(data, this.comparator);
-        this.nodes.set(data, node);
-        return node;
+        else {
+            node = new Node(data, this.comparator);
+            this.nodes.set(data, node);
+            return node;
+        }
     }
     rmNode(data) {
         const nodeToRm = this.nodes.get(data);
