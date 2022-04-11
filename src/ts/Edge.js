@@ -1,17 +1,19 @@
-export default class Edge {
-    dest;
-    cost;
-    constructor(dest, cost) {
+"use strict";
+exports.__esModule = true;
+var Edge = /** @class */ (function () {
+    function Edge(dest, cost) {
         this.dest = dest;
         this.cost = cost;
     }
-    changeCost(_newCost) {
+    Edge.prototype.changeCost = function (_newCost) {
         this.cost = _newCost;
-    }
-    changeDest(_newDest) {
+    };
+    Edge.prototype.changeDest = function (_newDest) {
         this.dest = _newDest;
-    }
-    toString() {
+    };
+    Edge.prototype.toString = function () {
         return '{dest:' + this.dest + ', cost:' + this.cost + '}';
-    }
-}
+    };
+    return Edge;
+}());
+exports["default"] = Edge;
