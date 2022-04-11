@@ -21,14 +21,14 @@ function changeSpeed(toThis: SpeedType) {
     currentSpeed = toThis;
 }
 
-const SOLIDRED: string = "#EF5350";
-const LIGHTRED: string = "#D5756C";
+const SOLID_RED: string = "#EF5350";
+const LIGHT_RED: string = "#D5756C";
 const BLUE: string = "#67BBFF";
 const GREEN: string = "#4CAF50";
 const YELLOW: string = "#E5C07B";
-const FILEBG: string = "#21252B";
-const FILEBGSELECTED: string = "#4b4e5578";
-const FILEBORDER: string = "#67bbff";
+const FILE_BG: string = "#21252B";
+const FILE_BG_SELECTED: string = "#4b4e5578";
+const FILE_BORDER: string = "#67bbff";
 
 
 
@@ -41,12 +41,12 @@ export {
     changeMaze,
     currentSpeed,
     changeSpeed,
-    SOLIDRED,
-    LIGHTRED,
+    SOLID_RED,
+    LIGHT_RED,
     BLUE,
     GREEN,
     YELLOW,
-    FILEBG,
-    FILEBGSELECTED,
-    FILEBORDER,
+    FILE_BG,
+    FILE_BG_SELECTED,
+    FILE_BORDER,
 };

@@ -1,4 +1,5 @@
 import Node from "./Node";
+import {Algorithms} from "./Algorithms";
 
 export default class Graph<T> {
     nodes: Map<T, Node<T>> = new Map();
@@ -72,5 +73,9 @@ export default class Graph<T> {
 
     distBw(_this: Node<T>, _that: Node<T>): number {
         return  Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+    }
+
+    hasCycles(start :T , end :T):boolean {
+        return new Algorithms(this).dfs(start, end)[0];
     }
 }

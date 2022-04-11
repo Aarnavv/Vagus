@@ -15,12 +15,12 @@ function changeMaze(toThis) {
 function changeSpeed(toThis) {
     currentSpeed = toThis;
 }
-const SOLIDRED = "#EF5350";
-const LIGHTRED = "#D5756C";
+const SOLID_RED = "#EF5350";
+const LIGHT_RED = "#D5756C";
 const BLUE = "#67BBFF";
 const GREEN = "#4CAF50";
 const YELLOW = "#E5C07B";
-const FILEBG = "#21252B";
-const FILEBGSELECTED = "#4b4e5578";
-const FILEBORDER = "#67bbff";
-export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLIDRED, LIGHTRED, BLUE, GREEN, YELLOW, FILEBG, FILEBGSELECTED, FILEBORDER, };
+const FILE_BG = "#21252B";
+const FILE_BG_SELECTED = "#4b4e5578";
+const FILE_BORDER = "#67bbff";
+export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW, FILE_BG, FILE_BG_SELECTED, FILE_BORDER, };

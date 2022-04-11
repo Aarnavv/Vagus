@@ -4,7 +4,7 @@ import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
-import { SOLIDRED, LIGHTRED, BLUE, GREEN, YELLOW } from "./GlobalState";
+import { SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW } from "./GlobalState";
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -19,11 +19,11 @@ export default class Navbar extends React.Component {
                     React.createElement(ActionIcons.PrevButtonIcon, null),
                     React.createElement(ActionIcons.RunButtonIcon, null))),
             React.createElement("div", { className: "folder-panel" },
-                React.createElement(FolderComponent, { colorOfFolder: SOLIDRED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
+                React.createElement(FolderComponent, { colorOfFolder: SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
                     React.createElement("div", { className: "advanced-cp-border" },
-                        React.createElement(FolderComponent, { colorOfFolder: SOLIDRED, text: "advanced-control-panel", divClassName: "folder advanced-cp-comp", arrowID: "advanced-cp-arrow" },
+                        React.createElement(FolderComponent, { colorOfFolder: SOLID_RED, text: "advanced-control-panel", divClassName: "folder advanced-cp-comp", arrowID: "advanced-cp-arrow" },
                             React.createElement("div", { className: "advanced-cp-border" },
-                                React.createElement(FolderComponent, { colorOfFolder: LIGHTRED, text: "algorithms", divClassName: "folder advanced-cp-comp", arrowID: "algorithms-arrow" },
+                                React.createElement(FolderComponent, { colorOfFolder: LIGHT_RED, text: "algorithms", divClassName: "folder advanced-cp-comp", arrowID: "algorithms-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "aStarSearch.tsx", divID: "tsx-1" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "djikstrasSearch.tsx", divID: "tsx-2" }),
@@ -49,7 +49,7 @@ export default class Navbar extends React.Component {
                                         React.createElement(SYSFile, { divClassName: "file sys-file", pClassName: "speed-name file-name", text: "25percent.sys", divID: "sys-1" }),
                                         React.createElement(SYSFile, { divClassName: "file sys-file", pClassName: "speed-name file-name", text: "50percent.sys", divID: "sys-2" }),
                                         React.createElement(SYSFile, { divClassName: "file sys-file", pClassName: "speed-name file-name", text: "100percent.sys", divID: "sys-3" }))))),
-                        React.createElement(FolderComponent, { colorOfFolder: SOLIDRED, text: "legend", divClassName: "folder advanced-cp-comp", arrowID: "legend-arrow" },
+                        React.createElement(FolderComponent, { colorOfFolder: SOLID_RED, text: "legend", divClassName: "folder advanced-cp-comp", arrowID: "legend-arrow" },
                             React.createElement("div", { className: "folder-drop-inner" },
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "bombNode.gui", type: "bomb", divID: "gui-1" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "shortestPathNode.gui", type: "shortest-path", divID: "gui-2" }),

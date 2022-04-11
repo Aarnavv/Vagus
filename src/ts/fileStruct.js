@@ -2,16 +2,16 @@ import React from 'react';
 import '../css/navbar.css';
 import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
 import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
-import { FILEBG, FILEBGSELECTED, FILEBORDER } from "./GlobalState";
+import { FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState";
 const setColor = (divClass, id, text) => {
     const files = document.querySelectorAll(divClass);
     for (let i = 0; i < files.length; i++) {
         const ele = files[i];
-        ele.style.backgroundColor = FILEBG;
+        ele.style.backgroundColor = FILE_BG;
         ele.style.borderLeft = "";
     }
-    document.getElementById(id).style.backgroundColor = FILEBGSELECTED;
-    document.getElementById(id).style.borderLeft = `2.5px solid ${FILEBORDER}`;
+    document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
+    document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
     const ext = text.substring(text.lastIndexOf(".") + 1);
     text = text.substring(0, text.lastIndexOf("."));
     console.log(text);

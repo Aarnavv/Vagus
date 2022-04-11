@@ -1,4 +1,5 @@
 import Node from "./Node";
+import { Algorithms } from "./Algorithms";
 export default class Graph {
     nodes = new Map();
     comparator;
@@ -63,5 +64,8 @@ export default class Graph {
     }
     distBw(_this, _that) {
         return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+    }
+    hasCycles(start, end) {
+        return new Algorithms(this).dfs(start, end)[0];
     }
 }
