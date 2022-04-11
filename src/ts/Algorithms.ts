@@ -1,6 +1,9 @@
 import Node from "./Node";
 import Graph from './Graph';
-import { PriorityQueue } from "@datastructures-js/priority-queue";
+
+import {PriorityQueue} from "@datastructures-js/priority-queue";
+import Edge from "./Edge";
+
 
 
 class Algorithms<T> {
@@ -129,64 +132,105 @@ class Algorithms<T> {
     }
     return [dist, prev];
   }
+    bellmanFord(start :T , end :T ):[T[] , Map<T, number > , Map<T,T >]{
+        const [dist , prev] = this.internalBellmanFord(start , end);
+        console.log(prev);
+        let path:T[] = [];
+        if(dist.get(end)===Infinity) return [path , dist , prev];
+        for(let at = end ; at !==undefined ; at=prev.get(at)) path.unshift(at);
+        return [path , dist , prev];
+    }
 
-  private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
-    let dist: Map<T, number> = new Map();
-    let visited: Map<T, boolean> = new Map();
-    let prev: Map<T, T> = new Map();
-    this.graph.nodes.forEach((node) => {
-      node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-    });
-    let PQ = new PriorityQueue<{ label: T, minDist: number }>((a, b) => {
-      return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
-    });
-    PQ.enqueue({ label: start, minDist: 0 });
-    while (!PQ.isEmpty()) {
-      const { label, minDist } = PQ.dequeue();
-      visited.set(label, true);
-      if (dist.get(label) < minDist)
-        continue;
-      this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
-        const dest = edge.dest.getData();
-        if (!visited.has(dest)) {
-          let newDist = dist.get(label) + edge.cost;
-          if (newDist < dist.get(dest)) {
-            prev.set(dest, label);
-            dist.set(dest, newDist);
-            PQ.enqueue({ label: dest, minDist: newDist });
-          }
+    private internalBellmanFord(start :T , end : T):[Map<T , number> , Map<T, T>]{
+        let dist:Map<T , number> = new Map();
+        let edgeList:Map<T, Edge<T>[]> = new Map();
+        let prev:Map<T , T> = new Map();
+        this.graph.nodes.forEach((node)=>{
+            node.getData() !==start ? dist.set(node.getData () , Infinity) : dist.set(start , 0);
+            edgeList.set(node.getData() , node.getAdjNodes());
+        });
+        const V= this.graph.nodes.size;
+        for(let v = 0; v < V -1 ; v ++ ) {
+            this.graph.nodes.forEach((node) => {
+                node.getAdjNodes().forEach((edge) => {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData() , node.getData());
+                    }
+                })
+            })
+        }
+        return [dist , prev];
+    }
+
+    private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
+        let dist: Map<T, number> = new Map();
+        let visited: Map<T, boolean> = new Map();
+        let prev: Map<T, T> = new Map();
+        this.graph.nodes.forEach((node) => {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+        });
+        let PQ = new PriorityQueue<{ label: T, minDist: number }>((a, b) => {
+            return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
+        });
+        PQ.enqueue({ label: start, minDist: 0 });
+        while (!PQ.isEmpty()) {
+            const { label, minDist } = PQ.dequeue();
+            visited.set(label, true);
+            if (dist.get(label) < minDist)
+                continue;
+            this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
+                const dest = edge.dest.getData();
+                if (!visited.has(dest)) {
+                    let newDist = dist.get(label) + edge.cost;
+                    if (newDist < dist.get(dest)) {
+                        prev.set(dest, label);
+                        dist.set(dest, newDist);
+                        PQ.enqueue({ label: dest, minDist: newDist });
+                    }
+                }
+            });
+            if (label === end) return [dist, prev];
         }
       });
-      if (label === end) return [dist, prev];
+
+    randomWalk(start :T , end:T):T[]{
+        let src : T =start;
+        let path:T[] =[] ;
+        while(true) {
+            let node=this.graph.nodes.get(src);
+            path.push(src);
+            if(src===end) return path;
+            src =node.getAdjNodes()[Math.floor(Math.random()*node.getAdjNodes().length)].dest.getData();
+
+        }
     }
-    return [dist, prev];
-  }
+    //i will have to sit down and fine tune BFS and DFS
+    biDirectional(start :T , end :T ){
+        return [this.bfs( start , end ) , this.bfs(end , start)];
+    }
 }
 
-// const graph = new Graph<number>((a, b): number => {
-//     return a === b ? 0 : a < b ? -1 : 1;
-// });
-// graph.addNode(1);
-// graph.addNode(2);
-// graph.addNode(3);
-// graph.addNode(4);
-// graph.addNode(5);
-// graph.addNode(6);
-// graph.addNode(7);
-// graph.addNode(8);
-// graph.addNode(9);
-// graph.addNode(10);
-// graph.addEdge(1, 2, 1);
-// graph.addEdge(1, 5, 2);
-// graph.addEdge(1, 9, 3);
-// graph.addEdge(2, 3, 4);
-// graph.addEdge(3, 4, 5);
-// graph.addEdge(5, 6, 6);
-// graph.addEdge(5, 7, 7);
-// graph.addEdge(6, 8, 8);
-// graph.addEdge(9, 10, 9);
-// graph.addEdge(9, 0, 10);
-// graph.rmNode(0);
-// const algo = new Algorithms<number>(graph);
-// console.log(algo.aStar(10, 2)[0]);
+const graph = new Graph<number>((a, b): number => {
+    return a === b ? 0 : a < b ? -1 : 1;
+});
 
+graph.addNode(1);
+graph.addNode(2);
+graph.addNode(3);
+graph.addNode(4);
+graph.addNode(5);
+graph.addNode(6);
+graph.addEdge(1 , 2 , 2);
+graph.addEdge(1 , 3 , 3);
+graph.addEdge(2, 4 , 7);
+graph.addEdge(3 , 2 , 1);
+graph.addEdge(3 , 5 , 3);
+graph.addEdge(4 , 6, 1);
+graph.addEdge(5 , 4 , 2);
+graph.addEdge(5 , 6 , 5);
+
+const algo = new Algorithms<number>(graph);
+algo.biDirectional(1 ,6)[0].forEach((node)=>console.log(node.getData()));
+console.log("=================================");
+algo.biDirectional(1 ,6)[1].forEach((node)=>console.log(node.getData()));

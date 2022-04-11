@@ -8,12 +8,13 @@ export enum NodeType {
 }
 
 export enum AlgoType {
-    djikstrasSearch='djiktras-algo',//this will be djikstras-algo
+    djikstrasSearch='dijktras-algo',//this will be djikstras-algo
     aStarSearch='aStar-algo',
     bellmanFord='bellmanFord-algo',
     breadthFirstSearch='bfs-algo',
     depthFirstSearch='dfs-algo',
-    biDirectionalSearch='bd-algo'
+    biDirectionalSearch='bd-algo',
+    randomWalk='rand-algo'
 }
 
 export enum MazeType{
