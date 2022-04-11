@@ -1,73 +1,71 @@
-"use strict";
-exports.__esModule = true;
-var Node_1 = require("./Node");
-var Algorithms_1 = require("./Algorithms");
-var Graph = /** @class */ (function () {
-    function Graph(comparator) {
-        this.nodes = new Map();
+import Node from "./Node";
+import { Algorithms } from "./Algorithms";
+export default class Graph {
+    nodes = new Map();
+    comparator;
+    isCyclic;
+    isUndirected;
+    constructor(comparator) {
         this.comparator = comparator;
-        this.isUndirected = true;
+        this.isUndirected = false;
     }
-    Graph.prototype.setNodeCoords = function (data, _a) {
-        var x = _a.x, y = _a.y;
+    setNodeCoords(data, { x, y }) {
         this.nodes.get(data).setCoords(x, y);
-    };
-    Graph.prototype.numberOfNodes = function () {
+    }
+    numberOfNodes() {
         return this.nodes.size;
-    };
-    Graph.prototype.nodesPresent = function () {
+    }
+    nodesPresent() {
         return this.nodes;
-    };
-    Graph.prototype.nodeExists = function (data) {
+    }
+    nodeExists(data) {
         return this.nodes.get(data) !== undefined;
-    };
-    Graph.prototype.edgeExists = function (source, destination) {
-        var src = this.nodes.get(source);
-        var at = src.getAdjNodes().findIndex(function (edge) {
+    }
+    edgeExists(source, destination) {
+        const src = this.nodes.get(source);
+        const at = src.getAdjNodes().findIndex((edge) => {
             return edge.dest.getData() === destination;
         });
         return at >= 0;
-    };
-    Graph.prototype.addNode = function (data) {
-        var node = this.nodes.get(data);
-        if (node)
+    }
+    addNode(data) {
+        let node = this.nodes.get(data);
+        if (node !== undefined)
             return node;
-        node = new Node_1["default"](data, this.comparator);
+        node = new Node(data, this.comparator);
         this.nodes.set(data, node);
         return node;
-    };
-    Graph.prototype.rmNode = function (data) {
-        var nodeToRm = this.nodes.get(data);
+    }
+    rmNode(data) {
+        const nodeToRm = this.nodes.get(data);
         if (!nodeToRm)
             return null;
-        this.nodes.forEach(function (node) {
+        this.nodes.forEach((node) => {
             node.rmAdjNode(nodeToRm.getData());
         });
-        this.nodes["delete"](data);
+        this.nodes.delete(data);
         return nodeToRm;
-    };
-    Graph.prototype.addEdge = function (source, destination, cost) {
-        var src = this.addNode(source);
-        var dest = this.addNode(destination);
+    }
+    addEdge(source, destination, cost) {
+        let src = this.addNode(source);
+        let dest = this.addNode(destination);
         src.addAdjNode(dest, cost);
         if (this.isUndirected)
             dest.addAdjNode(src, cost);
-    };
-    Graph.prototype.rmEdge = function (source, destination) {
-        var src = this.nodes.get(source);
-        var dest = this.nodes.get(destination);
+    }
+    rmEdge(source, destination) {
+        const src = this.nodes.get(source);
+        const dest = this.nodes.get(destination);
         if (src && dest) {
             src.rmAdjNode(destination);
             if (this.isUndirected)
                 dest.rmAdjNode(source);
         }
-    };
-    Graph.prototype.distBw = function (_this, _that) {
+    }
+    distBw(_this, _that) {
         return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
-    };
-    Graph.prototype.hasCycles = function (start, end) {
-        return new Algorithms_1.Algorithms(this).dfs(start, end)[0];
-    };
-    return Graph;
-}());
-exports["default"] = Graph;
+    }
+    hasCycles(start, end) {
+        return new Algorithms(this).dfs(start, end)[0];
+    }
+}

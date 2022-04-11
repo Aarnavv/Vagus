@@ -121,8 +121,8 @@ export class Algorithms {
         }
     }
     biDirectional(start, end) {
-        const [pathFromStart, visitedFromStart, prevFromStart] = this.bfs(start, end);
-        const [pathFromEnd, visitedFromEnd, prevFromEnd] = this.bfs(end, start);
+        const [pathFromStart, visitedFromStart] = this.bfs(start, end);
+        const [pathFromEnd, visitedFromEnd] = this.bfs(end, start);
         let splicePoint = pathFromEnd.length / 2;
         let visitedFromStartArray = Array.from(visitedFromStart.keys());
         let visitedFromEndArray = Array.from(visitedFromEnd.keys());
