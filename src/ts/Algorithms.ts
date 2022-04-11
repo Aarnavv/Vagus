@@ -178,7 +178,7 @@ export class Algorithms<T> {
             if (label === end) return [dist, prev];
             return [dist, prev];
         }
-    }
+  }
 
     private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
         let dist: Map<T, number> = new Map();
@@ -211,6 +211,11 @@ export class Algorithms<T> {
         }
         return [dist, prev];
     }
+  }
+  //i will have to sit down and fine tune BFS and DFS
+  biDirectional(start: T, end: T) {
+    return [this.bfs(start, end), this.bfs(end, start)];
+  }
 }
 
 const

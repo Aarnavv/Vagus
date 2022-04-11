@@ -190,7 +190,6 @@ export class Algorithms {
             if (label === end)
                 return [dist, prev];
         }
-        return [dist, prev];
     }
 }
 const graph = new Graph((a, b) => {
