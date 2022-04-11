@@ -7,19 +7,19 @@ let currentMaze: MazeType = MazeType.none;
 let currentSpeed: SpeedType = SpeedType.percent100;
 
 function changeAddableNode(toThis: NodeType) {
-    currentAddableNode = toThis;
+  currentAddableNode = toThis;
 }
 
 function changeAlgorithm(toThis: AlgoType) {
-    currentAlgorithm = toThis;
+  currentAlgorithm = toThis;
 }
 
 function changeMaze(toThis: MazeType) {
-    currentMaze = toThis;
+  currentMaze = toThis;
 }
 
 function changeSpeed(toThis: SpeedType) {
-    currentSpeed = toThis;
+  currentSpeed = toThis;
 }
 
 const SOLID_RED: string = "#EF5350";
@@ -32,25 +32,25 @@ const FILE_BG_SELECTED: string = "#4b4e5578";
 const FILE_BORDER: string = "#67bbff";
 
 const GRAPH = new Graph<number>((a, b): number => {
-    return a === b ? 0 : a < b ? -1 : 1;
+  return a === b ? 0 : a < b ? -1 : 1;
 });
 
 export {
-    currentAddableNode,
-    changeAddableNode,
-    currentAlgorithm,
-    changeAlgorithm,
-    currentMaze,
-    changeMaze,
-    currentSpeed,
-    changeSpeed,
-    SOLID_RED,
-    LIGHT_RED,
-    BLUE,
-    GREEN,
-    YELLOW,
-    FILE_BG,
-    FILE_BG_SELECTED,
-    FILE_BORDER,
-    GRAPH
+  currentAddableNode,
+  changeAddableNode,
+  currentAlgorithm,
+  changeAlgorithm,
+  currentMaze,
+  changeMaze,
+  currentSpeed,
+  changeSpeed,
+  SOLID_RED,
+  LIGHT_RED,
+  BLUE,
+  GREEN,
+  YELLOW,
+  FILE_BG,
+  FILE_BG_SELECTED,
+  FILE_BORDER,
+  GRAPH
 };

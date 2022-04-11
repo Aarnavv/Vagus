@@ -1,31 +1,31 @@
 export enum NodeType {
-    normal = 'reg-node',
-    path = 'path-node',
-    bomb = 'bomb-node',
-    visited = 'visited-node',
-    weight = 'weight-node',
-    wall = 'wall-node'
+  normal = 'reg-node',
+  path = 'path-node',
+  bomb = 'bomb-node',
+  visited = 'visited-node',
+  weight = 'weight-node',
+  wall = 'wall-node'
 }
 
 export enum AlgoType {
-    djikstrasSearch='dijktras-algo',//this will be djikstras-algo
-    aStarSearch='aStar-algo',
-    bellmanFord='bellmanFord-algo',
-    breadthFirstSearch='bfs-algo',
-    depthFirstSearch='dfs-algo',
-    biDirectionalSearch='bd-algo',
-    randomWalk='rand-algo'
+  djikstrasSearch = 'dijktras-algo',//this will be djikstras-algo
+  aStarSearch = 'aStar-algo',
+  bellmanFord = 'bellmanFord-algo',
+  breadthFirstSearch = 'bfs-algo',
+  depthFirstSearch = 'dfs-algo',
+  biDirectionalSearch = 'bd-algo',
+  randomWalk = 'rand-algo'
 }
 
-export enum MazeType{
-    none='none',
-    gridMaze='gridMaze-maze',
-    randomMaze='randomMaze-maze',
-    diagonalCutMaze='diagonalCutMaze-maze'
+export enum MazeType {
+  none = 'none',
+  gridMaze = 'gridMaze-maze',
+  randomMaze = 'randomMaze-maze',
+  diagonalCutMaze = 'diagonalCutMaze-maze'
 }
 
-export enum SpeedType{
-    percent100=100,
-    percent50=50,
-    percent25=25
+export enum SpeedType {
+  percent100 = 100,
+  percent50 = 50,
+  percent25 = 25
 }
