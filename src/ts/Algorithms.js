@@ -1,4 +1,3 @@
-import Graph from './Graph';
 import { PriorityQueue } from "@datastructures-js/priority-queue";
 export class Algorithms {
     graph;
@@ -193,3 +192,22 @@ export class Algorithms {
         return [dist, prev];
     }
 }
+// const graph1 = new Graph<number>((a, b): number => {
+//   return a === b ? 0 : a < b ? -1 : 1;
+// });
+// graph1.addNode(1);
+// graph1.addNode(2);
+// graph1.addNode(3);
+// graph1.addNode(4);
+// graph1.addNode(5);
+// graph1.addNode(6);
+// graph1.addEdge(1, 2, 2);
+// graph1.addEdge(1, 3, 3);
+// graph1.addEdge(2, 4, 7);
+// graph1.addEdge(3, 2, 1);
+// graph1.addEdge(3, 5, 3);
+// graph1.addEdge(4, 6, 1);
+// graph1.addEdge(5, 4, 2);
+// graph1.addEdge(5, 6, 5);
+// const algo = new Algorithms<number>(graph1);
+// algo.biDirectional(1, 6);
