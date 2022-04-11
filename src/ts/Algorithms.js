@@ -190,39 +190,25 @@ export class Algorithms {
             if (label === end)
                 return [dist, prev];
         }
+        return [dist, prev];
     }
 }
 const graph = new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
-graph
-    .addNode(1);
-graph
-    .addNode(2);
-graph
-    .addNode(3);
-graph
-    .addNode(4);
-graph
-    .addNode(5);
-graph
-    .addNode(6);
-graph
-    .addEdge(1, 2, 2);
-graph
-    .addEdge(1, 3, 3);
-graph
-    .addEdge(2, 4, 7);
-graph
-    .addEdge(3, 2, 1);
-graph
-    .addEdge(3, 5, 3);
-graph
-    .addEdge(4, 6, 1);
-graph
-    .addEdge(5, 4, 2);
-graph
-    .addEdge(5, 6, 5);
+graph.addNode(1);
+graph.addNode(2);
+graph.addNode(3);
+graph.addNode(4);
+graph.addNode(5);
+graph.addNode(6);
+graph.addEdge(1, 2, 2);
+graph.addEdge(1, 3, 3);
+graph.addEdge(2, 4, 7);
+graph.addEdge(3, 2, 1);
+graph.addEdge(3, 5, 3);
+graph.addEdge(4, 6, 1);
+graph.addEdge(5, 4, 2);
+graph.addEdge(5, 6, 5);
 const algo = new Algorithms(graph);
-algo
-    .biDirectional(1, 6);
+algo.biDirectional(1, 6);

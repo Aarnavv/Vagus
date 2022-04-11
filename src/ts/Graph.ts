@@ -1,5 +1,5 @@
 import Node from "./Node";
-import {Algorithms} from "./Algorithms";
+import { Algorithms } from "./Algorithms";
 
 export default class Graph<T> {
   nodes: Map<T, Node<T>> = new Map();
@@ -36,13 +36,13 @@ export default class Graph<T> {
     return at >= 0;
   }
 
-    addNode(data: T): Node<T>{
-        let node = this.nodes.get(data);
-        if (node) return node;
-        node = new Node(data, this.comparator);
-        this.nodes.set(data, node);
-        return node;
-    }
+  addNode(data: T): Node<T> {
+    let node = this.nodes.get(data);
+    if (node) return node;
+    node = new Node(data, this.comparator);
+    this.nodes.set(data, node);
+    return node;
+  }
 
   rmNode(data: T): Node<T> | null {
     const nodeToRm = this.nodes.get(data);
@@ -54,12 +54,12 @@ export default class Graph<T> {
     return nodeToRm;
   }
 
-    addEdge(source: T, destination: T, cost: number): void {
-        let src = this.addNode(source);
-        let dest = this.addNode(destination);
-        src.addAdjNode(dest, cost);
-        if (this.isUndirected) dest.addAdjNode(src, cost);
-    }
+  addEdge(source: T, destination: T, cost: number): void {
+    let src = this.addNode(source);
+    let dest = this.addNode(destination);
+    src.addAdjNode(dest, cost);
+    if (this.isUndirected) dest.addAdjNode(src, cost);
+  }
 
 
   rmEdge(source: T, destination: T) {
@@ -72,11 +72,11 @@ export default class Graph<T> {
     }
   }
 
-    distBw(_this: Node<T>, _that: Node<T>): number {
-        return  Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
-    }
+  distBw(_this: Node<T>, _that: Node<T>): number {
+    return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+  }
 
-    hasCycles(start :T , end :T):boolean {
-        return new Algorithms(this).dfs(start, end)[0];
-    }
+  hasCycles(start: T, end: T): boolean {
+    return new Algorithms(this).dfs(start, end)[0];
+  }
 }
