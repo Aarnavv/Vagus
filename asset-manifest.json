@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Vagus/static/css/main.15361771.css",
-    "main.js": "/Vagus/static/js/main.2d5dd3e6.js",
+    "main.css": "/Vagus/static/css/main.c6463da9.css",
+    "main.js": "/Vagus/static/js/main.c47160f3.js",
     "index.html": "/Vagus/index.html",
-    "main.15361771.css.map": "/Vagus/static/css/main.15361771.css.map",
-    "main.2d5dd3e6.js.map": "/Vagus/static/js/main.2d5dd3e6.js.map"
+    "main.c6463da9.css.map": "/Vagus/static/css/main.c6463da9.css.map",
+    "main.c47160f3.js.map": "/Vagus/static/js/main.c47160f3.js.map"
   },
   "entrypoints": [
-    "static/css/main.15361771.css",
-    "static/js/main.2d5dd3e6.js"
+    "static/css/main.c6463da9.css",
+    "static/js/main.c47160f3.js"
   ]
 }
