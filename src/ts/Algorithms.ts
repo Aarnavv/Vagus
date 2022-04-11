@@ -7,132 +7,131 @@ import Edge from "./Edge";
 
 
 class Algorithms<T> {
-    graph: Graph<T>;
-    comparator;
+  graph: Graph<T>;
+  comparator;
 
-    constructor(_assignGraph: Graph<T>) {
-        this.graph = _assignGraph;
-        this.comparator = this.graph.comparator;
-    }
+  constructor(_assignGraph: Graph<T>) {
+    this.graph = _assignGraph;
+    this.comparator = this.graph.comparator;
+  }
 
-    private internalDFS(node: Node<T>, visited: Map<T, boolean>, dfsCollector: Node<T>[]): void {
-        if (!node) return;
-        visited.set(node.getData(), true);
-        dfsCollector.push(node);
-        node.getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalDFS(edge.dest, visited, dfsCollector);
-            }
-        });
-    }
+  private internalDFS(node: Node<T>, visited: Map<T, boolean>, dfsCollector: Node<T>[]): void {
+    if (!node) return;
+    visited.set(node.getData(), true);
+    dfsCollector.push(node);
+    node.getAdjNodes().forEach((edge) => {
+      if (!visited.has(edge.dest.getData())) {
+        this.internalDFS(edge.dest, visited, dfsCollector);
+      }
+    });
+  }
 
-    dfs(start: T, end: T): Node<T>[] {
-        const visited: Map<T, boolean> = new Map();
-        const dfsCollector: Node<T>[] = [];
-        let finishIndex = this.graph.nodes.get(end);
-        if (finishIndex === undefined) return [];
-        this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalDFS(edge.dest, visited, dfsCollector);
-            }
-        });
-        let at = dfsCollector.findIndex((node) => {
-            return node.getData() === end;
-        });
-        if (at < 0) return dfsCollector;
-        dfsCollector.splice(at + 1);
-        return dfsCollector;
-    }
+  dfs(start: T, end: T): Node<T>[] {
+    const visited: Map<T, boolean> = new Map();
+    const dfsCollector: Node<T>[] = [];
+    let finishIndex = this.graph.nodes.get(end);
+    if (finishIndex === undefined) return [];
+    this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
+      if (!visited.has(edge.dest.getData())) {
+        this.internalDFS(edge.dest, visited, dfsCollector);
+      }
+    });
+    let at = dfsCollector.findIndex((node) => {
+      return node.getData() === end;
+    });
+    if (at < 0) return dfsCollector;
+    dfsCollector.splice(at + 1);
+    return dfsCollector;
+  }
 
-    private internalBFS(node: Node<T>, visited: Map<T, boolean>, bfsCollector: Node<T>[]): void {
-        const Q: Node<T>[] = []
-        if (!node) return;
-        Q.push(node);
-        let pointer = 0;
-        visited.set(node.getData(), true);
-        while (pointer !== Q.length) {
-            node = Q[pointer++];
-            if (node === null) continue;
-            bfsCollector.push(node);
-            node.getAdjNodes().forEach((item) => {
-                if (!visited.has(item.dest.getData())) {
-                    visited.set(item.dest.getData(), true);
-                    Q.push(item.dest);
-                }
-            });
+  private internalBFS(node: Node<T>, visited: Map<T, boolean>, bfsCollector: Node<T>[]): void {
+    const Q: Node<T>[] = []
+    if (!node) return;
+    Q.push(node);
+    let pointer = 0;
+    visited.set(node.getData(), true);
+    while (pointer !== Q.length) {
+      node = Q[pointer++];
+      if (node === null) continue;
+      bfsCollector.push(node);
+      node.getAdjNodes().forEach((item) => {
+        if (!visited.has(item.dest.getData())) {
+          visited.set(item.dest.getData(), true);
+          Q.push(item.dest);
         }
+      });
     }
+  }
 
-    bfs(start: T, end: T): Node<T>[] {
-        const visited: Map<T, boolean> = new Map();
-        const bfsCollector: Node<T>[] = [];
-        let finishIndex = this.graph.nodes.get(end);
-        if (finishIndex === undefined) return [];
-        this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalBFS(edge.dest, visited, bfsCollector);
-            }
-        });
-        let at = bfsCollector.findIndex((node) => {
-            return node.getData() === end;
-        });
-        if (at < 0) return bfsCollector;
-        bfsCollector.splice(at + 1);
-        return bfsCollector;
-    }
+  bfs(start: T, end: T): Node<T>[] {
+    const visited: Map<T, boolean> = new Map();
+    const bfsCollector: Node<T>[] = [];
+    let finishIndex = this.graph.nodes.get(end);
+    if (finishIndex === undefined) return [];
+    this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
+      if (!visited.has(edge.dest.getData())) {
+        this.internalBFS(edge.dest, visited, bfsCollector);
+      }
+    });
+    let at = bfsCollector.findIndex((node) => {
+      return node.getData() === end;
+    });
+    if (at < 0) return bfsCollector;
+    bfsCollector.splice(at + 1);
+    return bfsCollector;
+  }
 
-    dijkstras(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
-        const [dist, prev] = this.internalDijkstras(start, end);
-        // the rest is just finding the path to use.
-        let path: T[] = [];
-        if (dist.get(end) === Infinity) return [path, dist, prev];
-        for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
-        return [path, dist, prev];
-    }
+  dijkstras(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
+    const [dist, prev] = this.internalDijkstras(start, end);
+    // the rest is just finding the path to use.
+    let path: T[] = [];
+    if (dist.get(end) === Infinity) return [path, dist, prev];
+    for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
+    return [path, dist, prev];
+  }
 
-    aStar(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
-        const [dist, prev] = this.internalAStar(start, end);
-        // this is just to reconstruct the path for a*;
-        let path: T[] = [];
-        if (dist.get(end) === Infinity) return [path, dist, prev];
-        for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
-        return [path, dist, prev];
-    }
+  aStar(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
+    const [dist, prev] = this.internalAStar(start, end);
+    // this is just to reconstruct the path for a*;
+    let path: T[] = [];
+    if (dist.get(end) === Infinity) return [path, dist, prev];
+    for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
+    return [path, dist, prev];
+  }
 
-    private internalAStar(start: T, end: T): [Map<T, number>, Map<T, T>] {
-        let dist: Map<T, number> = new Map();
-        let visited: Map<T, boolean> = new Map();
-        let prev: Map<T, T> = new Map();
-        this.graph.nodes.forEach((node) => {
-            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-        });
-        let finish = this.graph.nodes.get(end);
-        let PQ = new PriorityQueue<{ label: T, heuristic: number }>((_this, _that) => {
-            return _this.heuristic < _that.heuristic ? -1 : _this.heuristic === _that.heuristic ? 0 : 1;
-        });
-        PQ.enqueue({ label: start, heuristic: 0 });
-        while (!PQ.isEmpty()) {
-            const { label, heuristic } = PQ.dequeue();
-            visited.set(label, true);
-            if (dist.get(label) < heuristic)
-                continue;
-            this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
-                const dest = edge.dest.getData();
-                if (!visited.has(dest)) {
-                    //the below thing is the heuristic, it give 80% weight to distance and 20% weight to cost.
-                    let newHeuristic = dist.get(label) + (0.8 * this.graph.distBw(this.graph.nodes.get(edge.dest.getData()), finish) + 0.2 * edge.cost);
-                    if (newHeuristic < dist.get(dest)) {
-                        prev.set(dest, label);
-                        dist.set(dest, newHeuristic);
-                        PQ.enqueue({ label: dest, heuristic: newHeuristic })
-                    }
-                }
-            })
-            if (label === end) return [dist, prev];
+  private internalAStar(start: T, end: T): [Map<T, number>, Map<T, T>] {
+    let dist: Map<T, number> = new Map();
+    let visited: Map<T, boolean> = new Map();
+    let prev: Map<T, T> = new Map();
+    this.graph.nodes.forEach((node) => {
+      node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+    });
+    let finish = this.graph.nodes.get(end);
+    let PQ = new PriorityQueue<{ label: T, heuristic: number }>((_this, _that) => {
+      return _this.heuristic < _that.heuristic ? -1 : _this.heuristic === _that.heuristic ? 0 : 1;
+    });
+    PQ.enqueue({ label: start, heuristic: 0 });
+    while (!PQ.isEmpty()) {
+      const { label, heuristic } = PQ.dequeue();
+      visited.set(label, true);
+      if (dist.get(label) < heuristic)
+        continue;
+      this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
+        const dest = edge.dest.getData();
+        if (!visited.has(dest)) {
+          //the below thing is the heuristic, it give 80% weight to distance and 20% weight to cost.
+          let newHeuristic = dist.get(label) + (0.8 * this.graph.distBw(this.graph.nodes.get(edge.dest.getData()), finish) + 0.2 * edge.cost);
+          if (newHeuristic < dist.get(dest)) {
+            prev.set(dest, label);
+            dist.set(dest, newHeuristic);
+            PQ.enqueue({ label: dest, heuristic: newHeuristic })
+          }
         }
-        return [dist, prev];
+      })
+      if (label === end) return [dist, prev];
     }
-
+    return [dist, prev];
+  }
     bellmanFord(start :T , end :T ):[T[] , Map<T, number > , Map<T,T >]{
         const [dist , prev] = this.internalBellmanFord(start , end);
         console.log(prev);
@@ -193,8 +192,7 @@ class Algorithms<T> {
             });
             if (label === end) return [dist, prev];
         }
-        return [dist, prev];
-    }
+      });
 
     randomWalk(start :T , end:T):T[]{
         let src : T =start;

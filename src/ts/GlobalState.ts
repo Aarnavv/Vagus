@@ -1,4 +1,5 @@
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import Graph from "./Graph";
 
 let currentAddableNode: NodeType = NodeType.normal;
 let currentAlgorithm: AlgoType = AlgoType.aStarSearch;
@@ -30,7 +31,9 @@ const FILEBG: string = "#21252B";
 const FILEBGSELECTED: string = "#4b4e5578";
 const FILEBORDER: string = "#67bbff";
 
-
+const GRAPH = new Graph<number>((a, b): number => {
+    return a === b ? 0 : a < b ? -1 : 1;
+});
 
 export {
     currentAddableNode,
@@ -49,4 +52,5 @@ export {
     FILEBG,
     FILEBGSELECTED,
     FILEBORDER,
+    GRAPH,
 };
