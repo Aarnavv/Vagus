@@ -1,8 +1,7 @@
-import { PriorityQueue } from "@datastructures-js/priority-queue";
+import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
 export class Algorithms {
     graph;
     comparator;
-    private;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
@@ -122,9 +121,16 @@ export class Algorithms {
         }
     }
     biDirectional(start, end) {
-        console.log(this.bfs(start, end)[1]);
-        console.log(this.bfs(end, start)[1]);
+        const [pathFromStart, visitedFromStart] = this.bfs(start, end);
+        const [pathFromEnd, visitedFromEnd] = this.bfs(end, start);
+        let splicePoint = pathFromEnd.length / 2;
+        let visitedFromStartArray = Array.from(visitedFromStart.keys());
+        let visitedFromEndArray = Array.from(visitedFromEnd.keys());
+        visitedFromStartArray.splice(splicePoint + 1);
+        visitedFromEndArray.splice(splicePoint + 1);
+        return [pathFromStart, visitedFromStartArray, visitedFromEndArray];
     }
+    // i will have to sort out aStar, change the heuristic.
     internalAStar(start, end) {
         let dist = new Map();
         let visited = new Map();
@@ -133,41 +139,40 @@ export class Algorithms {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
         let finish = this.graph.nodes.get(end);
-        let PQ = new PriorityQueue((_this, _that) => {
-            return _this.heuristic < _that.heuristic ? -1 : _this.heuristic === _that.heuristic ? 0 : 1;
-        });
-        PQ.enqueue({ label: start, heuristic: 0 });
+        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.heuristicCost);
+        PQ.enqueue({ label: start, heuristicCost: 0 });
         while (!PQ.isEmpty()) {
-            const { label, heuristic } = PQ.dequeue();
+            const { label, heuristicCost } = PQ.dequeue();
             visited.set(label, true);
-            if (dist.get(label) < heuristic)
+            if (dist.get(label) < heuristicCost)
                 continue;
             this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
-                    //the below thing is the heuristic, it give 80% weight to distance and 20% weight to cost.
-                    let newHeuristic = dist.get(label) + (0.8 * this.graph.distBw(this.graph.nodes.get(edge.dest.getData()), finish) + 0.2 * edge.cost);
-                    if (newHeuristic < dist.get(dest)) {
+                    //general travelCost which is used for decision to update dest.
+                    let cost = dist.get(label) + edge.cost;
+                    //general travelCost which is used for decision to update dest.
+                    let euclideanDist = this.graph.distBw(this.graph.nodes.get(edge.dest.getData()), finish);
+                    let heuristic = euclideanDist + cost;
+                    if (cost < dist.get(dest)) {
                         prev.set(dest, label);
-                        dist.set(dest, newHeuristic);
-                        PQ.enqueue({ label: dest, heuristic: newHeuristic });
+                        dist.set(dest, cost);
+                        PQ.enqueue({ label: dest, heuristicCost: heuristic });
                     }
                 }
             });
             if (label === end)
                 return [dist, prev];
-            return [dist, prev];
         }
+        return [dist, prev];
     }
     internalDijkstras(start, end) {
+        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minDist);
         let dist = new Map();
         let visited = new Map();
         let prev = new Map();
         this.graph.nodes.forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-        });
-        let PQ = new PriorityQueue((a, b) => {
-            return a.minDist < b.minDist ? -1 : a.minDist === b.minDist ? 0 : 1;
         });
         PQ.enqueue({ label: start, minDist: 0 });
         while (!PQ.isEmpty()) {
@@ -210,4 +215,4 @@ export class Algorithms {
 // graph1.addEdge(5, 4, 2);
 // graph1.addEdge(5, 6, 5);
 // const algo = new Algorithms<number>(graph1);
-// algo.biDirectional(1, 6);
+// console.log(algo.dijkstras(1 ,6)[0]);
