@@ -1,3 +1,4 @@
+import Graph from './Graph';
 import { PriorityQueue } from "@datastructures-js/priority-queue";
 class Algorithms {
     graph;
@@ -190,7 +191,6 @@ class Algorithms {
             if (label === end)
                 return [dist, prev];
         }
-        return [dist, prev];
     }
     randomWalk(start, end) {
         let src = start;
@@ -208,7 +208,6 @@ class Algorithms {
         return [this.bfs(start, end), this.bfs(end, start)];
     }
 }
-
 const graph = new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
