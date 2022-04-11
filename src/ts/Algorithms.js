@@ -1,4 +1,3 @@
-import Graph from './Graph';
 import { PriorityQueue } from "@datastructures-js/priority-queue";
 class Algorithms {
     graph;
@@ -163,29 +162,29 @@ class Algorithms {
         return [dist, prev];
     }
 }
-const graph = new Graph((a, b) => {
-    return a === b ? 0 : a < b ? -1 : 1;
-});
-graph.addNode(1);
-graph.addNode(2);
-graph.addNode(3);
-graph.addNode(4);
-graph.addNode(5);
-graph.addNode(6);
-graph.addNode(7);
-graph.addNode(8);
-graph.addNode(9);
-graph.addNode(10);
-graph.addEdge(1, 2, 1);
-graph.addEdge(1, 5, 2);
-graph.addEdge(1, 9, 3);
-graph.addEdge(2, 3, 4);
-graph.addEdge(3, 4, 5);
-graph.addEdge(5, 6, 6);
-graph.addEdge(5, 7, 7);
-graph.addEdge(6, 8, 8);
-graph.addEdge(9, 10, 9);
-graph.addEdge(9, 0, 10);
-graph.rmNode(0);
-const algo = new Algorithms(graph);
-console.log(algo.aStar(10, 2)[0]);
+// const graph = new Graph<number>((a, b): number => {
+//     return a === b ? 0 : a < b ? -1 : 1;
+// });
+// graph.addNode(1);
+// graph.addNode(2);
+// graph.addNode(3);
+// graph.addNode(4);
+// graph.addNode(5);
+// graph.addNode(6);
+// graph.addNode(7);
+// graph.addNode(8);
+// graph.addNode(9);
+// graph.addNode(10);
+// graph.addEdge(1, 2, 1);
+// graph.addEdge(1, 5, 2);
+// graph.addEdge(1, 9, 3);
+// graph.addEdge(2, 3, 4);
+// graph.addEdge(3, 4, 5);
+// graph.addEdge(5, 6, 6);
+// graph.addEdge(5, 7, 7);
+// graph.addEdge(6, 8, 8);
+// graph.addEdge(9, 10, 9);
+// graph.addEdge(9, 0, 10);
+// graph.rmNode(0);
+// const algo = new Algorithms<number>(graph);
+// console.log(algo.aStar(10, 2)[0]);
