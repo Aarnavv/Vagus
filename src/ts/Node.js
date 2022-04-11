@@ -45,9 +45,7 @@ export default class Node {
         return this.adjNodes;
     }
     addAdjNode(node, cost) {
-        if (this.adjNodes.every((edge) => {
-            return edge.dest.getData() !== node.getData();
-        }))
+        if (this.adjNodes.every((edge) => { return edge.dest.getData() !== node.getData(); }))
             this.adjNodes.push(new Edge(node, cost));
     }
     rmAdjNode(data) {

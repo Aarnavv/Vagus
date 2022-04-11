@@ -55,9 +55,7 @@ export default class Node<T> {
   }
 
   addAdjNode(node: Node<T>, cost: number): void {
-    if(this.adjNodes.every((edge)=>{
-      return edge.dest.getData()!==node.getData();
-    }))
+    if (this.adjNodes.every((edge) => { return edge.dest.getData() !== node.getData(); }))
       this.adjNodes.push(new Edge(node, cost));
   }
 
