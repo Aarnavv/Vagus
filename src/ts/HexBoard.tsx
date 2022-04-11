@@ -101,38 +101,55 @@ export default class HexBoard extends React.Component {
       else if ((i + 1) % rows === 0) {
         columnID = (i + 1) / rows;
         if (columnID === 1) { // adj 3
-          // console.log(i)
-          // console.log(i + 1)
-          // console.log(i - rows)
-          // console.log(i + rows)
-          // console.log(i - rows + 1)
-          // console.log(i + rows + 1)
+          GRAPH.addEdge(i, i - 1, 1);
+          GRAPH.addEdge(i, i + rows, 1);
+          GRAPH.addEdge(i, i + rows - 1, 1);
         }
         else if (columnID === cols) {
-          if (cols % 2 == 0) {
-            // adj 2
+          if (cols % 2 == 0) { // adj 2
+            GRAPH.addEdge(i, i - 1, 1);
+            GRAPH.addEdge(i, i - rows, 1);
           }
-          else {
-            // adj 3
+          else { // adj 3
+            GRAPH.addEdge(i, i - 1, 1);
+            GRAPH.addEdge(i, i - rows, 1);
+            GRAPH.addEdge(i, i - rows - 1, 1);
           }
         }
-        else if (columnID % 2 === 0) {
-          // 3 adj
+        else if (columnID % 2 === 0) { // 3 adj
+          GRAPH.addEdge(i, i - 1, 1);
+          GRAPH.addEdge(i, i - rows, 1);
+          GRAPH.addEdge(i, i + rows, 1);
         }
-        else {
-          // 5 adj
+        else { // 5 adj
+          GRAPH.addEdge(i, i - 1, 1);
+          GRAPH.addEdge(i, i - rows, 1);
+          GRAPH.addEdge(i, i + rows, 1);
+          GRAPH.addEdge(i, i - rows - 1, 1);
+          GRAPH.addEdge(i, i + rows - 1, 1);
         }
       }
       // first column conditions
-      else if (i <= rows) {
-        // adj 4
+      else if (i <= rows) { // adj 4
+        GRAPH.addEdge(i, i - 1, 1);
+        GRAPH.addEdge(i, i + 1, 1);
+        GRAPH.addEdge(i, i + rows, 1);
+        GRAPH.addEdge(i, i + rows - 1, 1);
       }
       //last column conditions
-      else if (i > (rows * (cols - 1))) {
-        // adj 4
+      else if (i > (rows * (cols - 1))) { // adj 4
+        GRAPH.addEdge(i, i - 1, 1);
+        GRAPH.addEdge(i, i + 1, 1);
+        GRAPH.addEdge(i, i - rows, 1);
+        GRAPH.addEdge(i, i - rows - 1, 1);
       }
-      else {
-        // adj 6
+      else { // adj 6
+        GRAPH.addEdge(i, i - 1, 1);
+        GRAPH.addEdge(i, i + 1, 1);
+        GRAPH.addEdge(i, i - rows, 1);
+        GRAPH.addEdge(i, i - rows + 1, 1);
+        GRAPH.addEdge(i, i + rows, 1);
+        GRAPH.addEdge(i, i + rows + 1, 1);
       }
     }
     return content;
