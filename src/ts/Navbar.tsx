@@ -4,7 +4,7 @@ import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
-import { SOLIDRED, LIGHTRED, BLUE, GREEN, YELLOW } from "./GlobalState"
+import { SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW } from "./GlobalState"
 
 export default class Navbar extends React.Component {
   render() {
@@ -24,11 +24,11 @@ export default class Navbar extends React.Component {
           </div>
         </div>
         <div className="folder-panel">
-          <FolderComponent colorOfFolder={SOLIDRED} text="Vagus-master" divClassName="folder" arrowID="vagus-master-arrow">
+          <FolderComponent colorOfFolder={SOLID_RED} text="Vagus-master" divClassName="folder" arrowID="vagus-master-arrow">
             <div className="advanced-cp-border">
-              <FolderComponent colorOfFolder={SOLIDRED} text="advanced-control-panel" divClassName="folder advanced-cp-comp" arrowID="advanced-cp-arrow" >
+              <FolderComponent colorOfFolder={SOLID_RED} text="advanced-control-panel" divClassName="folder advanced-cp-comp" arrowID="advanced-cp-arrow" >
                 <div className="advanced-cp-border">
-                  <FolderComponent colorOfFolder={LIGHTRED} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
+                  <FolderComponent colorOfFolder={LIGHT_RED} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
                     <div className="folder-drop-inner">
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="djikstrasSearch.tsx" divID="tsx-2" />
@@ -64,7 +64,7 @@ export default class Navbar extends React.Component {
                   </FolderComponent>
                 </div>
               </FolderComponent>
-              <FolderComponent colorOfFolder={SOLIDRED} text="legend" divClassName="folder advanced-cp-comp" arrowID="legend-arrow">
+              <FolderComponent colorOfFolder={SOLID_RED} text="legend" divClassName="folder advanced-cp-comp" arrowID="legend-arrow">
                 <div className="folder-drop-inner">
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="bombNode.gui" type="bomb" divID="gui-1" />
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="shortestPathNode.gui" type="shortest-path" divID="gui-2" />

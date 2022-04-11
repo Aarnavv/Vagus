@@ -1,80 +1,64 @@
 import Graph from './Graph';
 import { PriorityQueue } from "@datastructures-js/priority-queue";
-class Algorithms {
+export class Algorithms {
     graph;
     comparator;
+    private;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
     }
-    internalDFS(node, visited, dfsCollector) {
-        if (!node)
-            return;
-        visited.set(node.getData(), true);
-        dfsCollector.push(node);
-        node.getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalDFS(edge.dest, visited, dfsCollector);
-            }
-        });
-    }
-    dfs(start, end) {
-        const visited = new Map();
-        const dfsCollector = [];
-        let finishIndex = this.graph.nodes.get(end);
-        if (finishIndex === undefined)
-            return [];
-        this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalDFS(edge.dest, visited, dfsCollector);
-            }
-        });
-        let at = dfsCollector.findIndex((node) => {
-            return node.getData() === end;
-        });
-        if (at < 0)
-            return dfsCollector;
-        dfsCollector.splice(at + 1);
-        return dfsCollector;
-    }
-    internalBFS(node, visited, bfsCollector) {
-        const Q = [];
-        if (!node)
-            return;
-        Q.push(node);
-        let pointer = 0;
-        visited.set(node.getData(), true);
-        while (pointer !== Q.length) {
-            node = Q[pointer++];
-            if (node === null)
-                continue;
-            bfsCollector.push(node);
-            node.getAdjNodes().forEach((item) => {
-                if (!visited.has(item.dest.getData())) {
-                    visited.set(item.dest.getData(), true);
-                    Q.push(item.dest);
-                }
-            });
-        }
-    }
     bfs(start, end) {
         const visited = new Map();
-        const bfsCollector = [];
-        let finishIndex = this.graph.nodes.get(end);
-        if (finishIndex === undefined)
-            return [];
-        this.graph.nodes.get(start).getAdjNodes().forEach((edge) => {
-            if (!visited.has(edge.dest.getData())) {
-                this.internalBFS(edge.dest, visited, bfsCollector);
+        const prev = new Map();
+        const path = [];
+        if (this.graph.nodes.get(start) === undefined)
+            return [path, visited, prev];
+        const Q = new PriorityQueue(() => {
+            return 0;
+        });
+        Q.enqueue(start);
+        visited.set(start, true);
+        while (!Q.isEmpty()) {
+            let currNode = this.graph.nodes.get(Q.dequeue());
+            currNode.getAdjNodes().forEach((edge) => {
+                if (!visited.has(edge.dest.getData())) {
+                    visited.set(edge.dest.getData(), true);
+                    Q.enqueue(edge.dest.getData());
+                    prev.set(edge.dest.getData(), currNode.getData());
+                }
+            });
+            if (currNode.getData() === end) {
+                for (let at = end; at !== undefined; at = prev.get(at))
+                    path.unshift(at);
+                return [path, visited, prev];
             }
-        });
-        let at = bfsCollector.findIndex((node) => {
-            return node.getData() === end;
-        });
-        if (at < 0)
-            return bfsCollector;
-        bfsCollector.splice(at + 1);
-        return bfsCollector;
+        }
+        return [path, visited, prev];
+    }
+    dfs(start, end) {
+        let isCyclic = false;
+        let path = [];
+        const visited = new Map();
+        const internalDfs = (at) => {
+            if (visited.has(at)) {
+                isCyclic = true;
+                return;
+            }
+            visited.set(at, true);
+            path.push(at);
+            this.graph.nodes.get(at).getAdjNodes().forEach((edge) => {
+                internalDfs(edge.dest.getData());
+            });
+        };
+        internalDfs(start);
+        const endIndex = path.indexOf(end);
+        if (endIndex < 0)
+            return [isCyclic, visited, path];
+        else {
+            path.splice(endIndex + 1);
+            return [isCyclic, visited, path];
+        }
     }
     dijkstras(start, end) {
         const [dist, prev] = this.internalDijkstras(start, end);
@@ -95,6 +79,52 @@ class Algorithms {
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
         return [path, dist, prev];
+    }
+    bellmanFord(start, end) {
+        const [dist, prev] = this.internalBellmanFord(start);
+        console.log(prev);
+        let path = [];
+        if (dist.get(end) === Infinity)
+            return [path, dist, prev];
+        for (let at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+        return [path, dist, prev];
+    }
+    internalBellmanFord(start) {
+        let dist = new Map();
+        let edgeList = new Map();
+        let prev = new Map();
+        this.graph.nodes.forEach((node) => {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+            edgeList.set(node.getData(), node.getAdjNodes());
+        });
+        const V = this.graph.nodes.size;
+        for (let v = 0; v < V - 1; v++) {
+            this.graph.nodes.forEach((node) => {
+                node.getAdjNodes().forEach((edge) => {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData(), node.getData());
+                    }
+                });
+            });
+        }
+        return [dist, prev];
+    }
+    randomWalk(start, end) {
+        let src = start;
+        let path = [];
+        while (true) {
+            let node = this.graph.nodes.get(src);
+            path.push(src);
+            if (src === end)
+                return path;
+            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
+        }
+    }
+    biDirectional(start, end) {
+        console.log(this.bfs(start, end)[1]);
+        console.log(this.bfs(end, start)[1]);
     }
     internalAStar(start, end) {
         let dist = new Map();
@@ -127,39 +157,8 @@ class Algorithms {
             });
             if (label === end)
                 return [dist, prev];
+            return [dist, prev];
         }
-        return [dist, prev];
-    }
-    bellmanFord(start, end) {
-        const [dist, prev] = this.internalBellmanFord(start, end);
-        console.log(prev);
-        let path = [];
-        if (dist.get(end) === Infinity)
-            return [path, dist, prev];
-        for (let at = end; at !== undefined; at = prev.get(at))
-            path.unshift(at);
-        return [path, dist, prev];
-    }
-    internalBellmanFord(start, end) {
-        let dist = new Map();
-        let edgeList = new Map();
-        let prev = new Map();
-        this.graph.nodes.forEach((node) => {
-            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-            edgeList.set(node.getData(), node.getAdjNodes());
-        });
-        const V = this.graph.nodes.size;
-        for (let v = 0; v < V - 1; v++) {
-            this.graph.nodes.forEach((node) => {
-                node.getAdjNodes().forEach((edge) => {
-                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
-                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
-                        prev.set(edge.dest.getData(), node.getData());
-                    }
-                });
-            });
-        }
-        return [dist, prev];
     }
     internalDijkstras(start, end) {
         let dist = new Map();
@@ -192,40 +191,38 @@ class Algorithms {
                 return [dist, prev];
         }
     }
-    randomWalk(start, end) {
-        let src = start;
-        let path = [];
-        while (true) {
-            let node = this.graph.nodes.get(src);
-            path.push(src);
-            if (src === end)
-                return path;
-            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
-        }
-    }
-    //i will have to sit down and fine tune BFS and DFS
-    biDirectional(start, end) {
-        return [this.bfs(start, end), this.bfs(end, start)];
-    }
 }
 const graph = new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
-graph.addNode(1);
-graph.addNode(2);
-graph.addNode(3);
-graph.addNode(4);
-graph.addNode(5);
-graph.addNode(6);
-graph.addEdge(1, 2, 2);
-graph.addEdge(1, 3, 3);
-graph.addEdge(2, 4, 7);
-graph.addEdge(3, 2, 1);
-graph.addEdge(3, 5, 3);
-graph.addEdge(4, 6, 1);
-graph.addEdge(5, 4, 2);
-graph.addEdge(5, 6, 5);
+graph
+    .addNode(1);
+graph
+    .addNode(2);
+graph
+    .addNode(3);
+graph
+    .addNode(4);
+graph
+    .addNode(5);
+graph
+    .addNode(6);
+graph
+    .addEdge(1, 2, 2);
+graph
+    .addEdge(1, 3, 3);
+graph
+    .addEdge(2, 4, 7);
+graph
+    .addEdge(3, 2, 1);
+graph
+    .addEdge(3, 5, 3);
+graph
+    .addEdge(4, 6, 1);
+graph
+    .addEdge(5, 4, 2);
+graph
+    .addEdge(5, 6, 5);
 const algo = new Algorithms(graph);
-algo.biDirectional(1, 6)[0].forEach((node) => console.log(node.getData()));
-console.log("=================================");
-algo.biDirectional(1, 6)[1].forEach((node) => console.log(node.getData()));
+algo
+    .biDirectional(1, 6);
