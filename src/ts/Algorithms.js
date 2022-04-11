@@ -3,6 +3,7 @@ import { PriorityQueue } from "@datastructures-js/priority-queue";
 export class Algorithms {
     graph;
     comparator;
+    private;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
@@ -79,6 +80,52 @@ export class Algorithms {
             path.unshift(at);
         return [path, dist, prev];
     }
+    bellmanFord(start, end) {
+        const [dist, prev] = this.internalBellmanFord(start);
+        console.log(prev);
+        let path = [];
+        if (dist.get(end) === Infinity)
+            return [path, dist, prev];
+        for (let at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+        return [path, dist, prev];
+    }
+    internalBellmanFord(start) {
+        let dist = new Map();
+        let edgeList = new Map();
+        let prev = new Map();
+        this.graph.nodes.forEach((node) => {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+            edgeList.set(node.getData(), node.getAdjNodes());
+        });
+        const V = this.graph.nodes.size;
+        for (let v = 0; v < V - 1; v++) {
+            this.graph.nodes.forEach((node) => {
+                node.getAdjNodes().forEach((edge) => {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData(), node.getData());
+                    }
+                });
+            });
+        }
+        return [dist, prev];
+    }
+    randomWalk(start, end) {
+        let src = start;
+        let path = [];
+        while (true) {
+            let node = this.graph.nodes.get(src);
+            path.push(src);
+            if (src === end)
+                return path;
+            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
+        }
+    }
+    biDirectional(start, end) {
+        console.log(this.bfs(start, end)[1]);
+        console.log(this.bfs(end, start)[1]);
+    }
     internalAStar(start, end) {
         let dist = new Map();
         let visited = new Map();
@@ -110,39 +157,8 @@ export class Algorithms {
             });
             if (label === end)
                 return [dist, prev];
+            return [dist, prev];
         }
-        return [dist, prev];
-    }
-    bellmanFord(start, end) {
-        const [dist, prev] = this.internalBellmanFord(start);
-        console.log(prev);
-        let path = [];
-        if (dist.get(end) === Infinity)
-            return [path, dist, prev];
-        for (let at = end; at !== undefined; at = prev.get(at))
-            path.unshift(at);
-        return [path, dist, prev];
-    }
-    internalBellmanFord(start) {
-        let dist = new Map();
-        let edgeList = new Map();
-        let prev = new Map();
-        this.graph.nodes.forEach((node) => {
-            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-            edgeList.set(node.getData(), node.getAdjNodes());
-        });
-        const V = this.graph.nodes.size;
-        for (let v = 0; v < V - 1; v++) {
-            this.graph.nodes.forEach((node) => {
-                node.getAdjNodes().forEach((edge) => {
-                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
-                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
-                        prev.set(edge.dest.getData(), node.getData());
-                    }
-                });
-            });
-        }
-        return [dist, prev];
     }
     internalDijkstras(start, end) {
         let dist = new Map();
@@ -176,38 +192,38 @@ export class Algorithms {
         }
         return [dist, prev];
     }
-    randomWalk(start, end) {
-        let src = start;
-        let path = [];
-        while (true) {
-            let node = this.graph.nodes.get(src);
-            path.push(src);
-            if (src === end)
-                return path;
-            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
-        }
-    }
-    biDirectional(start, end) {
-        console.log(this.bfs(start, end)[1]);
-        console.log(this.bfs(end, start)[1]);
-    }
 }
 const graph = new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
-graph.addNode(1);
-graph.addNode(2);
-graph.addNode(3);
-graph.addNode(4);
-graph.addNode(5);
-graph.addNode(6);
-graph.addEdge(1, 2, 2);
-graph.addEdge(1, 3, 3);
-graph.addEdge(2, 4, 7);
-graph.addEdge(3, 2, 1);
-graph.addEdge(3, 5, 3);
-graph.addEdge(4, 6, 1);
-graph.addEdge(5, 4, 2);
-graph.addEdge(5, 6, 5);
+graph
+    .addNode(1);
+graph
+    .addNode(2);
+graph
+    .addNode(3);
+graph
+    .addNode(4);
+graph
+    .addNode(5);
+graph
+    .addNode(6);
+graph
+    .addEdge(1, 2, 2);
+graph
+    .addEdge(1, 3, 3);
+graph
+    .addEdge(2, 4, 7);
+graph
+    .addEdge(3, 2, 1);
+graph
+    .addEdge(3, 5, 3);
+graph
+    .addEdge(4, 6, 1);
+graph
+    .addEdge(5, 4, 2);
+graph
+    .addEdge(5, 6, 5);
 const algo = new Algorithms(graph);
-algo.biDirectional(1, 6);
+algo
+    .biDirectional(1, 6);

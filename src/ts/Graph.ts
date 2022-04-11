@@ -2,39 +2,39 @@ import Node from "./Node";
 import {Algorithms} from "./Algorithms";
 
 export default class Graph<T> {
-    nodes: Map<T, Node<T>> = new Map();
-    comparator: (a: T, b: T) => number;
-    isCyclic: boolean;
-    isUndirected: boolean;
+  nodes: Map<T, Node<T>> = new Map();
+  comparator: (a: T, b: T) => number;
+  isCyclic: boolean;
+  isUndirected: boolean;
 
-    constructor(comparator: (a: T, b: T) => number) {
-        this.comparator = comparator;
-        this.isUndirected = true;
-    }
+  constructor(comparator: (a: T, b: T) => number) {
+    this.comparator = comparator;
+    this.isUndirected = true;
+  }
 
-    setNodeCoords(data: T, {x, y}: { x: number, y: number }) {
-        this.nodes.get(data).setCoords(x, y);
-    }
+  setNodeCoords(data: T, { x, y }: { x: number, y: number }) {
+    this.nodes.get(data).setCoords(x, y);
+  }
 
-    numberOfNodes(): number {
-        return this.nodes.size;
-    }
+  numberOfNodes(): number {
+    return this.nodes.size;
+  }
 
-    nodesPresent(): Map<T, Node<T>> {
-        return this.nodes;
-    }
+  nodesPresent(): Map<T, Node<T>> {
+    return this.nodes;
+  }
 
-    nodeExists(data: T): boolean {
-        return this.nodes.get(data) !== undefined;
-    }
+  nodeExists(data: T): boolean {
+    return this.nodes.get(data) !== undefined;
+  }
 
-    edgeExists(source: T, destination: T): boolean {
-        const src = this.nodes.get(source);
-        const at: number = src.getAdjNodes().findIndex((edge) => {
-            return edge.dest.getData() === destination;
-        });
-        return at >= 0;
-    }
+  edgeExists(source: T, destination: T): boolean {
+    const src = this.nodes.get(source);
+    const at: number = src.getAdjNodes().findIndex((edge) => {
+      return edge.dest.getData() === destination;
+    });
+    return at >= 0;
+  }
 
     addNode(data: T): Node<T>{
         let node = this.nodes.get(data);
@@ -44,15 +44,15 @@ export default class Graph<T> {
         return node;
     }
 
-    rmNode(data: T): Node<T> | null {
-        const nodeToRm = this.nodes.get(data);
-        if (!nodeToRm) return null;
-        this.nodes.forEach((node) => {
-            node.rmAdjNode(nodeToRm.getData());
-        })
-        this.nodes.delete(data);
-        return nodeToRm;
-    }
+  rmNode(data: T): Node<T> | null {
+    const nodeToRm = this.nodes.get(data);
+    if (!nodeToRm) return null;
+    this.nodes.forEach((node) => {
+      node.rmAdjNode(nodeToRm.getData());
+    })
+    this.nodes.delete(data);
+    return nodeToRm;
+  }
 
     addEdge(source: T, destination: T, cost: number): void {
         let src = this.addNode(source);
@@ -61,15 +61,16 @@ export default class Graph<T> {
         if (this.isUndirected) dest.addAdjNode(src, cost);
     }
 
-    rmEdge(source: T, destination: T) {
-        const src = this.nodes.get(source);
-        const dest = this.nodes.get(destination);
-        if (src && dest) {
-            src.rmAdjNode(destination);
-            if (this.isUndirected)
-                dest.rmAdjNode(source);
-        }
+
+  rmEdge(source: T, destination: T) {
+    const src = this.nodes.get(source);
+    const dest = this.nodes.get(destination);
+    if (src && dest) {
+      src.rmAdjNode(destination);
+      if (this.isUndirected)
+        dest.rmAdjNode(source);
     }
+  }
 
     distBw(_this: Node<T>, _that: Node<T>): number {
         return  Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));

@@ -1,11 +1,12 @@
 import Graph from './Graph';
-import {PriorityQueue } from "@datastructures-js/priority-queue";
+import {PriorityQueue} from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
 
 
 export class Algorithms<T> {
     graph: Graph<T>;
     comparator;
+    private
 
     constructor(_assignGraph: Graph<T>) {
         this.graph = _assignGraph;
@@ -40,7 +41,7 @@ export class Algorithms<T> {
         return [path, visited, prev];
     }
 
-    dfs(start: T, end: T):[boolean , Map<T , boolean> , T[]] {
+    dfs(start: T, end: T): [boolean, Map<T, boolean>, T[]] {
         let isCyclic: boolean = false;
         let path: T [] = [];
         const visited: Map<T, boolean> = new Map();
@@ -58,8 +59,8 @@ export class Algorithms<T> {
         internalDfs(start);
         const endIndex = path.indexOf(end);
         if (endIndex < 0) return [isCyclic, visited, path];
-        else{
-            path.splice(endIndex +1)
+        else {
+            path.splice(endIndex + 1)
             return [isCyclic, visited, path];
         }
     }
@@ -80,6 +81,69 @@ export class Algorithms<T> {
         if (dist.get(end) === Infinity) return [path, dist, prev];
         for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
         return [path, dist, prev];
+    }
+
+    bellmanFord(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
+        const [dist, prev] = this.internalBellmanFord(start);
+        console.log(prev);
+        let path: T[] = [];
+        if (dist.get(end) === Infinity) return [path, dist, prev];
+        for (let at = end; at !== undefined; at = prev.get(at)) path.unshift(at);
+        return [path, dist, prev];
+    }
+
+    internalBellmanFord(start
+                            :
+                            T
+    ):
+        [Map<T, number>, Map<T, T>] {
+        let dist: Map<T, number> = new Map();
+        let edgeList: Map<T, Edge<T>[]> = new Map();
+        let prev: Map<T, T> = new Map();
+        this.graph.nodes.forEach((node) => {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+            edgeList.set(node.getData(), node.getAdjNodes());
+        });
+        const V = this.graph.nodes.size;
+        for (let v = 0; v < V - 1; v++) {
+            this.graph.nodes.forEach((node) => {
+                node.getAdjNodes().forEach((edge) => {
+                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
+                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        prev.set(edge.dest.getData(), node.getData());
+                    }
+                })
+            })
+        }
+        return [dist, prev];
+    }
+
+    randomWalk(start
+                   :
+                   T, end
+                   :
+                   T
+    ):
+        T[] {
+        let src: T = start;
+        let path: T[] = [];
+        while (true) {
+            let node = this.graph.nodes.get(src);
+            path.push(src);
+            if (src === end) return path;
+            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
+
+        }
+    }
+
+    biDirectional(start
+                      :
+                      T, end
+                      :
+                      T
+    ) {
+        console.log(this.bfs(start, end)[1]);
+        console.log(this.bfs(end, start)[1]);
     }
 
     private internalAStar(start: T, end: T): [Map<T, number>, Map<T, T>] {
@@ -112,39 +176,8 @@ export class Algorithms<T> {
                 }
             })
             if (label === end) return [dist, prev];
+            return [dist, prev];
         }
-        return [dist, prev];
-    }
-
-    bellmanFord(start: T, end: T): [T[], Map<T, number>, Map<T, T>] {
-        const [dist, prev] = this.internalBellmanFord(start);
-        console.log(prev);
-        let path: T[] = [];
-        if (dist.get(end) === Infinity) return [path, dist, prev];
-        for (let at = end; at !== undefined; at = prev.get(at)) path.unshift(at);
-        return [path, dist, prev];
-    }
-
-    private internalBellmanFord(start: T): [Map<T, number>, Map<T, T>] {
-        let dist: Map<T, number> = new Map();
-        let edgeList: Map<T, Edge<T>[]> = new Map();
-        let prev: Map<T, T> = new Map();
-        this.graph.nodes.forEach((node) => {
-            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-            edgeList.set(node.getData(), node.getAdjNodes());
-        });
-        const V = this.graph.nodes.size;
-        for (let v = 0; v < V - 1; v++) {
-            this.graph.nodes.forEach((node) => {
-                node.getAdjNodes().forEach((edge) => {
-                    if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
-                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
-                        prev.set(edge.dest.getData(), node.getData());
-                    }
-                })
-            })
-        }
-        return [dist, prev];
     }
 
     private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>] {
@@ -178,41 +211,106 @@ export class Algorithms<T> {
         }
         return [dist, prev];
     }
-
-    randomWalk(start: T, end: T): T[] {
-        let src: T = start;
-        let path: T[] = [];
-        while (true) {
-            let node = this.graph.nodes.get(src);
-            path.push(src);
-            if (src === end) return path;
-            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
-
-        }
-    }
-    biDirectional(start :T , end :T ){
-        console.log(this.bfs(start, end)[1]);
-        console.log(this.bfs(end, start)[1]);
-    }
 }
 
-const graph = new Graph<number>((a, b): number => {
-    return a === b ? 0 : a < b ? -1 : 1;
-});
+const
+    graph = new Graph<number>((a, b): number => {
+        return a === b ? 0 : a < b ? -1 : 1;
+    });
 
-graph.addNode(1);
-graph.addNode(2);
-graph.addNode(3);
-graph.addNode(4);
-graph.addNode(5);
-graph.addNode(6);
-graph.addEdge(1, 2, 2);
-graph.addEdge(1, 3, 3);
-graph.addEdge(2, 4, 7);
-graph.addEdge(3, 2, 1);
-graph.addEdge(3, 5, 3);
-graph.addEdge(4, 6, 1);
-graph.addEdge(5, 4, 2);
-graph.addEdge(5, 6, 5);
-const algo = new Algorithms<number>(graph);
-algo.biDirectional(1, 6)
+graph
+    .addNode(
+        1
+    );
+graph
+    .addNode(
+        2
+    );
+graph
+    .addNode(
+        3
+    );
+graph
+    .addNode(
+        4
+    );
+graph
+    .addNode(
+        5
+    );
+graph
+    .addNode(
+        6
+    );
+graph
+    .addEdge(
+        1
+        ,
+        2
+        ,
+        2
+    );
+graph
+    .addEdge(
+        1
+        ,
+        3
+        ,
+        3
+    );
+graph
+    .addEdge(
+        2
+        ,
+        4
+        ,
+        7
+    );
+graph
+    .addEdge(
+        3
+        ,
+        2
+        ,
+        1
+    );
+graph
+    .addEdge(
+        3
+        ,
+        5
+        ,
+        3
+    );
+graph
+    .addEdge(
+        4
+        ,
+        6
+        ,
+        1
+    );
+graph
+    .addEdge(
+        5
+        ,
+        4
+        ,
+        2
+    );
+graph
+    .addEdge(
+        5
+        ,
+        6
+        ,
+        5
+    );
+const
+    algo = new Algorithms<number>(graph);
+algo
+    .biDirectional(
+        1
+        ,
+        6
+    )

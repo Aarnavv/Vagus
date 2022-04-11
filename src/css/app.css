@@ -26,5 +26,5 @@
 
 .left-cmd {
   width: 30vw;
-  border-right: 0.75px solid #434B57;
+  border-right: 0.75px solid var(--cmd-border);
 }

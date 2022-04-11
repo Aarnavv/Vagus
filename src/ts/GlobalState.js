@@ -1,4 +1,5 @@
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import Graph from "./Graph";
 let currentAddableNode = NodeType.normal;
 let currentAlgorithm = AlgoType.aStarSearch;
 let currentMaze = MazeType.none;
@@ -23,4 +24,7 @@ const YELLOW = "#E5C07B";
 const FILE_BG = "#21252B";
 const FILE_BG_SELECTED = "#4b4e5578";
 const FILE_BORDER = "#67bbff";
-export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW, FILE_BG, FILE_BG_SELECTED, FILE_BORDER, };
+const GRAPH = new Graph((a, b) => {
+    return a === b ? 0 : a < b ? -1 : 1;
+});
+export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW, FILE_BG, FILE_BG_SELECTED, FILE_BORDER, GRAPH };
