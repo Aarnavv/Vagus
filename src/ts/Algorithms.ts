@@ -213,8 +213,7 @@ export class Algorithms<T> {
   }
 }
 
-const
-  graph = new Graph<number>((a, b): number => {
+const graph = new Graph<number>((a, b): number => {
     return a === b ? 0 : a < b ? -1 : 1;
   });
 
