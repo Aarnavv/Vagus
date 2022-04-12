@@ -40,9 +40,10 @@ export default class HexBoard extends React.Component {
         // yVar = -12;
         for (let i = 0; i < rows; i++) {
           content.push(<Hex x={xVar} y={yVar} id={idVar.toString()} key={idVar.toString()} />)
-          GRAPH.addNode(idVar++);
           yVar += HEX_HEIGHT;
           // yVar += 23.5;
+          GRAPH.addNode(idVar);
+          idVar++;
         }
       }
       else {
@@ -50,17 +51,17 @@ export default class HexBoard extends React.Component {
         yVar = -2.5;
         for (let i = 0; i < rows; i++) {
           content.push(<Hex x={xVar} y={yVar} id={idVar.toString()} key={idVar.toString()} />)
-          GRAPH.addNode(idVar++);
           yVar += HEX_HEIGHT;
           // yVar += 23.5;
+          GRAPH.addNode(idVar);
+          idVar++;
         }
       }
       // xVar += 21;
       xVar += HEX_WIDTH;
     }
     let columnID = 0;
-    // console.log(cols)
-    // console.log(rows)
+
     for (let i = 0; i < idVar; i++) {
       // first row conditions
       if (i % rows === 0) {
