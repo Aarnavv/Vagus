@@ -1,7 +1,7 @@
-import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import { MazeType, SpeedType } from "./Types";
 import Graph from "./Graph";
-let currentAddableNode = NodeType.normal;
-let currentAlgorithm = AlgoType.aStarSearch;
+let currentAddableNode = null;
+let currentAlgorithm = null;
 let currentMaze = MazeType.none;
 let currentSpeed = SpeedType.percent100;
 function changeAddableNode(toThis) {

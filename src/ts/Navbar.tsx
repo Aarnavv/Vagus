@@ -31,7 +31,7 @@ export default class Navbar extends React.Component {
                   <FolderComponent colorOfFolder={LIGHT_RED} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
                     <div className="folder-drop-inner">
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="djikstrasSearch.tsx" divID="tsx-2" />
+                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="dijkstrasSearch.tsx" divID="tsx-2" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bellmanFord.tsx" divID="tsx-3" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-4" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-5" />

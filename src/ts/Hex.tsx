@@ -1,7 +1,6 @@
 import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
-import {GRAPH} from "./GlobalState";
 
 type props = {
   x: number,

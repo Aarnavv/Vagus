@@ -30,6 +30,7 @@ export default class Node<T> {
     return this.yCoord;
   }
 
+  //@ts-ignore
   coordinates(): [x: number, y: number | string] {
     return [this.xCoord, this.yCoord];
   }
@@ -41,7 +42,7 @@ export default class Node<T> {
     this.data = data;
     this.comparator = comparator;
     this.adjNodes = [];
-    this.adjNodes.push(new Edge(this, 0));
+    this.adjNodes.push( new Edge ( this , 0));
     this.setX(x);
     this.setY(y);
   }
@@ -55,8 +56,10 @@ export default class Node<T> {
   }
 
   addAdjNode(node: Node<T>, cost: number): void {
-    if (this.adjNodes.every((edge) => { return edge.dest.getData() !== node.getData(); }))
-      this.adjNodes.push(new Edge(node, cost));
+    if(this.adjNodes.every((edge)=>{
+      return edge.dest.getData()!==node.getData();
+    })) this.adjNodes.push(new Edge(node, cost));
+    return;
   }
 
   rmAdjNode(data: T): Node<T> | null {

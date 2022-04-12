@@ -1,9 +1,9 @@
 import React from 'react';
 import '../css/navbar.css';
-import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
-import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
-import { FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState";
-const setColor = (divClass, id, text) => {
+import { BATIcon, BOMBNode, ENDNode, IOIcon, MDIcon, SHORTESTPATHNode, STARTNode, SYSIcon, TSXIcon, UNVISITEDNode, VISITEDNode, WALLNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
+import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed, FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState";
+import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+const updateState = (divClass, id, text) => {
     const files = document.querySelectorAll(divClass);
     for (let i = 0; i < files.length; i++) {
         const ele = files[i];
@@ -13,40 +13,40 @@ const setColor = (divClass, id, text) => {
     document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
     document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
     const ext = text.substring(text.lastIndexOf(".") + 1);
-    text = text.substring(0, text.lastIndexOf("."));
-    console.log(text);
     switch (ext) {
         case "tsx":
-            changeAlgorithm(text);
+            changeAlgorithm(AlgoType[text]);
             break;
         case "io":
-            changeAddableNode(text);
+            changeAddableNode(NodeType[text]);
             break;
         case "bat":
-            changeMaze(text);
+            changeMaze(MazeType[text]);
             break;
         case "sys":
-            changeSpeed(text);
+            changeSpeed(parseInt(SpeedType[`percent${text.substring(0, text.indexOf('p'))}`]));
             break;
+        default:
+            return;
     }
 };
 export function TSXFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => setColor('.tsx-file', props.divID, props.text) },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.tsx-file', props.divID, props.text) },
         React.createElement(TSXIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
 export function IOFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => setColor('.io-file', props.divID, props.text) },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.io-file', props.divID, props.text) },
         React.createElement(IOIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
 export function BATFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => setColor('.bat-file', props.divID, props.text) },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.bat-file', props.divID, props.text) },
         React.createElement(BATIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
 export function SYSFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => setColor('.sys-file', props.divID, props.text) },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.sys-file', props.divID, props.text) },
         React.createElement(SYSIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }

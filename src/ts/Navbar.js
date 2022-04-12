@@ -26,7 +26,7 @@ export default class Navbar extends React.Component {
                                 React.createElement(FolderComponent, { colorOfFolder: LIGHT_RED, text: "algorithms", divClassName: "folder advanced-cp-comp", arrowID: "algorithms-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "aStarSearch.tsx", divID: "tsx-1" }),
-                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "djikstrasSearch.tsx", divID: "tsx-2" }),
+                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "dijkstrasSearch.tsx", divID: "tsx-2" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "bellmanFord.tsx", divID: "tsx-3" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "breadthFirstSearch.tsx", divID: "tsx-4" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "depthFirstSearch.tsx", divID: "tsx-5" }),

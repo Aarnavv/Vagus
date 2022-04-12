@@ -1,15 +1,12 @@
 export enum NodeType {
-  normal = 'reg-node',
-  path = 'path-node',
-  bomb = 'bomb-node',
-  visited = 'visited-node',
-  weight = 'weight-node',
-  wall = 'wall-node'
+  bombNode = 'bomb-node',
+  weightNode = 'weight-node',
+  wallNode = 'wall-node'
 }
 
 export enum AlgoType {
-  djikstrasSearch = 'dijktras-algo',//this will be djikstras-algo
-  aStarSearch = 'aStar-algo',
+  dijkstrasSearch = "dijkstras-algo",//this will be djikstras-algo
+  aStarSearch = 'a*-algo',
   bellmanFord = 'bellmanFord-algo',
   breadthFirstSearch = 'bfs-algo',
   depthFirstSearch = 'dfs-algo',

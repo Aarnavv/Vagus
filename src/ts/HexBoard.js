@@ -48,7 +48,7 @@ export default class HexBoard extends React.Component {
             // xVar += 21;
             xVar += HEX_WIDTH;
         }
-        var columnID = 0;
+        let columnID = 0;
         for (let i = 0; i < idVar; i++) {
             // first row conditions
             if (i % rows === 0) {
@@ -58,7 +58,7 @@ export default class HexBoard extends React.Component {
                     GRAPH.addEdge(i, i + rows, 1);
                 }
                 else if (columnID === cols - 1) {
-                    if (cols % 2 == 0) { // adj 3
+                    if (cols % 2 === 0) { // adj 3
                         GRAPH.addEdge(i, i + 1, 1);
                         GRAPH.addEdge(i, i - rows, 1);
                         GRAPH.addEdge(i, i - rows + 1, 1);
@@ -90,7 +90,7 @@ export default class HexBoard extends React.Component {
                     GRAPH.addEdge(i, i + rows - 1, 1);
                 }
                 else if (columnID === cols) {
-                    if (cols % 2 == 0) { // adj 2
+                    if (cols % 2 === 0) { // adj 2
                         GRAPH.addEdge(i, i - 1, 1);
                         GRAPH.addEdge(i, i - rows, 1);
                     }

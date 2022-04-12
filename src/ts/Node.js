@@ -26,6 +26,7 @@ export default class Node {
     y() {
         return this.yCoord;
     }
+    //@ts-ignore
     coordinates() {
         return [this.xCoord, this.yCoord];
     }
@@ -45,8 +46,11 @@ export default class Node {
         return this.adjNodes;
     }
     addAdjNode(node, cost) {
-        if (this.adjNodes.every((edge) => { return edge.dest.getData() !== node.getData(); }))
+        if (this.adjNodes.every((edge) => {
+            return edge.dest.getData() !== node.getData();
+        }))
             this.adjNodes.push(new Edge(node, cost));
+        return;
     }
     rmAdjNode(data) {
         const index = this.adjNodes.findIndex((node) => this.comparator(node.dest.data, data) === 0);

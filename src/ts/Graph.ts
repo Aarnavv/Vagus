@@ -16,14 +16,6 @@ export default class Graph<T> {
     this.nodes.get(data).setCoords(x, y);
   }
 
-  numberOfNodes(): number {
-    return this.nodes.size;
-  }
-
-  nodesPresent(): Map<T, Node<T>> {
-    return this.nodes;
-  }
-
   nodeExists(data: T): boolean {
     return this.nodes.get(data) !== undefined;
   }
