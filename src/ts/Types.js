@@ -1,16 +1,13 @@
 export var NodeType;
 (function (NodeType) {
-    NodeType["normal"] = "reg-node";
-    NodeType["path"] = "path-node";
-    NodeType["bomb"] = "bomb-node";
-    NodeType["visited"] = "visited-node";
-    NodeType["weight"] = "weight-node";
-    NodeType["wall"] = "wall-node";
+    NodeType["bombNode"] = "bomb-node";
+    NodeType["weightNode"] = "weight-node";
+    NodeType["wallNode"] = "wall-node";
 })(NodeType || (NodeType = {}));
 export var AlgoType;
 (function (AlgoType) {
-    AlgoType["djikstrasSearch"] = "dijktras-algo";
-    AlgoType["aStarSearch"] = "aStar-algo";
+    AlgoType["dijkstrasSearch"] = "dijkstras-algo";
+    AlgoType["aStarSearch"] = "a*-algo";
     AlgoType["bellmanFord"] = "bellmanFord-algo";
     AlgoType["breadthFirstSearch"] = "bfs-algo";
     AlgoType["depthFirstSearch"] = "dfs-algo";

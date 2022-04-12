@@ -12,12 +12,6 @@ export default class Graph {
     setNodeCoords(data, { x, y }) {
         this.nodes.get(data).setCoords(x, y);
     }
-    numberOfNodes() {
-        return this.nodes.size;
-    }
-    nodesPresent() {
-        return this.nodes;
-    }
     nodeExists(data) {
         return this.nodes.get(data) !== undefined;
     }

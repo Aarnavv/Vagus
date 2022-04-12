@@ -1,7 +1,6 @@
 import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
-import { GRAPH } from "./GlobalState";
 export default class Hex extends React.Component {
     styles = {
         hexagon: {
@@ -30,7 +29,7 @@ export default class Hex extends React.Component {
     //   );
     // }
     render() {
-        return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon, onClick: () => console.log(GRAPH) },
+        return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon },
             React.createElement(HexIcon, { width: 34, height: 34 })));
     }
 }

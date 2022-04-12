@@ -1,10 +1,32 @@
 import React from 'react';
 import '../css/navbar.css';
-import { TSXIcon, IOIcon, BATIcon, SYSIcon, MDIcon, BOMBNode, SHORTESTPATHNode, VISITEDNode, WALLNode, UNVISITEDNode, STARTNode, ENDNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
-import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed } from "./GlobalState";
-import { FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState"
+import {
+    BATIcon,
+    BOMBNode,
+    ENDNode,
+    IOIcon,
+    MDIcon,
+    SHORTESTPATHNode,
+    STARTNode,
+    SYSIcon,
+    TSXIcon,
+    UNVISITEDNode,
+    VISITEDNode,
+    WALLNode,
+    WEIGHTNode
+} from "../svgIcons/fileSVGIconComponent";
+import {
+    changeAddableNode,
+    changeAlgorithm,
+    changeMaze,
+    changeSpeed,
+    FILE_BG,
+    FILE_BG_SELECTED,
+    FILE_BORDER
+} from "./GlobalState";
+import {AlgoType, MazeType, NodeType, SpeedType} from "./Types";
 
-const setColor = (divClass: string, id: string, text) => {
+const updateState = (divClass: string, id: string, text : string) : void => {
   const files = document.querySelectorAll(divClass);
   for (let i = 0; i < files.length; i++) {
     const ele = files[i] as HTMLElement;
@@ -13,21 +35,28 @@ const setColor = (divClass: string, id: string, text) => {
   }
   document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
   document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
-
   const ext: string = text.substring(text.lastIndexOf(".") + 1);
-  text = text.substring(0, text.lastIndexOf("."));
-  console.log(text);
   switch (ext) {
-    case "tsx": changeAlgorithm(text); break;
-    case "io": changeAddableNode(text); break;
-    case "bat": changeMaze(text); break;
-    case "sys": changeSpeed(text); break;
+      case "tsx":
+          changeAlgorithm(AlgoType[text]);
+          break;
+      case "io":
+          changeAddableNode(NodeType[text]);
+          break;
+      case "bat":
+          changeMaze(MazeType[text]);
+          break;
+      case "sys":
+          changeSpeed(parseInt(SpeedType[`percent${text.substring(0, text.indexOf('p'))}`]));
+          break;
+      default :
+          return
   }
 }
 
 export function TSXFile(props: any) {
   return (
-    <div className={props.divClassName} id={props.divID} onClick={() => setColor('.tsx-file', props.divID, props.text)}>
+    <div className={props.divClassName} id={props.divID} onClick={() => updateState('.tsx-file', props.divID, props.text)}>
       <TSXIcon />
       <p className={props.pClassName}>{props.text}</p>
     </div>
@@ -36,7 +65,7 @@ export function TSXFile(props: any) {
 
 export function IOFile(props: any) {
   return (
-    <div className={props.divClassName} id={props.divID} onClick={() => setColor('.io-file', props.divID, props.text)}>
+    <div className={props.divClassName} id={props.divID} onClick={() => updateState('.io-file', props.divID, props.text)}>
       <IOIcon />
       <p className={props.pClassName}>{props.text}</p>
     </div>
@@ -45,7 +74,7 @@ export function IOFile(props: any) {
 
 export function BATFile(props: any) {
   return (
-    <div className={props.divClassName} id={props.divID} onClick={() => setColor('.bat-file', props.divID, props.text)}>
+    <div className={props.divClassName} id={props.divID} onClick={() => updateState('.bat-file', props.divID, props.text)}>
       <BATIcon />
       <p className={props.pClassName}>{props.text}</p>
     </div>
@@ -54,7 +83,7 @@ export function BATFile(props: any) {
 
 export function SYSFile(props: any) {
   return (
-    <div className={props.divClassName} id={props.divID} onClick={() => setColor('.sys-file', props.divID, props.text)}>
+    <div className={props.divClassName} id={props.divID} onClick={() => updateState('.sys-file', props.divID, props.text)}>
       <SYSIcon />
       <p className={props.pClassName}>{props.text}</p>
     </div>

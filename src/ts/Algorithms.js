@@ -197,22 +197,14 @@ export class Algorithms {
         return [dist, prev];
     }
 }
-// const graph1 = new Graph<number>((a, b): number => {
-//   return a === b ? 0 : a < b ? -1 : 1;
+// const graph = new Graph<number>((a , b)=>{
+//   return a > b ? 1 : a ===b ? 0 : -1 ;
 // });
-// graph1.addNode(1);
-// graph1.addNode(2);
-// graph1.addNode(3);
-// graph1.addNode(4);
-// graph1.addNode(5);
-// graph1.addNode(6);
-// graph1.addEdge(1, 2, 2);
-// graph1.addEdge(1, 3, 3);
-// graph1.addEdge(2, 4, 7);
-// graph1.addEdge(3, 2, 1);
-// graph1.addEdge(3, 5, 3);
-// graph1.addEdge(4, 6, 1);
-// graph1.addEdge(5, 4, 2);
-// graph1.addEdge(5, 6, 5);
-// const algo = new Algorithms<number>(graph1);
-// console.log(algo.dijkstras(1 ,6)[0]);
+// graph.addNode(0);
+// graph.addNode(1);
+// graph.addNode(26);
+// graph.addEdge(0 , 1 , 0) ;
+// graph.addEdge(0 , 26 , 0);
+// graph.addEdge(1 , 0 , 0);
+// graph.addEdge(26 , 0 , 0 );
+// graph.nodes.forEach((node)=>console.log(node.toString()));
