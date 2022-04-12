@@ -1,4 +1,6 @@
 export enum NodeType {
+  startNode = 'start-node',
+  endNode = 'end-node',
   bombNode = 'bomb-node',
   weightNode = 'weight-node',
   wallNode = 'wall-node'

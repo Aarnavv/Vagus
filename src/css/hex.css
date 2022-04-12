@@ -9,6 +9,7 @@
   height:34px;
   width:34px;
   transition: all 0.1s;
+  overflow: hidden;
 }
 
 .icon {
@@ -27,9 +28,23 @@
   top: -1px;
 }
 
+.end-node {
+  background-image: url('../svgIcons/endNode.svg');
+  top: -1px;
+}
+
+.bomb-node {
+  background-image: url('../svgIcons/bombNode.svg');
+  top: -1px;
+}
+
 .icon:hover {
   animation: icon-pulsate 0.2s 1 linear forwards;
 }
+
+/* .prop-holder:hover {
+  animation: prop-holder-pulsate 0.2s 1 linear forwards;
+} */
 
 @keyframes icon-pulsate {
   0% {
@@ -37,6 +52,15 @@
   }
   100% {
       fill: var(--hex-color-hover);
+  }
+}
+
+@keyframes prop-holder-pulsate {
+  0% {
+      background-color: var(--hex-color);
+  }
+  100% {
+      background-color: var(--hex-color-hover);
   }
 }
 

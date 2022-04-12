@@ -148,6 +148,14 @@ export default class HexBoard extends React.Component {
         GRAPH.addEdge(i, i + rows, 1);
         GRAPH.addEdge(i, i + rows + 1, 1);
       }
+      if (i == 77) {
+        setTimeout(() => {
+          document.getElementById('props-66').classList.remove('no-node');
+          document.getElementById('props-66').classList.add('start-node');
+          document.getElementById('props-366').classList.remove('no-node');
+          document.getElementById('props-366').classList.add('end-node');
+        }, 1)
+      }
     }
     return content;
   }

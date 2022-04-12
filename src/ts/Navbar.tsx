@@ -42,9 +42,11 @@ export default class Navbar extends React.Component {
                   </FolderComponent>
                   <FolderComponent colorOfFolder={BLUE} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">
                     <div className="folder-drop-inner">
-                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weightNode.io" divID="io-1" />
-                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-2" />
-                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-3" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="startNode.io" divID="io-1" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="endNode.io" divID="io-2" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weightNode.io" divID="io-3" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-4" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={GREEN} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">

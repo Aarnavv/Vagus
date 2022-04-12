@@ -1,6 +1,7 @@
 import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
+import { UpdateHexIcon } from "./HexBoardUpdate";
 
 type props = {
   x: number,
@@ -15,6 +16,15 @@ export default class Hex extends React.Component<props> {
       top: this.props.y + "px",
     } as React.CSSProperties
   }
+  render() {
+    return (
+      <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => UpdateHexIcon(`props-${this.props.id}`)}>
+        <HexIcon width={34} height={34} />
+        <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>
+      </div>
+    );
+  }
+}
 
   // hover = () => {
   //   document.getElementById("ns" + this.props.id).style.backgroundColor = '#1B8BCD';
@@ -38,12 +48,3 @@ export default class Hex extends React.Component<props> {
   //     </div>
   //   );
   // }
-  render() {
-    return (
-      <div className="hexagon" id={this.props.id} style={this.styles.hexagon} >
-        <HexIcon width={34} height={34} />
-        <div className="prop-holder" id={`props-${this.props.id}`}></div>
-      </div>
-    );
-  }
-}

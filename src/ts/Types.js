@@ -1,5 +1,7 @@
 export var NodeType;
 (function (NodeType) {
+    NodeType["startNode"] = "start-node";
+    NodeType["endNode"] = "end-node";
     NodeType["bombNode"] = "bomb-node";
     NodeType["weightNode"] = "weight-node";
     NodeType["wallNode"] = "wall-node";
