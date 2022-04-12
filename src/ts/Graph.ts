@@ -38,12 +38,11 @@ export default class Graph<T> {
 
   addNode(data: T): Node<T> {
     let node = this.nodes.get(data);
-    if (node !== undefined) return node;
-    else {
-      node = new Node(data, this.comparator);
-      this.nodes.set(data, node);
+    if (node!==undefined)
       return node;
-    }
+    node = new Node(data, this.comparator);
+    this.nodes.set(data, node);
+    return node;
   }
 
   rmNode(data: T): Node<T> | null {
