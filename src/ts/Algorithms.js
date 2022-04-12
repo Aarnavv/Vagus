@@ -10,7 +10,7 @@ export class Algorithms {
         const visited = new Map();
         const prev = new Map();
         const path = [];
-        if (this.graph.nodes.get(start) === undefined)
+        if (this.graph.nodes().get(start) === undefined)
             return [path, visited, prev];
         const Q = new PriorityQueue(() => {
             return 0;
@@ -18,7 +18,7 @@ export class Algorithms {
         Q.enqueue(start);
         visited.set(start, true);
         while (!Q.isEmpty()) {
-            let currNode = this.graph.nodes.get(Q.dequeue());
+            let currNode = this.graph.nodes().get(Q.dequeue());
             currNode.getAdjNodes().forEach((edge) => {
                 if (!visited.has(edge.dest.getData())) {
                     visited.set(edge.dest.getData(), true);
@@ -45,7 +45,7 @@ export class Algorithms {
             }
             visited.set(at, true);
             path.push(at);
-            this.graph.nodes.get(at).getAdjNodes().forEach((edge) => {
+            this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
                 internalDfs(edge.dest.getData());
             });
         };
@@ -92,13 +92,13 @@ export class Algorithms {
         let dist = new Map();
         let edgeList = new Map();
         let prev = new Map();
-        this.graph.nodes.forEach((node) => {
+        this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
             edgeList.set(node.getData(), node.getAdjNodes());
         });
-        const V = this.graph.nodes.size;
+        const V = this.graph.nodes().size;
         for (let v = 0; v < V - 1; v++) {
-            this.graph.nodes.forEach((node) => {
+            this.graph.nodes().forEach((node) => {
                 node.getAdjNodes().forEach((edge) => {
                     if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
                         dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
@@ -113,7 +113,7 @@ export class Algorithms {
         let src = start;
         let path = [];
         while (true) {
-            let node = this.graph.nodes.get(src);
+            let node = this.graph.nodes().get(src);
             path.push(src);
             if (src === end)
                 return path;
@@ -135,10 +135,10 @@ export class Algorithms {
         let dist = new Map();
         let visited = new Map();
         let prev = new Map();
-        this.graph.nodes.forEach((node) => {
+        this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
-        let finish = this.graph.nodes.get(end);
+        let finish = this.graph.nodes().get(end);
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.heuristicCost);
         PQ.enqueue({ label: start, heuristicCost: 0 });
         while (!PQ.isEmpty()) {
@@ -146,13 +146,13 @@ export class Algorithms {
             visited.set(label, true);
             if (dist.get(label) < heuristicCost)
                 continue;
-            this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
+            this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
                     //general travelCost which is used for decision to update dest.
                     let cost = dist.get(label) + edge.cost;
                     //general travelCost which is used for decision to update dest.
-                    let euclideanDist = this.graph.distBw(this.graph.nodes.get(edge.dest.getData()), finish);
+                    let euclideanDist = this.graph.distBw(this.graph.nodes().get(edge.dest.getData()), finish);
                     let heuristic = euclideanDist + cost;
                     if (cost < dist.get(dest)) {
                         prev.set(dest, label);
@@ -171,7 +171,7 @@ export class Algorithms {
         let dist = new Map();
         let visited = new Map();
         let prev = new Map();
-        this.graph.nodes.forEach((node) => {
+        this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
         PQ.enqueue({ label: start, minDist: 0 });
@@ -180,7 +180,7 @@ export class Algorithms {
             visited.set(label, true);
             if (dist.get(label) < minDist)
                 continue;
-            this.graph.nodes.get(label).getAdjNodes().forEach((edge) => {
+            this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
                     let newDist = dist.get(label) + edge.cost;

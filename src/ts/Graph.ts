@@ -2,9 +2,21 @@ import Node from "./Node";
 import { Algorithms } from "./Algorithms";
 
 export default class Graph<T> {
-  nodes: Map<T, Node<T>> = new Map();
+  /**
+   * has a Map of Nodes which are present in the graph
+   */
+  Nodes: Map<T, Node<T>> = new Map();
+  /**
+   * is a comparator for the graph
+   */
   comparator: (a: T, b: T) => number;
+  /**
+   * tries to understand if the graph is cyclic or not,
+   */
   isCyclic: boolean;
+  /**
+   *  is a boolean for if the graph is undirected or directed.
+   */
   isUndirected: boolean;
 
   constructor(comparator: (a: T, b: T) => number) {
@@ -12,16 +24,24 @@ export default class Graph<T> {
     this.isUndirected = false;
   }
 
+  nodes():Map<T , Node<T>>{
+    let nodes : Map<T , Node<T>> = new Map()
+    this.Nodes.forEach((value ,key)=>{
+      if(value.inUse()) nodes.set(key , value);
+    })
+    return nodes;
+  }
+
   setNodeCoords(data: T, { x, y }: { x: number, y: number }) {
-    this.nodes.get(data).setCoords(x, y);
+    this.nodes().get(data).setCoords(x, y);
   }
 
   nodeExists(data: T): boolean {
-    return this.nodes.get(data) !== undefined;
+    return this.nodes().get(data) !== undefined;
   }
 
   edgeExists(source: T, destination: T): boolean {
-    const src = this.nodes.get(source);
+    const src = this.nodes().get(source);
     const at: number = src.getAdjNodes().findIndex((edge) => {
       return edge.dest.getData() === destination;
     });
@@ -29,21 +49,21 @@ export default class Graph<T> {
   }
 
   addNode(data: T): Node<T> {
-    let node = this.nodes.get(data);
+    let node = this.nodes().get(data);
     if (node!==undefined)
       return node;
     node = new Node(data, this.comparator);
-    this.nodes.set(data, node);
+    this.nodes().set(data, node);
     return node;
   }
 
   rmNode(data: T): Node<T> | null {
-    const nodeToRm = this.nodes.get(data);
+    const nodeToRm = this.nodes().get(data);
     if (!nodeToRm) return null;
-    this.nodes.forEach((node) => {
+    this.nodes().forEach((node) => {
       node.rmAdjNode(nodeToRm.getData());
     })
-    this.nodes.delete(data);
+    this.nodes().delete(data);
     return nodeToRm;
   }
 
@@ -56,8 +76,8 @@ export default class Graph<T> {
 
 
   rmEdge(source: T, destination: T) {
-    const src = this.nodes.get(source);
-    const dest = this.nodes.get(destination);
+    const src = this.nodes().get(source);
+    const dest = this.nodes().get(destination);
     if (src && dest) {
       src.rmAdjNode(destination);
       if (this.isUndirected)
@@ -71,5 +91,14 @@ export default class Graph<T> {
 
   hasCycles(start: T, end: T): boolean {
     return new Algorithms(this).dfs(start, end)[0];
+  }
+
+  static revertNode<T>(data : T , _initGraph : Graph <T>, _presentGraph :Graph<T>):void{
+    let initNode:Node<T> = _initGraph.nodes().get(data);
+    _presentGraph.addNode(initNode.getData());
+    initNode.getAdjNodes().forEach((edge)=>{
+      initNode.addAdjNode(edge.dest, edge.cost);
+      edge.dest.addAdjNode(initNode , edge.cost);
+    });
   }
 }

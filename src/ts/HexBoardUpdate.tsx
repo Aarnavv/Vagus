@@ -1,5 +1,4 @@
-import { currentAddableNode, GRAPH } from './GlobalState'
-import { NodeType } from "./Types";
+import { currentAddableNode } from './GlobalState'
 import { updateState } from './fileStruct'
 
 const UpdateHexIcon = (propID: string) => {

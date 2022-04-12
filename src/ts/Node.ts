@@ -6,6 +6,11 @@ export default class Node<T> {
   private readonly adjNodes: Edge<T>[]; //adjacent nodes
   private xCoord: number = 0;
   private yCoord: number = 0;
+  private use:boolean=true;
+
+
+  setUse(inUse : boolean):void{this.use=inUse;}
+  inUse():boolean{return this.use;}
 
   setX(x: number | string): void {
     if (typeof x === "string") this.xCoord = parseFloat(x);
