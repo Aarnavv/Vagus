@@ -29,11 +29,7 @@ export default class Hex extends React.Component {
     //   );
     // }
     render() {
-<<<<<<< HEAD
         return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon },
-=======
-        return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon},
->>>>>>> e983538d5764cdf8acb6a12abc1fb22910832f19
             React.createElement(HexIcon, { width: 34, height: 34 })));
     }
 }

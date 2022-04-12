@@ -26,11 +26,9 @@ export default class Graph {
         let node = this.nodes.get(data);
         if (node !== undefined)
             return node;
-        else {
-            node = new Node(data, this.comparator);
-            this.nodes.set(data, node);
-            return node;
-        }
+        node = new Node(data, this.comparator);
+        this.nodes.set(data, node);
+        return node;
     }
     rmNode(data) {
         const nodeToRm = this.nodes.get(data);
