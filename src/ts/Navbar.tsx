@@ -5,6 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import { SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW } from "./GlobalState"
+import { PrevButtonClick } from "./ActionButtonsFunctionality";
 
 export default class Navbar extends React.Component {
   render() {
@@ -19,7 +20,7 @@ export default class Navbar extends React.Component {
           <p className="project-title">Project</p>
           <div className="buttons">
             <ActionIcons.StopButtonIcon />
-            <ActionIcons.PrevButtonIcon />
+            <ActionIcons.PrevButtonIcon onClick={() => PrevButtonClick()}/>
             <ActionIcons.RunButtonIcon />
           </div>
         </div>
@@ -44,8 +45,8 @@ export default class Navbar extends React.Component {
                     <div className="folder-drop-inner">
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="startNode.io" divID="io-1" />
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="endNode.io" divID="io-2" />
-                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weightNode.io" divID="io-3" />
-                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-4" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="bombNode.io" divID="io-3" />
+                      <IOFile divClassName="file io-file" pClassName="node-name file-name" text="weightNode.io" divID="io-4" />
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>

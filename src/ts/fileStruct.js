@@ -4,16 +4,14 @@ import { BATIcon, BOMBNode, ENDNode, IOIcon, MDIcon, SHORTESTPATHNode, STARTNode
 import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed, FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState";
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 export const updateState = (divClass, id, text) => {
-    const files = document.querySelectorAll(divClass);
+    let files = document.querySelectorAll(divClass);
     for (let i = 0; i < files.length; i++) {
         const ele = files[i];
         ele.style.backgroundColor = FILE_BG;
         ele.style.borderLeft = "";
     }
-    console.log(id);
     document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
     document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
-    console.log(id);
     let ext = text.substring(text.lastIndexOf(".") + 1);
     let textAdd = text.substring(0, text.lastIndexOf("."));
     switch (ext) {
@@ -32,7 +30,28 @@ export const updateState = (divClass, id, text) => {
         default:
             return;
     }
-    // console.log(currentAddableNode);
+    NodeAnimation(textAdd);
+};
+const NodeAnimation = (nodeType) => {
+    let files = document.querySelectorAll('.node-hover');
+    for (let i = 0; i < files.length; i++) {
+        const ele = files[i];
+        ele.classList.remove('node-hover');
+    }
+    switch (nodeType) {
+        case 'startNode':
+            document.querySelector('.start-node').classList.add('node-hover');
+            break;
+        case 'endNode':
+            document.querySelector('.end-node').classList.add('node-hover');
+            break;
+        case 'bombNode':
+            if (document.querySelector('.bomb-node'))
+                document.querySelector('.bomb-node').classList.add('node-hover');
+            break;
+        default:
+            break;
+    }
 };
 export function TSXFile(props) {
     return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.tsx-file', props.divID, props.text) },

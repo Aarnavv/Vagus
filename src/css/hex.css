@@ -25,29 +25,33 @@
 
 .start-node {
   background-image: url('../svgIcons/startNode.svg');
-  top: -1px;
-}
-
-.start-node:hover {
-  animation: node-pulsate 1s infinite linear;
+  top: 0px; 
+  /* DO NOT REMOVE THE ABOVE LINE */
 }
 
 .end-node {
   background-image: url('../svgIcons/endNode.svg');
-  top: -1px;
-}
-
-.end-node:hover {
-  animation: node-pulsate 1s infinite linear;
+  top: 0px;
+  /* DO NOT REMOVE THE ABOVE LINE */
 }
 
 .bomb-node {
   background-image: url('../svgIcons/bombNode.svg');
-  top: -1px;
+  top: 0px;
+  left: 1px;
 }
 
+.weight-node {
+  background-image: url('../svgIcons/weightNode.svg');
+  top: 0px;
+  left: 1px;
+}
 .icon:hover {
   animation: icon-pulsate 0.2s 1 linear forwards;
+}
+
+.node-hover {
+  animation: node-pulsate 1s infinite linear;
 }
 
 @keyframes icon-pulsate {
