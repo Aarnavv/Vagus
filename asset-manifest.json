@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/Vagus/static/css/main.48bdfcf2.css",
-    "main.js": "/Vagus/static/js/main.fc0dbc64.js",
+    "main.css": "/Vagus/static/css/main.abdd7efc.css",
+    "main.js": "/Vagus/static/js/main.5aa03600.js",
     "static/media/bombNode.svg": "/Vagus/static/media/bombNode.ac952050b3044fce91ff.svg",
     "static/media/weightNode.svg": "/Vagus/static/media/weightNode.e6f6fd1b79c92c283027.svg",
     "index.html": "/Vagus/index.html",
     "static/media/startNode.svg": "/Vagus/static/media/startNode.bbf4c4cec6ebd659b8c1.svg",
     "static/media/endNode.svg": "/Vagus/static/media/endNode.45a1e50024e4e7fa58a8.svg",
-    "main.48bdfcf2.css.map": "/Vagus/static/css/main.48bdfcf2.css.map",
-    "main.fc0dbc64.js.map": "/Vagus/static/js/main.fc0dbc64.js.map"
+    "main.abdd7efc.css.map": "/Vagus/static/css/main.abdd7efc.css.map",
+    "main.5aa03600.js.map": "/Vagus/static/js/main.5aa03600.js.map"
   },
   "entrypoints": [
-    "static/css/main.48bdfcf2.css",
-    "static/js/main.fc0dbc64.js"
+    "static/css/main.abdd7efc.css",
+    "static/js/main.5aa03600.js"
   ]
 }
