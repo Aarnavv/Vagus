@@ -4,6 +4,9 @@ export default class Node {
     adjNodes; //adjacent nodes
     xCoord = 0;
     yCoord = 0;
+    use = true;
+    setUse(inUse) { this.use = inUse; }
+    inUse() { return this.use; }
     setX(x) {
         if (typeof x === "string")
             this.xCoord = parseFloat(x);
