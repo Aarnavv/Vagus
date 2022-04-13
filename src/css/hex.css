@@ -28,9 +28,17 @@
   top: -1px;
 }
 
+.start-node:hover {
+  animation: node-pulsate 1s infinite linear;
+}
+
 .end-node {
   background-image: url('../svgIcons/endNode.svg');
   top: -1px;
+}
+
+.end-node:hover {
+  animation: node-pulsate 1s infinite linear;
 }
 
 .bomb-node {
@@ -42,10 +50,6 @@
   animation: icon-pulsate 0.2s 1 linear forwards;
 }
 
-/* .prop-holder:hover {
-  animation: prop-holder-pulsate 0.2s 1 linear forwards;
-} */
-
 @keyframes icon-pulsate {
   0% {
       fill: var(--hex-color);
@@ -55,12 +59,15 @@
   }
 }
 
-@keyframes prop-holder-pulsate {
+@keyframes node-pulsate {
   0% {
-      background-color: var(--hex-color);
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
   }
   100% {
-      background-color: var(--hex-color-hover);
+    transform: scale(1);
   }
 }
 
