@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Vagus/static/css/main.c5afc168.css",
-    "main.js": "/Vagus/static/js/main.4db356dc.js",
+    "main.css": "/Vagus/static/css/main.27ee1261.css",
+    "main.js": "/Vagus/static/js/main.64de3742.js",
     "static/media/bombNode.svg": "/Vagus/static/media/bombNode.ac952050b3044fce91ff.svg",
     "static/media/startNode.svg": "/Vagus/static/media/startNode.bc3bc5d6435877b10a54.svg",
     "index.html": "/Vagus/index.html",
     "static/media/endNode.svg": "/Vagus/static/media/endNode.45a1e50024e4e7fa58a8.svg",
-    "main.c5afc168.css.map": "/Vagus/static/css/main.c5afc168.css.map",
-    "main.4db356dc.js.map": "/Vagus/static/js/main.4db356dc.js.map"
+    "main.27ee1261.css.map": "/Vagus/static/css/main.27ee1261.css.map",
+    "main.64de3742.js.map": "/Vagus/static/js/main.64de3742.js.map"
   },
   "entrypoints": [
-    "static/css/main.c5afc168.css",
-    "static/js/main.4db356dc.js"
+    "static/css/main.27ee1261.css",
+    "static/js/main.64de3742.js"
   ]
 }
