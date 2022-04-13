@@ -157,6 +157,7 @@ export default class HexBoard extends React.Component {
         }, 1)
       }
     }
+    console.log(GRAPH);
     return content;
   }
 }

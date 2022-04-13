@@ -1,4 +1,10 @@
 import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
+/**
+ * @class
+ * *dijkstras [Single Source Shortest Path] algorithm, it can find the shortest as well as least cost route from one place to another place say [startNode-endNode]
+ * *aStar [Single Source Shortest Path] heuristic algorithm, it can find the shortest path with least cost route from one node [start] to another node [end]
+ * @constructor constructor()
+ */
 export class Algorithms {
     graph;
     comparator;
@@ -197,14 +203,3 @@ export class Algorithms {
         return [dist, prev];
     }
 }
-// const graph = new Graph<number>((a , b)=>{
-//   return a > b ? 1 : a ===b ? 0 : -1 ;
-// });
-// graph.addNode(0);
-// graph.addNode(1);
-// graph.addNode(26);
-// graph.addEdge(0 , 1 , 0) ;
-// graph.addEdge(0 , 26 , 0);
-// graph.addEdge(1 , 0 , 0);
-// graph.addEdge(26 , 0 , 0 );
-// graph.nodes.forEach((node)=>console.log(node.toString()));
