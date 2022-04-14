@@ -15,7 +15,8 @@ const UpdateHexIcon = (propID: string) => {
       NodeHoverAnimation(propID);
       break;
     case 'bomb-node':
-      if (document.getElementById(propID).classList.contains('bomb-node')) removeOnClick(propID, 'bomb-node');
+      if (document.getElementById(propID).classList.contains('bomb-node'))
+        removeOnClick(propID, 'bomb-node');
       else updateNode(propID, 'bomb-node');
       NodeHoverAnimation(propID);
       break;

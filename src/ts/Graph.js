@@ -133,4 +133,10 @@ export default class Graph {
             }
         });
     }
+    updateCostOfIncoming(data, cost) {
+        let node = this.nodes().get(data);
+        if (node === undefined)
+            return;
+        node.getAdjNodes().forEach((edge) => edge.dest.updateCostTo(node, cost));
+    }
 }

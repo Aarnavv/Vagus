@@ -2,7 +2,8 @@ import {AlgoType, MazeType, NodeType, SpeedType} from "./Types";
 import Graph from "./Graph";
 
 class State<T> {
-  private GRAPH: Graph<T>;
+  private PRES_GRAPH: Graph<T>;
+  private INIT_GRAPH: Graph<T>;
   private AddableNode: NodeType;
   private Algorithm: AlgoType;
   private Maze: MazeType;
@@ -19,10 +20,12 @@ class State<T> {
     this.StartNode = _start;
     this.EndNode = _end;
     this.BombNode = null;
-    this.GRAPH=_graph;
+    this.INIT_GRAPH=_graph;
+    this.PRES_GRAPH=_graph;
   }
 
-  graph():Graph<T> {return this.GRAPH;}
+  graph():Graph<T> {return this.PRES_GRAPH;}
+  initGraph():Graph<T>{return this.INIT_GRAPH;}
   addableNode():NodeType{return this.AddableNode;}
   algorithm(): AlgoType{return this.Algorithm;}
   maze() :MazeType {return this.Maze;}
@@ -56,7 +59,11 @@ class State<T> {
     this.BombNode = toThis;
   }
   changeGraph(toThis : Graph<T>){
-    this.GRAPH=toThis;
+    this.PRES_GRAPH=toThis;
+  }
+  changeInitGraph(toThis : Graph<T> , freeze : boolean) {
+    this.INIT_GRAPH=toThis;
+    if(freeze) this.INIT_GRAPH.freeze();
   }
 }
 

@@ -62,6 +62,18 @@ export default class Node<T> {
     return;
   }
 
+  updateCostTo(node : Node<T> , cost : number): boolean{
+    let edgeToUpdate = this.adjNodes.find((edge)=>{
+      if(edge.dest.getData() === node.getData())
+        return edge;
+      //added this later.
+      else return undefined;
+    });
+    if(edgeToUpdate===undefined ) return false ;
+    edgeToUpdate.cost = cost;
+    return true;
+  }
+
   rmAdjNode(data: T): Node<T> | null {
     const index = this.adjNodes.findIndex((node) => this.comparator(node.dest.data, data) === 0);
     if (index > -1) {
