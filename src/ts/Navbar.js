@@ -5,7 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { PrevButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick } from "./ActionButtonsFunctionality";
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -16,8 +16,8 @@ export default class Navbar extends React.Component {
                 React.createElement(ProjectIcon, null),
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
-                    React.createElement(ActionIcons.StopButtonIcon, null),
-                    React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => PrevButtonClick() }),
+                    React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
+                    React.createElement(ActionIcons.PrevButtonIcon, null),
                     React.createElement(ActionIcons.RunButtonIcon, null))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },

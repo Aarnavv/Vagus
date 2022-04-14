@@ -1,14 +1,14 @@
-import {SetInitialNodes} from "./HexBoardUpdate";
+import { SetInitialNodes } from "./HexBoardUpdate";
 
-const PrevButtonClick = () => {
-  document.getElementById('prev-button').classList.add('button-clicked');
+const StopButtonClick = () => {
+  document.getElementById('stop-button').classList.add('button-clicked');
   RemoveAllNodes('start-node');
   RemoveAllNodes('end-node');
   RemoveAllNodes('bomb-node');
   RemoveAllNodes('weight-node');
   SetInitialNodes();
   setTimeout(() => {
-    document.getElementById('prev-button').classList.remove('button-clicked');
+    document.getElementById('stop-button').classList.remove('button-clicked');
   }, 200);
 }
 
@@ -22,5 +22,5 @@ const RemoveAllNodes = (node) => {
 }
 
 export {
-  PrevButtonClick
+  StopButtonClick
 }

@@ -1,4 +1,4 @@
-import  currentState  from './GlobalState'
+import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoard from "./HexBoard";
 
@@ -32,34 +32,25 @@ const UpdateHexIcon = (propID: string) => {
 }
 
 const WeightNodeUpdate = (propID: string, node: string) => {
-  let cmdWidth = document.querySelector<HTMLElement>('.navbar').clientWidth;
-  let hexboardHeight = document.querySelector<HTMLElement>('.hex-board').clientHeight;
-  let hexWidth = 33.01;
-  let hexHeight = 29.69;
-  let hexRows = hexboardHeight / hexHeight;
-  console.log(HexBoard.rows)
-  let hexRow, hexCol, hexNo;
   if (document.getElementById(propID).classList.contains('no-node')) {
+    document.getElementById(propID).classList.remove('no-node');
+    document.getElementById(propID).classList.add(node);
     document.onmousemove = (event) => {
       if (event.buttons === 1) {
-        // document.getElementById(this).classList.remove('no-node');
-        // document.getElementById(this).classList.add(node);
-        let cursorX;
-        let cursorY;
         document.onmousemove = function (e) {
-          cursorX = e.pageX - cmdWidth;
-          cursorY = e.pageY;
-          hexRow = Math.floor(cursorY / hexRows);
-          hexCol = Math.floor(cursorX / hexWidth);
-          hexNo = (hexCol * HexBoard.rows) + hexRow;
-          // console.log(cursorX, cursorY);
-          // console.log(hexRow, hexCol);
-          console.log(hexNo);
+          let path = e.target as HTMLElement;
+          if (path.id != "") {
+            let hexNo = path.id.substring(path.id.lastIndexOf('-') + 1);
+            let HexID = `props-${hexNo}`;
+            if (document.getElementById(HexID).classList.contains('no-node')) {
+              document.getElementById(HexID).classList.remove('no-node');
+              document.getElementById(HexID).classList.add(node);
+              NodeHoverAnimation(HexID);
+            }
+          }
         }
       }
     }
-    document.getElementById(propID).classList.remove('no-node');
-    document.getElementById(propID).classList.add(node);
   }
 }
 
@@ -106,7 +97,7 @@ const NodeHoverAnimation = (propID: string) => {
   }
 }
 
-const SetInitialNodes = () : void => {
+const SetInitialNodes = (): void => {
   for (let i = 0; i < HexBoard.idVar; i++) {
     if (i === (HexBoard.rows * 3)) {
       setTimeout(() => {

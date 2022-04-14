@@ -21,9 +21,9 @@ export default class Hex extends React.Component<props> {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {
         UpdateHexIcon(`props-${this.props.id}`);
-        console.log(currentState);
+        // console.log(currentState);
       }}>
-        <HexIcon width={34} height={34} />
+        <HexIcon id={`path-${this.props.id}`}/>
         <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>
       </div>
     );
