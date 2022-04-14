@@ -20,8 +20,8 @@ export default class Hex extends React.Component<props> {
   render() {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {
-        UpdateHexIcon(`props-${this.props.id}`);
-        // console.log(currentState);
+        UpdateHexIcon(`props-${this.props.id}` , parseInt(this.props.id));
+        console.log(currentState);
       }}>
         <HexIcon idSVG={`svg-${this.props.id}`}/>
         <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>

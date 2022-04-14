@@ -55,7 +55,7 @@ class State<T> {
   changeEndNode(toThis :T ){
     this.EndNode=toThis;
   }
-  changeBombNode(toThis : T ){
+  changeBombNode(toThis : T | null){
     this.BombNode = toThis;
   }
   changeGraph(toThis : Graph<T>){

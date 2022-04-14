@@ -1,7 +1,7 @@
 import currentState from './GlobalState';
 import { updateState } from './fileStruct';
 import HexBoard from "./HexBoard";
-const UpdateHexIcon = (propID) => {
+const UpdateHexIcon = (propID, id) => {
     document.onmousemove = null;
     document.onmousedown = null;
     updateStateOnClick(propID);
@@ -9,17 +9,23 @@ const UpdateHexIcon = (propID) => {
         case 'start-node':
             updateNode(propID, 'start-node');
             NodeHoverAnimation(propID);
+            currentState.changeStartNode(id);
             break;
         case 'end-node':
             updateNode(propID, 'end-node');
             NodeHoverAnimation(propID);
+            currentState.changeEndNode(id);
             break;
         case 'bomb-node':
             NodeHoverAnimation(propID);
-            if (document.getElementById(propID).classList.contains('bomb-node'))
+            if (document.getElementById(propID).classList.contains('bomb-node')) {
                 removeOnClick(propID, 'bomb-node');
-            else
+                currentState.changeBombNode(null);
+            }
+            else {
                 updateNode(propID, 'bomb-node');
+                currentState.changeBombNode(id);
+            }
             break;
         case 'weight-node':
             NodeHoverAnimation(propID);
@@ -122,7 +128,9 @@ const SetInitialNodes = () => {
             setTimeout(() => {
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.remove('no-node');
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.add('start-node');
+                currentState.changeStartNode(Math.floor((HexBoard.rows * HexBoard.cols) * 0.25));
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.75)}`).classList.add('end-node');
+                currentState.changeEndNode(Math.floor((HexBoard.rows * HexBoard.cols) * 0.75));
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.75)}`).classList.remove('no-node');
             }, 1);
         }
