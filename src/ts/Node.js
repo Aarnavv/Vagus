@@ -52,6 +52,19 @@ export default class Node {
             this.adjNodes.push(new Edge(node, cost));
         return;
     }
+    updateCostTo(node, cost) {
+        let edgeToUpdate = this.adjNodes.find((edge) => {
+            if (edge.dest.getData() === node.getData())
+                return edge;
+            //added this later.
+            else
+                return undefined;
+        });
+        if (edgeToUpdate === undefined)
+            return false;
+        edgeToUpdate.cost = cost;
+        return true;
+    }
     rmAdjNode(data) {
         const index = this.adjNodes.findIndex((node) => this.comparator(node.dest.data, data) === 0);
         if (index > -1) {

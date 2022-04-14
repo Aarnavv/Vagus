@@ -1,7 +1,8 @@
 import { MazeType, SpeedType } from "./Types";
 import Graph from "./Graph";
 class State {
-    GRAPH;
+    PRES_GRAPH;
+    INIT_GRAPH;
     AddableNode;
     Algorithm;
     Maze;
@@ -17,9 +18,11 @@ class State {
         this.StartNode = _start;
         this.EndNode = _end;
         this.BombNode = null;
-        this.GRAPH = _graph;
+        this.INIT_GRAPH = _graph;
+        this.PRES_GRAPH = _graph;
     }
-    graph() { return this.GRAPH; }
+    graph() { return this.PRES_GRAPH; }
+    initGraph() { return this.INIT_GRAPH; }
     addableNode() { return this.AddableNode; }
     algorithm() { return this.Algorithm; }
     maze() { return this.Maze; }
@@ -49,7 +52,12 @@ class State {
         this.BombNode = toThis;
     }
     changeGraph(toThis) {
-        this.GRAPH = toThis;
+        this.PRES_GRAPH = toThis;
+    }
+    changeInitGraph(toThis, freeze) {
+        this.INIT_GRAPH = toThis;
+        if (freeze)
+            this.INIT_GRAPH.freeze();
     }
 }
 let currentState = new State();

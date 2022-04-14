@@ -22,7 +22,7 @@ const StopButtonClick = () => {
  * @param node The class of the node type that has to be removed from the board.
  * @return void
  */
-const RemoveAllNodes = (node) => {
+const RemoveAllNodes = (node: string) => {
   let nodes = document.querySelectorAll(`.${node}`);
   for (let i = 0; i < nodes.length; i++) {
     const ele = nodes[i] as HTMLElement;
