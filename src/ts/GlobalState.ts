@@ -1,58 +1,68 @@
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 import Graph from "./Graph";
 
-let currentAddableNode: NodeType = null;
-let currentAlgorithm: AlgoType = null;
-let currentMaze: MazeType = MazeType.none;
-let currentSpeed: SpeedType = SpeedType.percent100;
+class State<T> {
+  private GRAPH: Graph<T>;
+  private AddableNode: NodeType;
+  private Algorithm: AlgoType;
+  private Maze: MazeType;
+  private Speed: SpeedType;
+  private StartNode: T;
+  private EndNode: T;
+  private BombNode: T;
 
-function changeAddableNode(toThis: NodeType) {
-  currentAddableNode = toThis;
+  constructor(_start:T =null , _end : T= null , _graph : Graph<T> = null) {
+    this.AddableNode=null;
+    this.Algorithm= null;
+    this.Maze = MazeType.none;
+    this.Speed= SpeedType.percent100;
+    this.StartNode = _start;
+    this.EndNode = _end;
+    this.BombNode = null;
+    this.GRAPH=_graph;
+  }
+
+  graph():Graph<T> {return this.GRAPH;}
+  addableNode():NodeType{return this.AddableNode;}
+  algorithm(): AlgoType{return this.Algorithm;}
+  maze() :MazeType {return this.Maze;}
+  speed(): SpeedType {return this.Speed;}
+  startNode () : T {return this.StartNode;}
+  endNode () : T {return this.EndNode;}
+  bombNode() :T {return this.BombNode;}
+
+  changeAddableNode(toThis: NodeType) {
+    this.AddableNode = toThis;
+  }
+
+  changeAlgorithm(toThis : AlgoType) {
+    this.Algorithm = toThis;
+  }
+
+  changeMaze(toThis: MazeType) {
+    this.Maze = toThis;
+  }
+
+  changeSpeed(toThis: SpeedType) {
+    this.Speed = toThis;
+  }
+  changeStartNode(toThis: T){
+    this.StartNode = toThis;
+  }
+  changeEndNode(toThis :T ){
+    this.EndNode=toThis;
+  }
+  changeBombNode(toThis : T ){
+    this.BombNode = toThis;
+  }
+  changeGraph(toThis : Graph<T>){
+    this.GRAPH=toThis;
+  }
 }
 
-function changeAlgorithm(toThis: AlgoType) {
-  currentAlgorithm = toThis;
-}
+let currentState= new State<number>();
+currentState.changeGraph( new Graph<number>((a , b):number=>{
+  return a===b ? 0 : a < b ? -1 : 1 ;
+}))
 
-function changeMaze(toThis: MazeType) {
-  currentMaze = toThis;
-}
-
-function changeSpeed(toThis: SpeedType) {
-  currentSpeed = toThis;
-}
-
-const SOLID_RED: string = "#EF5350";
-const LIGHT_RED: string = "#D5756C";
-const BLUE: string = "#67BBFF";
-const GREEN: string = "#4CAF50";
-const YELLOW: string = "#E5C07B";
-const FILE_BG: string = "#21252B";
-const FILE_BG_SELECTED: string = "#4b4e5578";
-const FILE_BORDER: string = "#67bbff";
-const WALL_NODE_COLOR: string = "#484E5B";
-
-const GRAPH = new Graph<number>((a, b): number => {
-  return a === b ? 0 : a < b ? -1 : 1;
-});
-
-export {
-  currentAddableNode,
-  changeAddableNode,
-  currentAlgorithm,
-  changeAlgorithm,
-  currentMaze,
-  changeMaze,
-  currentSpeed,
-  changeSpeed,
-  SOLID_RED,
-  LIGHT_RED,
-  BLUE,
-  GREEN,
-  YELLOW,
-  FILE_BG,
-  FILE_BG_SELECTED,
-  FILE_BORDER,
-  WALL_NODE_COLOR,
-  GRAPH
-};
+export default  currentState;

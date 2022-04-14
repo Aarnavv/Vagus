@@ -1,7 +1,7 @@
 import * as React from "react";
 import Hex from "./Hex";
 import '../css/hex.css';
-import { GRAPH } from "./GlobalState";
+import currentState from "./GlobalState";
 import { SetInitialNodes } from './HexBoardUpdate';
 export default class HexBoard extends React.Component {
     static rows;
@@ -34,7 +34,7 @@ export default class HexBoard extends React.Component {
                     content.push(React.createElement(Hex, { x: xVar, y: yVar, id: HexBoard.idVar.toString(), key: HexBoard.idVar.toString() }));
                     yVar += HEX_HEIGHT;
                     // yVar += 23.5;
-                    GRAPH.addNode(HexBoard.idVar);
+                    currentState.graph().addNode(HexBoard.idVar);
                     HexBoard.idVar++;
                 }
             }
@@ -45,7 +45,7 @@ export default class HexBoard extends React.Component {
                     content.push(React.createElement(Hex, { x: xVar, y: yVar, id: HexBoard.idVar.toString(), key: HexBoard.idVar.toString() }));
                     yVar += HEX_HEIGHT;
                     // yVar += 23.5;
-                    GRAPH.addNode(HexBoard.idVar);
+                    currentState.graph().addNode(HexBoard.idVar);
                     HexBoard.idVar++;
                 }
             }
@@ -58,86 +58,86 @@ export default class HexBoard extends React.Component {
             if (i % HexBoard.rows === 0) {
                 columnID = i / HexBoard.rows;
                 if (columnID === 0) { // adj 2
-                    GRAPH.addEdge(i, i + 1, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + 1, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
                 }
                 else if (columnID === HexBoard.cols - 1) {
                     if (HexBoard.cols % 2 === 0) { // adj 3
-                        GRAPH.addEdge(i, i + 1, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows + 1, 1);
+                        currentState.graph().addEdge(i, i + 1, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
                     }
                     else { // adj 2
-                        GRAPH.addEdge(i, i + 1, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows, 1);
+                        currentState.graph().addEdge(i, i + 1, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
                     }
                 }
                 else if (columnID % 2 === 0) { // 3 adj
-                    GRAPH.addEdge(i, i + 1, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + 1, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
                 }
                 else { // 5 adj
-                    GRAPH.addEdge(i, i + 1, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows + 1, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows + 1, 1);
+                    currentState.graph().addEdge(i, i + 1, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
                 }
             }
             // last row conditions
             else if ((i + 1) % HexBoard.rows === 0) {
                 columnID = (i + 1) / HexBoard.rows;
                 if (columnID === 1) { // adj 3
-                    GRAPH.addEdge(i, i - 1, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows - 1, 1);
+                    currentState.graph().addEdge(i, i - 1, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows - 1, 1);
                 }
                 else if (columnID === HexBoard.cols) {
                     if (HexBoard.cols % 2 === 0) { // adj 2
-                        GRAPH.addEdge(i, i - 1, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows, 1);
+                        currentState.graph().addEdge(i, i - 1, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
                     }
                     else { // adj 3
-                        GRAPH.addEdge(i, i - 1, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                        GRAPH.addEdge(i, i - HexBoard.rows - 1, 1);
+                        currentState.graph().addEdge(i, i - 1, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                        currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
                     }
                 }
                 else if (columnID % 2 === 0) { // 3 adj
-                    GRAPH.addEdge(i, i - 1, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i - 1, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
                 }
                 else { // 5 adj
-                    GRAPH.addEdge(i, i - 1, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows, 1);
-                    GRAPH.addEdge(i, i - HexBoard.rows - 1, 1);
-                    GRAPH.addEdge(i, i + HexBoard.rows - 1, 1);
+                    currentState.graph().addEdge(i, i - 1, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+                    currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
+                    currentState.graph().addEdge(i, i + HexBoard.rows - 1, 1);
                 }
             }
             // first column conditions
             else if (i <= HexBoard.rows) { // adj 4
-                GRAPH.addEdge(i, i - 1, 1);
-                GRAPH.addEdge(i, i + 1, 1);
-                GRAPH.addEdge(i, i + HexBoard.rows, 1);
-                GRAPH.addEdge(i, i + HexBoard.rows - 1, 1);
+                currentState.graph().addEdge(i, i - 1, 1);
+                currentState.graph().addEdge(i, i + 1, 1);
+                currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+                currentState.graph().addEdge(i, i + HexBoard.rows - 1, 1);
             }
             //last column conditions
             else if (i > (HexBoard.rows * (HexBoard.cols - 1))) { // adj 4
-                GRAPH.addEdge(i, i - 1, 1);
-                GRAPH.addEdge(i, i + 1, 1);
-                GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                GRAPH.addEdge(i, i - HexBoard.rows - 1, 1);
+                currentState.graph().addEdge(i, i - 1, 1);
+                currentState.graph().addEdge(i, i + 1, 1);
+                currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
             }
             else { // adj 6
-                GRAPH.addEdge(i, i - 1, 1);
-                GRAPH.addEdge(i, i + 1, 1);
-                GRAPH.addEdge(i, i - HexBoard.rows, 1);
-                GRAPH.addEdge(i, i - HexBoard.rows + 1, 1);
-                GRAPH.addEdge(i, i + HexBoard.rows, 1);
-                GRAPH.addEdge(i, i + HexBoard.rows + 1, 1);
+                currentState.graph().addEdge(i, i - 1, 1);
+                currentState.graph().addEdge(i, i + 1, 1);
+                currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+                currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
+                currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+                currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
             }
         }
         SetInitialNodes();

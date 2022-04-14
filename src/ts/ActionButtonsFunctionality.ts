@@ -1,4 +1,4 @@
-import { SetInitialNodes } from "./HexBoardUpdate";
+import {SetInitialNodes} from "./HexBoardUpdate";
 
 const PrevButtonClick = () => {
   document.getElementById('prev-button').classList.add('button-clicked');

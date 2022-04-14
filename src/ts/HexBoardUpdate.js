@@ -1,10 +1,10 @@
-import { currentAddableNode } from './GlobalState';
+import currentState from './GlobalState';
 import { updateState } from './fileStruct';
 import HexBoard from "./HexBoard";
 const UpdateHexIcon = (propID) => {
     document.onmousemove = null;
     updateStateOnClick(propID);
-    switch (currentAddableNode) {
+    switch (currentState.addableNode()) {
         case 'start-node':
             updateNode(propID, 'start-node');
             NodeHoverAnimation(propID);
@@ -105,7 +105,7 @@ const NodeHoverAnimation = (propID) => {
 };
 const SetInitialNodes = () => {
     for (let i = 0; i < HexBoard.idVar; i++) {
-        if (i == (HexBoard.rows * 3)) {
+        if (i === (HexBoard.rows * 3)) {
             setTimeout(() => {
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.remove('no-node');
                 document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.add('start-node');

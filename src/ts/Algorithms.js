@@ -197,14 +197,3 @@ export class Algorithms {
         return [dist, prev];
     }
 }
-// const graph = new Graph<number>((a , b)=>{
-//   return a > b ? 1 : a ===b ? 0 : -1 ;
-// });
-// graph.addNode(0);
-// graph.addNode(1);
-// graph.addNode(26);
-// graph.addEdge(0 , 1 , 0) ;
-// graph.addEdge(0 , 26 , 0);
-// graph.addEdge(1 , 0 , 0);
-// graph.addEdge(26 , 0 , 0 );
-// graph.nodes.forEach((node)=>console.log(node.toString()));
