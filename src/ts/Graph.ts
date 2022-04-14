@@ -148,4 +148,10 @@ export default class Graph<T> {
       }
     });
   }
+
+  updateCostOfIncoming(data : T , cost : number ) {
+    let node:Node<T> = this.nodes().get(data);
+    if(node===undefined) return;
+    node.getAdjNodes().forEach((edge)=> edge.dest.updateCostTo(node , cost));
+  }
 }

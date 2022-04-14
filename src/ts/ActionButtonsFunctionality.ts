@@ -12,7 +12,7 @@ const StopButtonClick = () => {
   }, 200);
 }
 
-const RemoveAllNodes = (node) => {
+const RemoveAllNodes = (node: string) => {
   let nodes = document.querySelectorAll(`.${node}`);
   for (let i = 0; i < nodes.length; i++) {
     const ele = nodes[i] as HTMLElement;
