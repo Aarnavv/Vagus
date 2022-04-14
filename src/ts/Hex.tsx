@@ -17,6 +17,10 @@ export default class Hex extends React.Component<props> {
       top: this.props.y + "px",
     } as React.CSSProperties
   }
+  /**
+   * Renders each individual hexagon.
+   * @return void
+   */
   render() {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {

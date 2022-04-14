@@ -16,6 +16,10 @@ export default class HexBoard extends React.Component {
     );
   }
 
+  /**
+   * Renders the hex board in a cyclic fashion.
+   * @return void
+   */
   static renderHex() {
     const HEX_WIDTH: number = 26;
     const HEX_HEIGHT: number = 30;

@@ -19,6 +19,15 @@ import currentState from "./GlobalState";
 import cssConstants from "./cssConstants";
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 
+/**
+ * Makes the changes in the Global States for the algorithm, node type, maze type, and speed.
+ * Also makes the required the changes in the visual representation of the command board.
+ * Sets the nodes to start pulsating depending on the selected node type.
+ * @param divClass The class of the type of file which is clicked.
+ * @param id The id of the file which is clicked.
+ * @param text The type of file that is clicked.
+ * @returns void
+ */
 export const updateState = (divClass: string, id: string, text: string): void => {
   let files = document.querySelectorAll(divClass);
   for (let i = 0; i < files.length; i++) {
@@ -51,6 +60,11 @@ export const updateState = (divClass: string, id: string, text: string): void =>
   document.onmousedown = null;
 }
 
+
+/**
+ * Starts the pulsating of the all the nodes of a particular type which is selected on the command board.
+ * @param nodeType The type of node that is selected.
+ */
 const NodeAnimation = (nodeType: string) => {
   let files = document.querySelectorAll('.node-hover');
   for (let i = 0; i < files.length; i++) {
