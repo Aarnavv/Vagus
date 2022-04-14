@@ -1,4 +1,4 @@
-import {AlgoType, MazeType, NodeType, SpeedType} from "./Types";
+import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 import Graph from "./Graph";
 
 class State<T> {
