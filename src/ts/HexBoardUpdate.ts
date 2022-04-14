@@ -4,6 +4,7 @@ import HexBoard from "./HexBoard";
 
 const UpdateHexIcon = (propID: string) => {
   document.onmousemove = null;
+  document.onmousedown = null;
   updateStateOnClick(propID);
   switch (currentState.addableNode()) {
     case 'start-node':
@@ -15,37 +16,47 @@ const UpdateHexIcon = (propID: string) => {
       NodeHoverAnimation(propID);
       break;
     case 'bomb-node':
+      NodeHoverAnimation(propID);
       if (document.getElementById(propID).classList.contains('bomb-node')) removeOnClick(propID, 'bomb-node');
       else updateNode(propID, 'bomb-node');
-      NodeHoverAnimation(propID);
       break;
     case 'weight-node':
-      if (document.getElementById(propID).classList.contains('weight-node')) removeOnClick(propID, 'weight-node');
-      else WeightNodeUpdate(propID, 'weight-node');
       NodeHoverAnimation(propID);
+      if (document.getElementById(propID).classList.contains('weight-node')) removeOnClick(propID, 'weight-node');
+      else MultiNodeUpdate(propID, 'weight-node', ['no-node']);
       break;
     case 'wall-node':
+      NodeHoverAnimation(propID);
+      if (document.getElementById(propID).classList.contains('wall-node')) removeOnClick(propID, 'wall-node');
+      else MultiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
       break;
     default:
       break;
   }
 }
 
-const WeightNodeUpdate = (propID: string, node: string) => {
+const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>) => {
+  document.onmousemove = null;
+  document.onmousedown = null;
   if (document.getElementById(propID).classList.contains('no-node')) {
     document.getElementById(propID).classList.remove('no-node');
     document.getElementById(propID).classList.add(node);
-    document.onmousemove = (event) => {
-      if (event.buttons === 1) {
-        document.onmousemove = function (e) {
-          let path = e.target as HTMLElement;
-          if (path.id != "") {
-            let hexNo = path.id.substring(path.id.lastIndexOf('-') + 1);
-            let HexID = `props-${hexNo}`;
-            if (document.getElementById(HexID).classList.contains('no-node')) {
-              document.getElementById(HexID).classList.remove('no-node');
-              document.getElementById(HexID).classList.add(node);
-              NodeHoverAnimation(HexID);
+    let svgID = propID.replace('props', 'svg');
+    toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
+    document.getElementById(svgID).classList.add(node);
+    document.onmousedown = () => {
+      document.onmousemove = (e) => {
+        if (e.buttons === 1) {
+          let svg = e.target as HTMLElement;
+          if (svg.id.startsWith('svg')) {
+            let SVG_ID = svg.id;
+            let HoverPropsID = svg.id.replace('svg', 'props');
+            if (document.getElementById(HoverPropsID).classList.contains('no-node')) {
+              toRemove.forEach(element => document.getElementById(SVG_ID).classList.remove(element));
+              document.getElementById(SVG_ID).classList.add(node);
+              document.getElementById(HoverPropsID).classList.remove('no-node');
+              document.getElementById(HoverPropsID).classList.add(node);
+              NodeHoverAnimation(HoverPropsID);
             }
           }
         }
@@ -68,6 +79,8 @@ const updateNode = (propID: string, node: string) => {
 }
 
 const updateStateOnClick = (propID: string) => {
+  document.onmousemove = null;
+  document.onmousedown = null;
   let ele = document.getElementById(propID)
   if (ele.classList.contains('start-node'))
     updateState('.io-file', 'io-1', 'startNode.io');
@@ -77,11 +90,18 @@ const updateStateOnClick = (propID: string) => {
     updateState('.io-file', 'io-3', 'bombNode.io');
   else if (ele.classList.contains('weight-node'))
     updateState('.io-file', 'io-4', 'weightNode.io');
+  else if (ele.classList.contains('wall-node'))
+    updateState('.io-file', 'io-5', 'wallNode.io');
 }
 
 const removeOnClick = (propID: string, nodeClass: string) => {
-  document.getElementById(propID).classList.remove(nodeClass);
+  document.getElementById(propID).classList.remove(nodeClass, 'node-hover');
   document.getElementById(propID).classList.add('no-node');
+  if (nodeClass === 'wall-node' || nodeClass === 'weight-node') {
+    let svgID = propID.replace('props', 'svg');
+    document.getElementById(svgID).classList.remove(nodeClass);
+    document.getElementById(svgID).classList.add('no-node', 'icon');
+  }
 }
 
 const NodeHoverAnimation = (propID: string) => {

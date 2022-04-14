@@ -23,12 +23,27 @@ export default class Hex extends React.Component<props> {
         UpdateHexIcon(`props-${this.props.id}`);
         // console.log(currentState);
       }}>
-        <HexIcon id={`path-${this.props.id}`}/>
+        <HexIcon idSVG={`svg-${this.props.id}`}/>
         <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>
       </div>
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // hover = () => {
   //   document.getElementById("ns" + this.props.id).style.backgroundColor = '#1B8BCD';

@@ -47,6 +47,8 @@ export const updateState = (divClass: string, id: string, text: string): void =>
       return
   }
   NodeAnimation(textAdd);
+  document.onmousemove = null;
+  document.onmousedown = null;
 }
 
 const NodeAnimation = (nodeType: string) => {

@@ -14,7 +14,7 @@ export default class Hex extends React.Component {
                 UpdateHexIcon(`props-${this.props.id}`);
                 // console.log(currentState);
             } },
-            React.createElement(HexIcon, { id: `path-${this.props.id}` }),
+            React.createElement(HexIcon, { idSVG: `svg-${this.props.id}` }),
             React.createElement("div", { className: "prop-holder no-node", id: `props-${this.props.id}` })));
     }
 }
