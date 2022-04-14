@@ -1,4 +1,4 @@
-import { SetInitialNodes } from "./HexBoardUpdate";
+import { setInitialNodes } from "./HexBoardUpdate";
 
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
@@ -11,7 +11,7 @@ const StopButtonClick = (): void => {
   RemoveAllNodes('end-node');
   RemoveAllNodes('bomb-node');
   RemoveAllNodes('weight-node');
-  SetInitialNodes();
+  setInitialNodes();
   setTimeout(() => {
     document.getElementById('stop-button').classList.remove('button-clicked');
   }, 200);

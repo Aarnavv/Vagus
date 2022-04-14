@@ -1,7 +1,7 @@
 import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
-import { UpdateHexIcon } from "./HexBoardUpdate";
+import { updateHexIcon } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
 
 type props = {
@@ -24,7 +24,7 @@ export default class Hex extends React.Component<props> {
   render() {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {
-        UpdateHexIcon(`props-${this.props.id}` , parseInt(this.props.id));
+        updateHexIcon(`props-${this.props.id}` , parseInt(this.props.id));
         console.log(currentState);
       }}>
         <HexIcon idSVG={`svg-${this.props.id}`}/>

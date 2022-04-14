@@ -2,25 +2,25 @@ import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoard from "./HexBoard";
 
-const UpdateHexIcon = (propID: string , id:number): void => {
+const updateHexIcon = (propID: string, id: number): void => {
   document.onmousemove = null;
   document.onmousedown = null;
   updateStateOnClick(propID);
   switch (currentState.addableNode()) {
     case 'start-node':
       updateNode(propID, 'start-node');
-      NodeHoverAnimation(propID);
+      nodeHoverAnimation(propID);
       currentState.changeStartNode(id);
       break;
     case 'end-node':
       updateNode(propID, 'end-node');
-      NodeHoverAnimation(propID);
+      nodeHoverAnimation(propID);
       currentState.changeEndNode(id);
       break;
     case 'bomb-node':
-      NodeHoverAnimation(propID);
+      nodeHoverAnimation(propID);
       if (document.getElementById(propID).classList.contains('bomb-node')) {
-        removeOnClick(propID, 'bomb-node');
+        removeOnClick(propID, 'bomb-node', id);
         currentState.changeBombNode(null);
       }
       else {
@@ -29,26 +29,28 @@ const UpdateHexIcon = (propID: string , id:number): void => {
       }
       break;
     case 'weight-node':
-      NodeHoverAnimation(propID);
-      if (document.getElementById(propID).classList.contains('weight-node')) removeOnClick(propID, 'weight-node');
-      else MultiNodeUpdate(propID, 'weight-node', ['no-node']);
+      nodeHoverAnimation(propID);
+      if (document.getElementById(propID).classList.contains('weight-node')) removeOnClick(propID, 'weight-node', id);
+      else multiNodeUpdate(propID, 'weight-node', ['no-node']);
       break;
     case 'wall-node':
-      NodeHoverAnimation(propID);
-      if (document.getElementById(propID).classList.contains('wall-node')) removeOnClick(propID, 'wall-node');
-      else MultiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
+      nodeHoverAnimation(propID);
+      if (document.getElementById(propID).classList.contains('wall-node')) removeOnClick(propID, 'wall-node', id);
+      else multiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
       break;
     default:
       break;
   }
 }
 
-const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>): void => {
+const multiNodeUpdate = (propID: string, node: string, toRemove: Array<string>): void => {
   document.onmousemove = null;
   document.onmousedown = null;
   if (document.getElementById(propID).classList.contains('no-node')) {
     document.getElementById(propID).classList.remove('no-node');
     document.getElementById(propID).classList.add(node);
+    console.log(Number(propID.substring(propID.lastIndexOf('-') + 1)))
+    weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10)
     let svgID = propID.replace('props', 'svg');
     toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
     document.getElementById(svgID).classList.add(node);
@@ -64,7 +66,8 @@ const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>):
               document.getElementById(SVG_ID).classList.add(node);
               document.getElementById(HoverPropsID).classList.remove('no-node');
               document.getElementById(HoverPropsID).classList.add(node);
-              NodeHoverAnimation(HoverPropsID);
+              weightNodeUpdateCost(node, Number(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10)
+              nodeHoverAnimation(HoverPropsID);
             }
           }
         }
@@ -86,6 +89,12 @@ const updateNode = (propID: string, node: string): void => {
   }
 }
 
+const weightNodeUpdateCost = (node: string, id: number, cost: number) => {
+  if (node === 'weight-node') {
+    currentState.graph().updateCostOfIncoming(id, cost);
+  }
+}
+
 const updateStateOnClick = (propID: string): void => {
   document.onmousemove = null;
   document.onmousedown = null;
@@ -102,17 +111,18 @@ const updateStateOnClick = (propID: string): void => {
     updateState('.io-file', 'io-5', 'wallNode.io');
 }
 
-const removeOnClick = (propID: string, nodeClass: string): void => {
+const removeOnClick = (propID: string, nodeClass: string, id: number): void => {
   document.getElementById(propID).classList.remove(nodeClass, 'node-hover');
   document.getElementById(propID).classList.add('no-node');
   if (nodeClass === 'wall-node' || nodeClass === 'weight-node') {
     let svgID = propID.replace('props', 'svg');
     document.getElementById(svgID).classList.remove(nodeClass);
     document.getElementById(svgID).classList.add('no-node', 'icon');
+    weightNodeUpdateCost(nodeClass, id, 1);
   }
 }
 
-const NodeHoverAnimation = (propID: string): void => {
+const nodeHoverAnimation = (propID: string): void => {
   let files = document.querySelectorAll('.node-hover');
   for (let i = 0; i < files.length; i++) {
     const ele = files[i] as HTMLElement;
@@ -125,7 +135,7 @@ const NodeHoverAnimation = (propID: string): void => {
   }
 }
 
-const SetInitialNodes = (): void => {
+const setInitialNodes = (): void => {
   for (let i = 0; i < HexBoard.idVar; i++) {
     if (i === (HexBoard.rows * 3)) {
       setTimeout(() => {
@@ -141,6 +151,6 @@ const SetInitialNodes = (): void => {
 }
 
 export {
-  UpdateHexIcon,
-  SetInitialNodes,
+  updateHexIcon,
+  setInitialNodes,
 }

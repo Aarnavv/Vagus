@@ -25,7 +25,7 @@ export default class Graph<T> {
     this.isUndirected = false;
   }
 
-  nodes():Map<T , Node<T>>{
+  nodes(): Map<T, Node<T>> {
     return this.Nodes;
   }
 
@@ -47,7 +47,7 @@ export default class Graph<T> {
 
   addNode(data: T): Node<T> {
     let node = this.nodes().get(data);
-    if (node!==undefined)
+    if (node !== undefined)
       return node;
     node = new Node(data, this.comparator);
     this.nodes().set(data, node);
@@ -120,12 +120,12 @@ export default class Graph<T> {
     return new Algorithms(this).dfs(start, end)[0];
   }
 
-  freeze() :void {
+  freeze(): void {
     Object.freeze(this);
   }
 
 
-  static freeze<T>(graph : Graph<T>){ Object.freeze(graph);}
+  static freeze<T>(graph: Graph<T>) { Object.freeze(graph); }
 
   /**
    * Modifies the given _presentGraph graph to get the state of a node present in the _initGraph. Given a node-label
@@ -139,20 +139,22 @@ export default class Graph<T> {
    * @param _presentGraph the graph to which the node needs to be added.
    * @return void
    */
-  static revertNode<T>(data : T , _initGraph : Graph <T>, _presentGraph :Graph<T>):void{
-    let initNode:Node<T> = _initGraph.nodes().get(data);
+  static revertNode<T>(data: T, _initGraph: Graph<T>, _presentGraph: Graph<T>): void {
+    let initNode: Node<T> = _initGraph.nodes().get(data);
     _presentGraph.addNode(initNode.getData());
-    initNode.getAdjNodes().forEach((edge)=>{
-      if(_presentGraph.nodes().has(edge.dest.getData())) {
+    initNode.getAdjNodes().forEach((edge) => {
+      if (_presentGraph.nodes().has(edge.dest.getData())) {
         initNode.addAdjNode(edge.dest, edge.cost);
         edge.dest.addAdjNode(initNode, edge.cost);
       }
     });
   }
 
-  updateCostOfIncoming(data : T , cost : number ) {
-    let node:Node<T> = this.nodes().get(data);
-    if(node===undefined) return;
-    node.getAdjNodes().forEach((edge)=> edge.dest.updateCostTo(node , cost));
+  updateCostOfIncoming(data: T, cost: number) {
+    let node: Node<T> = this.nodes().get(data);
+    if (node === undefined) return;
+    node.getAdjNodes().forEach((edge) => {
+      if (edge.dest.getData() !== node.getData()) edge.dest.updateCostTo(node, cost)
+    });
   }
 }

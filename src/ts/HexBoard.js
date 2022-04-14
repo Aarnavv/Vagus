@@ -2,7 +2,7 @@ import * as React from "react";
 import Hex from "./Hex";
 import '../css/hex.css';
 import currentState from "./GlobalState";
-import { SetInitialNodes } from './HexBoardUpdate';
+import { setInitialNodes } from './HexBoardUpdate';
 export default class HexBoard extends React.Component {
     static rows;
     static cols;
@@ -146,7 +146,7 @@ export default class HexBoard extends React.Component {
                 currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
             }
         }
-        SetInitialNodes();
+        setInitialNodes();
         return content;
     }
 }
