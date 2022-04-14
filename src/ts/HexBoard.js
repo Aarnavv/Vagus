@@ -35,6 +35,7 @@ export default class HexBoard extends React.Component {
                     yVar += HEX_HEIGHT;
                     // yVar += 23.5;
                     currentState.graph().addNode(HexBoard.idVar);
+                    currentState.graph().setNodeCoords(HexBoard.idVar, { x: xVar, y: yVar });
                     HexBoard.idVar++;
                 }
             }
@@ -46,6 +47,7 @@ export default class HexBoard extends React.Component {
                     yVar += HEX_HEIGHT;
                     // yVar += 23.5;
                     currentState.graph().addNode(HexBoard.idVar);
+                    currentState.graph().setNodeCoords(HexBoard.idVar, { x: xVar, y: yVar });
                     HexBoard.idVar++;
                 }
             }

@@ -1,8 +1,8 @@
 import * as React from "react";
 import Hex from "./Hex";
 import '../css/hex.css';
-import currentState  from "./GlobalState";
-import {SetInitialNodes} from './HexBoardUpdate'
+import currentState from "./GlobalState";
+import { SetInitialNodes } from './HexBoardUpdate'
 
 export default class HexBoard extends React.Component {
   static rows: number;
@@ -47,6 +47,7 @@ export default class HexBoard extends React.Component {
           yVar += HEX_HEIGHT;
           // yVar += 23.5;
           currentState.graph().addNode(HexBoard.idVar);
+          currentState.graph().setNodeCoords(HexBoard.idVar, { x: xVar, y: yVar });
           HexBoard.idVar++;
         }
       }
@@ -58,6 +59,7 @@ export default class HexBoard extends React.Component {
           yVar += HEX_HEIGHT;
           // yVar += 23.5;
           currentState.graph().addNode(HexBoard.idVar);
+          currentState.graph().setNodeCoords(HexBoard.idVar, { x: xVar, y: yVar });
           HexBoard.idVar++;
         }
       }

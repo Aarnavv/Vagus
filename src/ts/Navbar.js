@@ -5,7 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { PrevButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick } from "./ActionButtonsFunctionality";
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -16,8 +16,7 @@ export default class Navbar extends React.Component {
                 React.createElement(ProjectIcon, null),
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
-                    React.createElement(ActionIcons.StopButtonIcon, null),
-                    React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => PrevButtonClick() }),
+                    React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
                     React.createElement(ActionIcons.RunButtonIcon, null))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
@@ -62,7 +61,6 @@ export default class Navbar extends React.Component {
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "startNode.gui", type: "start-node", divID: "gui-6" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "endNode.gui", type: "end-node", divID: "gui-7" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))),
-                        React.createElement("br", null),
                         React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md", divID: "md-1" }))))));
     }
 }

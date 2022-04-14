@@ -50,6 +50,10 @@
   animation: icon-pulsate 0.2s 1 linear forwards;
 }
 
+svg.wall-node {
+fill: var(--wall-node-color);
+}
+
 .node-hover {
   animation: node-pulsate 1s infinite linear;
 }

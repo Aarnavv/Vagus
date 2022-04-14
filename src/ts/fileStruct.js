@@ -32,6 +32,8 @@ export const updateState = (divClass, id, text) => {
             return;
     }
     NodeAnimation(textAdd);
+    document.onmousemove = null;
+    document.onmousedown = null;
 };
 const NodeAnimation = (nodeType) => {
     let files = document.querySelectorAll('.node-hover');
