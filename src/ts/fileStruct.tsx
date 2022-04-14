@@ -66,6 +66,15 @@ const NodeAnimation = (nodeType: string) => {
       if (document.querySelector<HTMLElement>('.bomb-node'))
         document.querySelector<HTMLElement>('.bomb-node').classList.add('node-hover');
       break;
+    case 'weightNode':
+      if (document.querySelector<HTMLElement>('.weight-node')) { 
+        let files = document.querySelectorAll('.weight-node');
+        for (let i = 0; i < files.length; i++) {
+          const ele = files[i] as HTMLElement;
+          ele.classList.add('node-hover');
+        }
+      }
+      break;
     default:
       break;
   }

@@ -5,6 +5,7 @@ const PrevButtonClick = () => {
   RemoveAllNodes('start-node');
   RemoveAllNodes('end-node');
   RemoveAllNodes('bomb-node');
+  RemoveAllNodes('weight-node');
   SetInitialNodes();
   setTimeout(() => {
     document.getElementById('prev-button').classList.remove('button-clicked');
