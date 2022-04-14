@@ -45,6 +45,23 @@ export default class Hex extends React.Component<props> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // hover = () => {
   //   document.getElementById("ns" + this.props.id).style.backgroundColor = '#1B8BCD';
   //   document.getElementById("nwse" + this.props.id).style.backgroundColor = '#1B8BCD';

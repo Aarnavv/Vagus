@@ -20,7 +20,7 @@ export default class Navbar extends React.Component {
           <p className="project-title">Project</p>
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => StopButtonClick()} />
-            <ActionIcons.PrevButtonIcon />
+            {/* <ActionIcons.PrevButtonIcon /> */}
             <ActionIcons.RunButtonIcon />
           </div>
         </div>
