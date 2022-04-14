@@ -1,31 +1,32 @@
 import React from 'react';
 import '../css/navbar.css';
 import { BATIcon, BOMBNode, ENDNode, IOIcon, MDIcon, SHORTESTPATHNode, STARTNode, SYSIcon, TSXIcon, UNVISITEDNode, VISITEDNode, WALLNode, WEIGHTNode } from "../svgIcons/fileSVGIconComponent";
-import { changeAddableNode, changeAlgorithm, changeMaze, changeSpeed, FILE_BG, FILE_BG_SELECTED, FILE_BORDER } from "./GlobalState";
+import currentState from "./GlobalState";
+import cssConstants from "./cssConstants";
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 export const updateState = (divClass, id, text) => {
     let files = document.querySelectorAll(divClass);
     for (let i = 0; i < files.length; i++) {
         const ele = files[i];
-        ele.style.backgroundColor = FILE_BG;
+        ele.style.backgroundColor = cssConstants.FILE_BG;
         ele.style.borderLeft = "";
     }
-    document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
-    document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
+    document.getElementById(id).style.backgroundColor = cssConstants.FILE_BG_SELECTED;
+    document.getElementById(id).style.borderLeft = `2.5px solid ${cssConstants.FILE_BORDER}`;
     let ext = text.substring(text.lastIndexOf(".") + 1);
     let textAdd = text.substring(0, text.lastIndexOf("."));
     switch (ext) {
         case "tsx":
-            changeAlgorithm(AlgoType[textAdd]);
+            currentState.changeAlgorithm(AlgoType[textAdd]);
             break;
         case "io":
-            changeAddableNode(NodeType[textAdd]);
+            currentState.changeAddableNode(NodeType[textAdd]);
             break;
         case "bat":
-            changeMaze(MazeType[textAdd]);
+            currentState.changeMaze(MazeType[textAdd]);
             break;
         case "sys":
-            changeSpeed(parseInt(SpeedType[`percent${text.substring(0, text.indexOf('p'))}`]));
+            currentState.changeSpeed(parseInt(SpeedType[`percent${text.substring(0, text.indexOf('p'))}`]));
             break;
         default:
             return;

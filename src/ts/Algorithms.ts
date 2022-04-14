@@ -2,12 +2,7 @@ import Graph from './Graph';
 import {MinPriorityQueue, PriorityQueue} from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
 
-/**
- * @class
- * *dijkstras [Single Source Shortest Path] algorithm, it can find the shortest as well as least cost route from one place to another place say [startNode-endNode]
- * *aStar [Single Source Shortest Path] heuristic algorithm, it can find the shortest path with least cost route from one node [start] to another node [end]
- * @constructor constructor()
- */
+
 export class Algorithms<T> {
     graph: Graph<T>;
     comparator;
