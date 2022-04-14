@@ -5,6 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import { SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW } from "./GlobalState";
+import { PrevButtonClick } from "./ActionButtonsFunctionality";
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -16,7 +17,7 @@ export default class Navbar extends React.Component {
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, null),
-                    React.createElement(ActionIcons.PrevButtonIcon, null),
+                    React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => PrevButtonClick() }),
                     React.createElement(ActionIcons.RunButtonIcon, null))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
@@ -37,8 +38,8 @@ export default class Navbar extends React.Component {
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "startNode.io", divID: "io-1" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "endNode.io", divID: "io-2" }),
-                                        React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "weightNode.io", divID: "io-3" }),
-                                        React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "bombNode.io", divID: "io-4" }),
+                                        React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "bombNode.io", divID: "io-3" }),
+                                        React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "weightNode.io", divID: "io-4" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "wallNode.io", divID: "io-5" }))),
                                 React.createElement(FolderComponent, { colorOfFolder: GREEN, text: "mazes", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },

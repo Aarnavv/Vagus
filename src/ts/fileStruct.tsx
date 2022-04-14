@@ -28,18 +28,16 @@ import {
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 
 export const updateState = (divClass: string, id: string, text: string): void => {
-  const files = document.querySelectorAll(divClass);
+  let files = document.querySelectorAll(divClass);
   for (let i = 0; i < files.length; i++) {
     const ele = files[i] as HTMLElement;
     ele.style.backgroundColor = FILE_BG;
     ele.style.borderLeft = "";
   }
-  console.log(id);
   document.getElementById(id).style.backgroundColor = FILE_BG_SELECTED;
   document.getElementById(id).style.borderLeft = `2.5px solid ${FILE_BORDER}`;
-  console.log(id);
   let ext: string = text.substring(text.lastIndexOf(".") + 1);
-  let textAdd = text.substring(0, text.lastIndexOf("."));
+  let textAdd: string = text.substring(0, text.lastIndexOf("."));
   switch (ext) {
     case "tsx":
       changeAlgorithm(AlgoType[textAdd]);
@@ -56,7 +54,29 @@ export const updateState = (divClass: string, id: string, text: string): void =>
     default:
       return
   }
-  // console.log(currentAddableNode);
+  NodeAnimation(textAdd);
+}
+
+const NodeAnimation = (nodeType: string) => {
+  let files = document.querySelectorAll('.node-hover');
+  for (let i = 0; i < files.length; i++) {
+    const ele = files[i] as HTMLElement;
+    ele.classList.remove('node-hover');
+  }
+  switch (nodeType) {
+    case 'startNode':
+      document.querySelector<HTMLElement>('.start-node').classList.add('node-hover');
+      break;
+    case 'endNode':
+      document.querySelector<HTMLElement>('.end-node').classList.add('node-hover');
+      break;
+    case 'bombNode':
+      if (document.querySelector<HTMLElement>('.bomb-node'))
+        document.querySelector<HTMLElement>('.bomb-node').classList.add('node-hover');
+      break;
+    default:
+      break;
+  }
 }
 
 export function TSXFile(props: any) {

@@ -24,7 +24,8 @@ const YELLOW = "#E5C07B";
 const FILE_BG = "#21252B";
 const FILE_BG_SELECTED = "#4b4e5578";
 const FILE_BORDER = "#67bbff";
+const WALL_NODE_COLOR = "#484E5B";
 const GRAPH = new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 });
-export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW, FILE_BG, FILE_BG_SELECTED, FILE_BORDER, GRAPH };
+export { currentAddableNode, changeAddableNode, currentAlgorithm, changeAlgorithm, currentMaze, changeMaze, currentSpeed, changeSpeed, SOLID_RED, LIGHT_RED, BLUE, GREEN, YELLOW, FILE_BG, FILE_BG_SELECTED, FILE_BORDER, WALL_NODE_COLOR, GRAPH };
