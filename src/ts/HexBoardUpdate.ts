@@ -49,8 +49,7 @@ const multiNodeUpdate = (propID: string, node: string, toRemove: Array<string>):
   if (document.getElementById(propID).classList.contains('no-node')) {
     document.getElementById(propID).classList.remove('no-node');
     document.getElementById(propID).classList.add(node);
-    console.log(Number(propID.substring(propID.lastIndexOf('-') + 1)))
-    weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10)
+    weightNodeUpdateCost(node, parseInt(propID.substring(propID.lastIndexOf('-') + 1)), 10)
     let svgID = propID.replace('props', 'svg');
     toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
     document.getElementById(svgID).classList.add(node);
@@ -66,7 +65,7 @@ const multiNodeUpdate = (propID: string, node: string, toRemove: Array<string>):
               document.getElementById(SVG_ID).classList.add(node);
               document.getElementById(HoverPropsID).classList.remove('no-node');
               document.getElementById(HoverPropsID).classList.add(node);
-              weightNodeUpdateCost(node, Number(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10)
+              weightNodeUpdateCost(node, parseInt(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10)
               nodeHoverAnimation(HoverPropsID);
             }
           }
@@ -89,7 +88,7 @@ const updateNode = (propID: string, node: string): void => {
   }
 }
 
-const weightNodeUpdateCost = (node: string, id: number, cost: number) => {
+const  weightNodeUpdateCost = (node: string, id: number, cost: number) => {
   if (node === 'weight-node') {
     currentState.graph().updateCostOfIncoming(id, cost);
   }

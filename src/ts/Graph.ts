@@ -1,5 +1,6 @@
 import Node from "./Node";
 import { Algorithms } from "./Algorithms";
+import currentState from "./GlobalState";
 
 
 export default class Graph<T> {
@@ -150,11 +151,14 @@ export default class Graph<T> {
     });
   }
 
-  updateCostOfIncoming(data: T, cost: number) {
+   updateCostOfIncoming(data: T, cost: number) {
     let node: Node<T> = this.nodes().get(data);
     if (node === undefined) return;
     node.getAdjNodes().forEach((edge) => {
-      if (edge.dest.getData() !== node.getData()) edge.dest.updateCostTo(node, cost)
+      if (edge.dest.getData() !== node.getData()) {
+        edge.dest.updateCostTo(node, cost);
+      }
     });
+
   }
 }

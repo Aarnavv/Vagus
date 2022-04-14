@@ -64,8 +64,10 @@ export default class Node<T> {
 
   updateCostTo(node : Node<T> , cost : number): boolean{
     let edgeToUpdate = this.adjNodes.find((edge)=>{
-      if(edge.dest.getData() === node.getData())
+      if(edge.dest.getData() === node.getData()) {
+        console.log(edge.dest.getData());
         return edge;
+      }
       //added this later.
       else return undefined;
     });
