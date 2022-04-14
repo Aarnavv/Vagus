@@ -5,7 +5,7 @@ import { SetInitialNodes } from "./HexBoardUpdate";
  * Requires no parameters.
  * @return void
  */
-const StopButtonClick = () => {
+const StopButtonClick = (): void => {
   document.getElementById('stop-button').classList.add('button-clicked');
   RemoveAllNodes('start-node');
   RemoveAllNodes('end-node');
@@ -22,7 +22,7 @@ const StopButtonClick = () => {
  * @param node The class of the node type that has to be removed from the board.
  * @return void
  */
-const RemoveAllNodes = (node: string) => {
+const RemoveAllNodes = (node: string): void => {
   let nodes = document.querySelectorAll(`.${node}`);
   for (let i = 0; i < nodes.length; i++) {
     const ele = nodes[i] as HTMLElement;

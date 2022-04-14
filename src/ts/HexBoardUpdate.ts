@@ -2,7 +2,7 @@ import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoard from "./HexBoard";
 
-const UpdateHexIcon = (propID: string) => {
+const UpdateHexIcon = (propID: string): void => {
   document.onmousemove = null;
   document.onmousedown = null;
   updateStateOnClick(propID);
@@ -35,7 +35,7 @@ const UpdateHexIcon = (propID: string) => {
   }
 }
 
-const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>) => {
+const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>): void => {
   document.onmousemove = null;
   document.onmousedown = null;
   if (document.getElementById(propID).classList.contains('no-node')) {
@@ -65,7 +65,7 @@ const MultiNodeUpdate = (propID: string, node: string, toRemove: Array<string>) 
   }
 }
 
-const updateNode = (propID: string, node: string) => {
+const updateNode = (propID: string, node: string): void => {
   if (document.getElementById(propID).classList.contains('no-node')) {
     let files = document.querySelectorAll(`.${node}`);
     for (let i = 0; i < files.length; i++) {
@@ -78,7 +78,7 @@ const updateNode = (propID: string, node: string) => {
   }
 }
 
-const updateStateOnClick = (propID: string) => {
+const updateStateOnClick = (propID: string): void => {
   document.onmousemove = null;
   document.onmousedown = null;
   let ele = document.getElementById(propID)
@@ -94,7 +94,7 @@ const updateStateOnClick = (propID: string) => {
     updateState('.io-file', 'io-5', 'wallNode.io');
 }
 
-const removeOnClick = (propID: string, nodeClass: string) => {
+const removeOnClick = (propID: string, nodeClass: string): void => {
   document.getElementById(propID).classList.remove(nodeClass, 'node-hover');
   document.getElementById(propID).classList.add('no-node');
   if (nodeClass === 'wall-node' || nodeClass === 'weight-node') {
@@ -104,7 +104,7 @@ const removeOnClick = (propID: string, nodeClass: string) => {
   }
 }
 
-const NodeHoverAnimation = (propID: string) => {
+const NodeHoverAnimation = (propID: string): void => {
   let files = document.querySelectorAll('.node-hover');
   for (let i = 0; i < files.length; i++) {
     const ele = files[i] as HTMLElement;
