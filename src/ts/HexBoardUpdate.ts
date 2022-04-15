@@ -1,6 +1,7 @@
 import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoard from "./HexBoard";
+import HexBoardInitializer from './HexBoardInitializer';
 
 const updateHexIcon = (propID: string, id: number): void => {
   document.onmousemove = null;
@@ -139,15 +140,15 @@ const nodeHoverAnimation = (propID: string): void => {
 }
 
 const setInitialNodes = (): void => {
-  for (let i = 0; i < HexBoard.idVar; i++) {
-    if (i === (HexBoard.rows * 3)) {
+  for (let i = 0; i < HexBoardInitializer.idVar; i++) {
+    if (i === (HexBoardInitializer.rows * 3)) {
       setTimeout(() => {
-        document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.remove('no-node');
-        document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.25)}`).classList.add('start-node');
-        currentState.changeStartNode(Math.floor((HexBoard.rows * HexBoard.cols) * 0.25));
-        document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.75)}`).classList.add('end-node');
-        currentState.changeEndNode(Math.floor((HexBoard.rows * HexBoard.cols) * 0.75));
-        document.getElementById(`props-${Math.floor((HexBoard.rows * HexBoard.cols) * 0.75)}`).classList.remove('no-node');
+        document.getElementById(`props-${Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25)}`).classList.remove('no-node');
+        document.getElementById(`props-${Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25)}`).classList.add('start-node');
+        currentState.changeStartNode(Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25));
+        document.getElementById(`props-${Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75)}`).classList.add('end-node');
+        currentState.changeEndNode(Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75));
+        document.getElementById(`props-${Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75)}`).classList.remove('no-node');
       }, 1)
     }
   }
