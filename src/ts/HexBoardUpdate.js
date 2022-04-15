@@ -1,6 +1,7 @@
 import currentState from './GlobalState';
 import { updateState } from './fileStruct';
 import HexBoardInitializer from './HexBoardInitializer';
+import Graph from "./Graph";
 const updateHexIcon = (propID, id) => {
     document.onmousemove = null;
     document.onmousedown = null;
@@ -38,10 +39,12 @@ const updateHexIcon = (propID, id) => {
             break;
         case 'wall-node':
             nodeHoverAnimation(propID);
-            if (document.getElementById(propID).classList.contains('wall-node'))
+            if (document.getElementById(propID).classList.contains('wall-node')) {
                 removeOnClick(propID, 'wall-node', id);
-            else
+            }
+            else {
                 multiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
+            }
             break;
         default:
             break;
@@ -94,6 +97,9 @@ const weightNodeUpdateCost = (node, id, cost) => {
     if (node === 'weight-node') {
         currentState.graph().updateCostOfIncoming(id, cost);
     }
+    if (node === 'wall-node') {
+        currentState.graph().rmNode(id);
+    }
 };
 const updateStateOnClick = (propID) => {
     document.onmousemove = null;
@@ -117,7 +123,10 @@ const removeOnClick = (propID, nodeClass, id) => {
         let svgID = propID.replace('props', 'svg');
         document.getElementById(svgID).classList.remove(nodeClass);
         document.getElementById(svgID).classList.add('no-node', 'icon');
-        weightNodeUpdateCost(nodeClass, id, 1);
+        if (nodeClass === 'weight-node')
+            weightNodeUpdateCost(nodeClass, id, 1);
+        else
+            Graph.revertNode(id, currentState.initGraph(), currentState.graph());
     }
 };
 const nodeHoverAnimation = (propID) => {

@@ -2,6 +2,7 @@ import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoard from "./HexBoard";
 import HexBoardInitializer from './HexBoardInitializer';
+import Graph from "./Graph";
 
 const updateHexIcon = (propID: string, id: number): void => {
   document.onmousemove = null;
@@ -40,8 +41,12 @@ const updateHexIcon = (propID: string, id: number): void => {
       break;
     case 'wall-node':
       nodeHoverAnimation(propID);
-      if (document.getElementById(propID).classList.contains('wall-node')) removeOnClick(propID, 'wall-node', id);
-      else multiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
+      if (document.getElementById(propID).classList.contains('wall-node')){
+        removeOnClick(propID, 'wall-node', id);
+      }
+      else {
+        multiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
+      }
       break;
     default:
       break;
@@ -54,7 +59,7 @@ const multiNodeUpdate = (propID: string, node: string, toRemove: Array<string>):
   if (document.getElementById(propID).classList.contains('no-node')) {
     document.getElementById(propID).classList.remove('no-node');
     document.getElementById(propID).classList.add(node);
-    weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10)
+    weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10);
     let svgID = propID.replace('props', 'svg');
     toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
     document.getElementById(svgID).classList.add(node);
@@ -97,6 +102,9 @@ const weightNodeUpdateCost = (node: string, id: number, cost: number) => {
   if (node === 'weight-node') {
     currentState.graph().updateCostOfIncoming(id, cost);
   }
+  if(node === 'wall-node'){
+    currentState.graph().rmNode(id);
+  }
 }
 
 const updateStateOnClick = (propID: string): void => {
@@ -122,7 +130,10 @@ const removeOnClick = (propID: string, nodeClass: string, id: number): void => {
     let svgID = propID.replace('props', 'svg');
     document.getElementById(svgID).classList.remove(nodeClass);
     document.getElementById(svgID).classList.add('no-node', 'icon');
-    weightNodeUpdateCost(nodeClass, id, 1);
+    if(nodeClass ==='weight-node')
+      weightNodeUpdateCost(nodeClass, id, 1);
+    else
+      Graph.revertNode<number>(id , currentState.initGraph(),currentState.graph());
   }
 }
 
