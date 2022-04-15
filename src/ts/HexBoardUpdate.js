@@ -56,7 +56,7 @@ const multiNodeUpdate = (propID, node, toRemove) => {
     if (document.getElementById(propID).classList.contains('no-node')) {
         document.getElementById(propID).classList.remove('no-node');
         document.getElementById(propID).classList.add(node);
-        weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10);
+        multiNodeGraphUpdate(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10, false);
         let svgID = propID.replace('props', 'svg');
         toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
         document.getElementById(svgID).classList.add(node);
@@ -72,7 +72,7 @@ const multiNodeUpdate = (propID, node, toRemove) => {
                             document.getElementById(SVG_ID).classList.add(node);
                             document.getElementById(HoverPropsID).classList.remove('no-node');
                             document.getElementById(HoverPropsID).classList.add(node);
-                            weightNodeUpdateCost(node, Number(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10);
+                            multiNodeGraphUpdate(node, Number(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10, false);
                             nodeHoverAnimation(HoverPropsID);
                         }
                     }
@@ -93,12 +93,15 @@ const updateNode = (propID, node) => {
         document.getElementById(propID).classList.add(node);
     }
 };
-const weightNodeUpdateCost = (node, id, cost) => {
+const multiNodeGraphUpdate = (node, id, cost, add) => {
     if (node === 'weight-node') {
         currentState.graph().updateCostOfIncoming(id, cost);
     }
-    if (node === 'wall-node') {
-        currentState.graph().rmNode(id);
+    else if (node === 'wall-node') {
+        if (add)
+            Graph.revertNode(id, currentState.initGraph(), currentState.graph());
+        else
+            currentState.graph().rmNode(id);
     }
 };
 const updateStateOnClick = (propID) => {
@@ -123,10 +126,7 @@ const removeOnClick = (propID, nodeClass, id) => {
         let svgID = propID.replace('props', 'svg');
         document.getElementById(svgID).classList.remove(nodeClass);
         document.getElementById(svgID).classList.add('no-node', 'icon');
-        if (nodeClass === 'weight-node')
-            weightNodeUpdateCost(nodeClass, id, 1);
-        else
-            Graph.revertNode(id, currentState.initGraph(), currentState.graph());
+        multiNodeGraphUpdate(nodeClass, id, 1, true);
     }
 };
 const nodeHoverAnimation = (propID) => {
