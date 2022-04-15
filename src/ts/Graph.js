@@ -125,10 +125,10 @@ export default class Graph {
      */
     static revertNode(data, _initGraph, _presentGraph) {
         let initNode = _initGraph.nodes().get(data);
-        _presentGraph.addNode(initNode.getData());
+        let presNode = _presentGraph.addNode(initNode.getData());
         initNode.getAdjNodes().forEach((edge) => {
             if (_presentGraph.nodes().has(edge.dest.getData())) {
-                initNode.addAdjNode(edge.dest, edge.cost);
+                presNode.addAdjNode(edge.dest, edge.cost);
                 edge.dest.addAdjNode(initNode, edge.cost);
             }
         });
