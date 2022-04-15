@@ -140,14 +140,6 @@ export default class HexBoard extends React.Component {
                 currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
             }
             else { // adj 6
-<<<<<<< HEAD
-                currentState.graph().addEdge(i, i - 1, 1);
-                currentState.graph().addEdge(i, i + 1, 1);
-                currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
-                currentState.graph().addEdge(i, i - HexBoard.rows, 1);
-                currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
-                currentState.graph().addEdge(i, i + HexBoard.rows, 1);
-=======
                 columnIDCenter = Math.floor(i / HexBoard.rows);
                 if (columnIDCenter % 2 != 0) {
                     currentState.graph().addEdge(i, i - 1, 1);
@@ -165,7 +157,6 @@ export default class HexBoard extends React.Component {
                     currentState.graph().addEdge(i, i + HexBoard.rows, 1);
                     currentState.graph().addEdge(i, i + HexBoard.rows - 1, 1);
                 }
->>>>>>> e9669b0af49f68838124135e192b98fc878127ed
             }
         }
         //if it is even then it is adding 1 extra, if it is odd it should be fine.
