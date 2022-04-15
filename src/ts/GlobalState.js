@@ -54,14 +54,15 @@ class State {
     changeGraph(toThis) {
         this.PRES_GRAPH = toThis;
     }
-    changeInitGraph(toThis, freeze) {
+    changeInitGraph(toThis) {
         this.INIT_GRAPH = toThis;
-        if (freeze)
-            this.INIT_GRAPH.freeze();
     }
 }
 let currentState = new State();
 currentState.changeGraph(new Graph((a, b) => {
+    return a === b ? 0 : a < b ? -1 : 1;
+}));
+currentState.changeInitGraph(new Graph((a, b) => {
     return a === b ? 0 : a < b ? -1 : 1;
 }));
 export default currentState;
