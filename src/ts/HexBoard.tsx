@@ -71,11 +71,13 @@ export default class HexBoard extends React.Component {
       xVar += HEX_WIDTH;
     }
     let columnID = 0;
+    let columnIDCenter = 0;
 
     for (let i = 0; i < HexBoard.idVar; i++) {
       // first row conditions
       if (i % HexBoard.rows === 0) {
         columnID = i / HexBoard.rows;
+        // console.log(columnID)
         if (columnID === 0) { // adj 2
           currentState.graph().addEdge(i, i + 1, 1);
           currentState.graph().addEdge(i, i + HexBoard.rows, 1);
@@ -151,12 +153,23 @@ export default class HexBoard extends React.Component {
         currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
       }
       else { // adj 6
-        currentState.graph().addEdge(i, i - 1, 1);
-        currentState.graph().addEdge(i, i + 1, 1);
-        currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
-        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
-        currentState.graph().addEdge(i, i + HexBoard.rows +1, 1);
-        currentState.graph().addEdge(i, i + HexBoard.rows , 1);
+        columnIDCenter = Math.floor(i / HexBoard.rows);
+        if (columnIDCenter % 2 != 0) {
+          currentState.graph().addEdge(i, i - 1, 1);
+          currentState.graph().addEdge(i, i + 1, 1);
+          currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+          currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
+          currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+          currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
+        }
+        else if (columnIDCenter % 2 === 0) {
+          currentState.graph().addEdge(i, i - 1, 1);
+          currentState.graph().addEdge(i, i + 1, 1);
+          currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+          currentState.graph().addEdge(i, i - HexBoard.rows - 1, 1);
+          currentState.graph().addEdge(i, i + HexBoard.rows, 1);
+          currentState.graph().addEdge(i, i + HexBoard.rows - 1, 1);
+        }
       }
     }
     //if it is even then it is adding 1 extra, if it is odd it should be fine.
