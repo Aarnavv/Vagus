@@ -182,7 +182,7 @@ export default class HexBoardInitializer extends React.Component {
             }
             else { // adj 6
                 columnIDCenter = Math.floor(i / HexBoardInitializer.rows);
-                if (columnIDCenter % 2 != 0) {
+                if (columnIDCenter % 2 !== 0) {
                     currentState.graph().addEdge(i, i - 1, 1);
                     currentState.graph().addEdge(i, i + 1, 1);
                     currentState.graph().addEdge(i, i - HexBoardInitializer.rows, 1);

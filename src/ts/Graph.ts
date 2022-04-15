@@ -1,5 +1,5 @@
 import Node from "./Node";
-import { Algorithms } from "./Algorithms";
+import  Algorithms  from "./Algorithms";
 
 
 export default class Graph<T> {
@@ -140,14 +140,16 @@ export default class Graph<T> {
    * @return void
    */
   static revertNode<T>(data: T, _initGraph: Graph<T>, _presentGraph: Graph<T>): void {
-    let initNode: Node<T> = _initGraph.nodes().get(data);
-    let presNode = _presentGraph.addNode(initNode.getData());
-    initNode.getAdjNodes().forEach((edge) => {
-      if (_presentGraph.nodes().has(edge.dest.getData())) {
-        presNode.addAdjNode(edge.dest, edge.cost);
-        edge.dest.addAdjNode(initNode, edge.cost);
+    let initialNode:Node<T> = _initGraph.nodes().get(data);
+    _presentGraph.addNode(data);
+    let presentNode:Node<T> = _presentGraph.nodes().get(data);
+    initialNode.getAdjNodes().forEach((edge)=>{
+      let presentEdgeDest= _presentGraph.nodes().get(edge.dest.getData());
+      if(presentEdgeDest!==undefined){
+        presentNode.addAdjNode(presentEdgeDest, edge.cost);
+        presentEdgeDest.addAdjNode(presentNode , edge.cost);
       }
-    });
+    })
   }
 
   updateCostOfIncoming(data: T, cost: number) {

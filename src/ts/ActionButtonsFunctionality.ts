@@ -1,4 +1,5 @@
 import { setInitialNodes } from "./HexBoardUpdate";
+import Algorithms  from "./Algorithms";
 
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
@@ -15,6 +16,14 @@ const StopButtonClick = (): void => {
   setTimeout(() => {
     document.getElementById('stop-button').classList.remove('button-clicked');
   }, 200);
+}
+
+const StartButtonClicked = ():void =>{
+  document.getElementById('start-button').classList.add('button-clicked');
+  //code goes here.
+  let [AnimationPath , visitedInOrder]= Algorithms.runAlgoFromGlobalState();
+  setTimeout(_=> document.getElementById('start-button').classList.remove('button-clicked'), 200);
+
 }
 
 /**

@@ -1,7 +1,7 @@
 import currentState from './GlobalState';
 import { updateState } from './fileStruct';
-import Graph from './Graph';
 import HexBoardInitializer from './HexBoardInitializer';
+import Graph from "./Graph";
 const updateHexIcon = (propID, id) => {
     document.onmousemove = null;
     document.onmousedown = null;
@@ -30,17 +30,21 @@ const updateHexIcon = (propID, id) => {
             break;
         case 'weight-node':
             nodeHoverAnimation(propID);
-            if (document.getElementById(propID).classList.contains('weight-node'))
+            if (document.getElementById(propID).classList.contains('weight-node')) {
                 removeOnClick(propID, 'weight-node', id);
-            else
+            }
+            else {
                 multiNodeUpdate(propID, 'weight-node', ['no-node']);
+            }
             break;
         case 'wall-node':
             nodeHoverAnimation(propID);
-            if (document.getElementById(propID).classList.contains('wall-node'))
+            if (document.getElementById(propID).classList.contains('wall-node')) {
                 removeOnClick(propID, 'wall-node', id);
-            else
+            }
+            else {
                 multiNodeUpdate(propID, 'wall-node', ['no-node', 'icon']);
+            }
             break;
         default:
             break;

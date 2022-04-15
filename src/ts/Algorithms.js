@@ -1,5 +1,5 @@
 import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
-export class Algorithms {
+export default class Algorithms {
     graph;
     comparator;
     constructor(_assignGraph) {
@@ -195,5 +195,9 @@ export class Algorithms {
                 return [dist, prev];
         }
         return [dist, prev];
+    }
+    static runAlgoFromGlobalState() {
+        //the code goes here.
+        return [undefined, undefined];
     }
 }

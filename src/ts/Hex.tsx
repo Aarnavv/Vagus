@@ -17,6 +17,7 @@ export default class Hex extends React.Component<props> {
       top: this.props.y + "px",
     } as React.CSSProperties
   }
+
   /**
    * Renders each individual hexagon.
    * @return void

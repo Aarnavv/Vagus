@@ -1,5 +1,5 @@
 import Node from "./Node";
-import { Algorithms } from "./Algorithms";
+import Algorithms from "./Algorithms";
 export default class Graph {
     /**
      * has a Map of Nodes which are present in the graph
@@ -124,12 +124,14 @@ export default class Graph {
      * @return void
      */
     static revertNode(data, _initGraph, _presentGraph) {
-        let initNode = _initGraph.nodes().get(data);
-        let presNode = _presentGraph.addNode(initNode.getData());
-        initNode.getAdjNodes().forEach((edge) => {
-            if (_presentGraph.nodes().has(edge.dest.getData())) {
-                presNode.addAdjNode(edge.dest, edge.cost);
-                edge.dest.addAdjNode(initNode, edge.cost);
+        let initialNode = _initGraph.nodes().get(data);
+        _presentGraph.addNode(data);
+        let presentNode = _presentGraph.nodes().get(data);
+        initialNode.getAdjNodes().forEach((edge) => {
+            let presentEdgeDest = _presentGraph.nodes().get(edge.dest.getData());
+            if (presentEdgeDest !== undefined) {
+                presentNode.addAdjNode(presentEdgeDest, edge.cost);
+                presentEdgeDest.addAdjNode(presentNode, edge.cost);
             }
         });
     }
