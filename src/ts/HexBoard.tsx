@@ -153,12 +153,13 @@ export default class HexBoard extends React.Component {
       else { // adj 6
         currentState.graph().addEdge(i, i - 1, 1);
         currentState.graph().addEdge(i, i + 1, 1);
-        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
         currentState.graph().addEdge(i, i - HexBoard.rows + 1, 1);
-        currentState.graph().addEdge(i, i + HexBoard.rows, 1);
-        currentState.graph().addEdge(i, i + HexBoard.rows + 1, 1);
+        currentState.graph().addEdge(i, i - HexBoard.rows, 1);
+        currentState.graph().addEdge(i, i + HexBoard.rows +1, 1);
+        currentState.graph().addEdge(i, i + HexBoard.rows , 1);
       }
     }
+    //if it is even then it is adding 1 extra, if it is odd it should be fine.
     setInitialNodes();
     return content;
   }

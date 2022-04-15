@@ -1,5 +1,5 @@
 import Node from "./Node";
-import { Algorithms } from "./Algorithms";
+import Algorithms from "./Algorithms";
 export default class Graph {
     /**
      * has a Map of Nodes which are present in the graph

@@ -30,8 +30,12 @@ const updateHexIcon = (propID: string, id: number): void => {
       break;
     case 'weight-node':
       nodeHoverAnimation(propID);
-      if (document.getElementById(propID).classList.contains('weight-node')) removeOnClick(propID, 'weight-node', id);
-      else multiNodeUpdate(propID, 'weight-node', ['no-node']);
+      if (document.getElementById(propID).classList.contains('weight-node')) {
+        removeOnClick(propID, 'weight-node', id);
+      }
+      else {
+        multiNodeUpdate(propID, 'weight-node', ['no-node']);
+      }
       break;
     case 'wall-node':
       nodeHoverAnimation(propID);
@@ -49,7 +53,6 @@ const multiNodeUpdate = (propID: string, node: string, toRemove: Array<string>):
   if (document.getElementById(propID).classList.contains('no-node')) {
     document.getElementById(propID).classList.remove('no-node');
     document.getElementById(propID).classList.add(node);
-    console.log(Number(propID.substring(propID.lastIndexOf('-') + 1)))
     weightNodeUpdateCost(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10)
     let svgID = propID.replace('props', 'svg');
     toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));

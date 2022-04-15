@@ -1,5 +1,5 @@
 import Node from "./Node";
-import { Algorithms } from "./Algorithms";
+import  Algorithms  from "./Algorithms";
 
 
 export default class Graph<T> {

@@ -1,9 +1,11 @@
 import Graph from './Graph';
 import {MinPriorityQueue, PriorityQueue} from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
+import {AlgoType} from "./Types";
+import currentState from "./GlobalState";
 
 
-export class Algorithms<T> {
+export default class Algorithms<T> {
     graph: Graph<T>;
     comparator;
 
@@ -200,5 +202,9 @@ export class Algorithms<T> {
             if (label === end) return [dist, prev];
         }
         return [dist, prev];
+    }
+    static runAlgoFromGlobalState():[number[] , Map<number , number > | Map<number , boolean>]{
+        //the code goes here.
+        return [undefined , undefined] ;
     }
 }
