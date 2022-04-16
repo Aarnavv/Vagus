@@ -16,6 +16,8 @@
   --hex-color: #282C34;
   --hex-color-hover: #1B8BCD;
   --wall-node-color: #484E5B;
+  --path-node-color: #FFA500;
+  --visited-node-color: #443415;
 }
 
 .content {

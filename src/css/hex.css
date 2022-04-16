@@ -58,6 +58,14 @@ fill: var(--wall-node-color);
   animation: node-pulsate 1s infinite linear;
 }
 
+.svg-path-node {
+  fill: var(--path-node-color);
+}
+
+.svg-visited-node {
+  fill: var(--visited-node-color);
+}
+
 @keyframes icon-pulsate {
   0% {
       fill: var(--hex-color);
