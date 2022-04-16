@@ -3,6 +3,8 @@ import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-que
 import Edge from "./Edge";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
+import Node from "./Node";
+import { Queue } from "queue-typescript";
 
 
 export default class Algorithms<T> {
@@ -18,26 +20,23 @@ export default class Algorithms<T> {
     const visited: Map<T, boolean> = new Map();
     const prev: Map<T, T> = new Map();
     const path: T[] = [];
-    if (this.graph.nodes().get(start) === undefined) return [null, null];
-    const Q = new PriorityQueue<T>(() => {
-      return 0
-    });
+    const Q = new Queue<T>();
     Q.enqueue(start);
     visited.set(start, true);
-    while (!Q.isEmpty()) {
-      let currNode = this.graph.nodes().get(Q.dequeue());
-      currNode.getAdjNodes().forEach((edge) => {
+    while (Q.length !== 0) {
+      let node: Node<T> = this.graph.nodes().get(Q.dequeue());
+      visited.set(node.getData(), true);
+      node.getAdjNodes().forEach((edge) => {
         if (!visited.has(edge.dest.getData())) {
           visited.set(edge.dest.getData(), true);
+          prev.set(edge.dest.getData(), node.getData());
           Q.enqueue(edge.dest.getData());
-          prev.set(edge.dest.getData(), currNode.getData());
         }
-      })
-      if (currNode.getData() === end) {
+      });
+      if (node.getData() === end) {
         for (let at = end; at !== undefined; at = prev.get(at))
           path.unshift(at);
         return [path, visited];
-
       }
     }
     return [null, visited];
@@ -151,7 +150,7 @@ export default class Algorithms<T> {
       node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
     });
     let finish = this.graph.nodes().get(end);
-    let PQ = new MinPriorityQueue<{ label: T, H: number, G: number }>((promisingNode) => promisingNode.H);
+    let PQ = new MinPriorityQueue<{ label: T, H: number, G: number }>((promisingNode) => promisingNode.G);
     PQ.enqueue({ label: start, H: this.graph.distBw(this.graph.nodes().get(start), this.graph.nodes().get(end)), G: 0 });
     while (!PQ.isEmpty()) {
       const { label, H, G } = PQ.dequeue();
