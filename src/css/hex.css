@@ -50,7 +50,7 @@
   animation: icon-pulsate 0.2s 1 linear forwards;
 }
 
-svg.wall-node {
+.svg-wall-node {
 fill: var(--wall-node-color);
 }
 
