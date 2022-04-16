@@ -60,10 +60,12 @@ fill: var(--wall-node-color);
 
 .svg-path-node {
   fill: var(--path-node-color);
+  transition: all 0.75s;
 }
 
 .svg-visited-node {
   fill: var(--visited-node-color);
+  transition: all 0.15s;
 }
 
 @keyframes icon-pulsate {

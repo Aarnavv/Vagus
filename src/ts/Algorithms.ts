@@ -150,7 +150,7 @@ export default class Algorithms<T> {
       node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
     });
     let finish = this.graph.nodes().get(end);
-    let PQ = new MinPriorityQueue<{ label: T, H: number, G: number }>((promisingNode) => promisingNode.H);
+    let PQ = new MinPriorityQueue<{ label: T, H: number, G: number }>((promisingNode) => promisingNode.G);
     PQ.enqueue({ label: start, H: this.graph.distBw(this.graph.nodes().get(start), this.graph.nodes().get(end)), G: 0 });
     while (!PQ.isEmpty()) {
       const { label, H, G } = PQ.dequeue();
