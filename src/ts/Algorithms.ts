@@ -141,51 +141,55 @@ export default class Algorithms<T> {
 
   }
 
-  // i will have to sort out aStar, change the heuristic.
+  // I will have to sort out aStar, change the heuristic.
   private internalAStar(start: T, end: T): [Map<T, number>, Map<T, T>, Map<T, boolean>] {
-    let dist: Map<T, number> = new Map();
-    let visited: Map<T, boolean> = new Map();
-    let prev: Map<T, T> = new Map();
-    this.graph.nodes().forEach((node) => {
-      node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
-    });
-    let finish = this.graph.nodes().get(end);
-    let PQ = new MinPriorityQueue<{ label: T, H: number, G: number }>((promisingNode) => promisingNode.G);
-    PQ.enqueue({ label: start, H: this.graph.distBw(this.graph.nodes().get(start), this.graph.nodes().get(end)), G: 0 });
-    while (!PQ.isEmpty()) {
-      const { label, H, G } = PQ.dequeue();
-      visited.set(label, true);
-      this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
-        const dest = edge.dest.getData();
-        if (!visited.has(dest)) {
-          //general travelCost which is used for decision to update dest.
-          let g = dist.get(label) + edge.cost;
-          //general travelCost which is used for decision to update dest.
-          let h = this.graph.distBw(this.graph.nodes().get(edge.dest.getData()), finish);
-          if (g < dist.get(dest)) {
-            prev.set(dest, label);
-            dist.set(dest, g);
-            PQ.enqueue({ label: dest, H: h, G: g })
+    let visited:Map<T , boolean> = new Map();
+    let dist:Map<T , number> = new Map();
+    let prev:Map<T,T> = new Map();
+    type Priority={
+      label:T,
+      g:number,
+      h:number
+    }
+    let PQ = new MinPriorityQueue<Priority>(promisingNode => promisingNode.h);
+    this.graph.nodes().forEach((node)=>
+        node.getData()!==start ? dist.set(node.getData() , Infinity) : dist.set(node.getData () , 0));
+    let startNode = this.graph.nodes().get(start) , endNode =this.graph.nodes().get(end);
+    PQ.enqueue({label:start,g:0 ,h:this.graph.distBw(startNode , endNode)});
+    while(!PQ.isEmpty()){
+      const {label,g,h}= PQ.dequeue();
+      visited.set(label , true);
+      if(dist.get(label) < g )
+        continue;
+      this.graph.nodes().get(label).getAdjNodes().forEach((edge)=>{
+        if(!visited.has(edge.dest.getData())){
+          let newCost=dist.get(label)+edge.cost;
+          let newHeuristic= this.graph.distBw(edge.dest , endNode) +edge.cost;
+          if(newCost < dist.get(edge.dest.getData())){
+            dist.set(edge.dest.getData() , newCost);
+            prev.set(edge.dest.getData () , label);
+            PQ.enqueue({label : edge.dest.getData () , g : newCost , h:newHeuristic + newCost});
           }
         }
-      })
-      if (label === end) return [dist, prev, visited];
+      });
+      if(label===end){
+        return [dist , prev , visited];
+      }
     }
-    return [dist, prev, visited];
+    return [dist , prev , visited];
   }
 
   private internalDijkstras(start: T, end: T): [Map<T, number>, Map<T, T>, Map<T, boolean>] {
     let PQ = new MinPriorityQueue<{ label: T, minDist: number }>((promisingNode) => promisingNode.minDist);
-    let dist: Map<T, number> = new Map();
-    let visited: Map<T, boolean> = new Map();
-    let prev: Map<T, T> = new Map();
+    let dist: Map<T, number> = new Map() , prev:Map<T,T> = new Map();
+    let visited: Map<T ,boolean> = new Map();
     this.graph.nodes().forEach((node) => {
       node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
     });
     PQ.enqueue({ label: start, minDist: 0 });
     while (!PQ.isEmpty()) {
       const { label, minDist } = PQ.dequeue();
-      visited.set(label, true);
+      visited.set(label,true);
       if (dist.get(label) < minDist)
         continue;
       this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
