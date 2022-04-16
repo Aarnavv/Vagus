@@ -1,3 +1,8 @@
+import { nodeHoverAnimation } from "./HexBoardUpdate";
+import currentState from "./GlobalState";
+
+// console.log(currentState.speed());
+
 let i1 = 0;
 let i2 = 0;
 
@@ -15,7 +20,7 @@ export const updatePathNodes = (pathIDs: number[]): void => {
     if (i1 < pathIDs.length) {
       updatePathNodes(pathIDs);
     }
-  }, 50)
+  }, 50 * updateSpeed())
 }
 
 export const updateVisitedNodes = (visitedIDs: number[], pathIDs: number[]): void => {
@@ -29,11 +34,25 @@ export const updateVisitedNodes = (visitedIDs: number[], pathIDs: number[]): voi
 
       document.getElementById(propsID).classList.remove('no-node');
       document.getElementById(propsID).classList.add('visited-node');
+
+      if (document.getElementById(propsID).classList.contains('weight-node'))
+        nodeHoverAnimation(propsID);
       i2++;
-      if (i2 < visitedIDs.length) 
+      if (i2 < visitedIDs.length)
         updateVisitedNodes(visitedIDs, pathIDs);
-      else if(i2 === visitedIDs.length)
+      else if (i2 === visitedIDs.length)
         updatePathNodes(pathIDs);
     }
-  }, 1)
+  }, 1 * updateSpeed())
+}
+
+const updateSpeed = (): number => {
+  switch (currentState.speed()) {
+    case 100:
+      return 1;
+    case 50:
+      return 2;
+    case 25:
+      return 4;
+  }
 }

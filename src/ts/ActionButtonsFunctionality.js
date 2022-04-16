@@ -1,4 +1,3 @@
-import { setInitialNodes } from "./HexBoardUpdate";
 import Algorithms from "./Algorithms";
 import { updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
 /**
@@ -7,18 +6,19 @@ import { updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
  * @return void
  */
 const StopButtonClick = () => {
-    document.getElementById('stop-button').classList.add('button-clicked');
-    RemoveAllNodes('start-node');
-    RemoveAllNodes('end-node');
-    RemoveAllNodes('bomb-node');
-    RemoveAllNodes('weight-node');
-    RemoveAllNodes('wall-node');
-    RemoveAllNodes('path-node');
-    RemoveAllNodes('visited-node');
-    setInitialNodes();
-    setTimeout(() => {
-        document.getElementById('stop-button').classList.remove('button-clicked');
-    }, 200);
+    // document.getElementById('stop-button').classList.add('button-clicked');
+    // RemoveAllNodes('start-node');
+    // RemoveAllNodes('end-node');
+    // RemoveAllNodes('bomb-node');
+    // RemoveAllNodes('weight-node');
+    // RemoveAllNodes('wall-node');
+    // RemoveAllNodes('path-node');
+    // RemoveAllNodes('visited-node');
+    // setInitialNodes();
+    // setTimeout(() => {
+    //   document.getElementById('stop-button').classList.remove('button-clicked');
+    // }, 200);
+    document.location.reload();
 };
 /**
  * Removes all the nodes of a certain type from the board.
