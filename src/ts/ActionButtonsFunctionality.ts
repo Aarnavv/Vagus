@@ -44,12 +44,21 @@ const RemoveAllNodes = (node: string): void => {
 }
 
 const StartButtonClick = (): void => {
-  let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;
-  let visitedInOrder: Map<number, number> | Map<number, boolean> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
-  // console.log(path);
-  let ids: number[] = Array.from(visitedInOrder.keys());
-  // console.log(ids);
-  updateVisitedNodes(ids, path);
+  if (currentState.bombNode() === null) {
+    let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;
+    let visitedInOrder: Map<number, boolean> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
+    let ids: number[] = Array.from(visitedInOrder.keys());
+    updateVisitedNodes(ids, null, path, false);
+  }
+  else {
+    let path: number[] = Algorithms.runAlgorithmGlobalStateYesBomb().path;
+    let visitedP1: Map<number, boolean> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
+    let visitedP2: Map<number, boolean> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
+    let ids1: number[] = Array.from(visitedP1.keys());
+    let ids2: number[] = Array.from(visitedP2.keys());
+    let ids3 = ids1.concat(ids2);
+    updateVisitedNodes(ids1, ids2, path, true);
+  }
 }
 
 export {

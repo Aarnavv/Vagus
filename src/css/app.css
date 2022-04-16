@@ -24,6 +24,9 @@
   --visited-node-color-1: #175ab5;
   --visited-node-color-2: #1b8bcd;
   --visited-node-color-3: #25c8cf;
+  --visited-node-color-11: #BF4286;
+  --visited-node-color-21: #D15FDA;
+  --visited-node-color-31: #85404F;
 }
 
 .content {

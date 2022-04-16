@@ -67,7 +67,13 @@ fill: var(--wall-node-color);
 .svg-visited-node {
   fill: var(--visited-node-color);
   transition: all 0.001s;
-  animation: visited-node-transform 1s 1 linear forwards;
+  animation: visited-node-transform-no-bomb 1s 1 linear forwards;
+}
+
+.svg-visited-node-bomb {
+  fill: var(--visited-node-color);
+  transition: all 0.001s;
+  animation: visited-node-transform-yes-bomb 1s 1 linear forwards;
 }
 
 @keyframes path-node-transform {
@@ -90,7 +96,8 @@ fill: var(--wall-node-color);
       fill: var(--path-node-color-1);
   }
 }
-@keyframes visited-node-transform {
+
+@keyframes visited-node-transform-no-bomb {
   0% {
       fill: var(--hex-color);
   }
@@ -102,6 +109,21 @@ fill: var(--wall-node-color);
   }
   100% {
       fill: var(--visited-node-color-1);
+  }
+}
+
+@keyframes visited-node-transform-yes-bomb {
+  0% {
+      fill: var(--hex-color);
+  }
+  33% {
+      fill: var(--visited-node-color-31);
+  }
+  66% {
+      fill: var(--visited-node-color-21);
+  }
+  100% {
+      fill: var(--visited-node-color-11);
   }
 }
 
