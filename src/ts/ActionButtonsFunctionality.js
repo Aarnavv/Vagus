@@ -1,6 +1,6 @@
 import { setInitialNodes } from "./HexBoardUpdate";
 import Algorithms from "./Algorithms";
-import { updatePathNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import { updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
  * Requires no parameters.
@@ -44,10 +44,6 @@ const StartButtonClick = () => {
     // console.log(path);
     let ids = Array.from(visitedInOrder.keys());
     // console.log(ids);
-    updateVisitedNodes(ids);
-    setTimeout(() => {
-        // console.log(1)
-        updatePathNodes(path);
-    }, (ids.length * 1.1) * 15);
+    updateVisitedNodes(ids, path);
 };
 export { StopButtonClick, StartButtonClick };

@@ -15,12 +15,12 @@ export const updatePathNodes = (pathIDs: number[]): void => {
     if (i1 < pathIDs.length) {
       updatePathNodes(pathIDs);
     }
-  }, 75)
+  }, 50)
 }
 
-export const updateVisitedNodes = (pathIDs: number[]): void => {
+export const updateVisitedNodes = (visitedIDs: number[], pathIDs: number[]): void => {
   setTimeout(() => {
-    let id = pathIDs[i2];
+    let id = visitedIDs[i2];
     let svgID = `svg-${id}`;
     let propsID = `props-${id}`;
     if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -30,9 +30,10 @@ export const updateVisitedNodes = (pathIDs: number[]): void => {
       document.getElementById(propsID).classList.remove('no-node');
       document.getElementById(propsID).classList.add('visited-node');
       i2++;
-      if (i2 < pathIDs.length) {
-        updateVisitedNodes(pathIDs);
-      }
+      if (i2 < visitedIDs.length) 
+        updateVisitedNodes(visitedIDs, pathIDs);
+      else if(i2 === visitedIDs.length)
+        updatePathNodes(pathIDs);
     }
-  }, 15)
+  }, 1)
 }

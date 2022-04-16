@@ -48,11 +48,7 @@ const StartButtonClick = (): void => {
   // console.log(path);
   let ids: number[] = Array.from(visitedInOrder.keys());
   // console.log(ids);
-  updateVisitedNodes(ids);
-  setTimeout(() => {
-    // console.log(1)
-    updatePathNodes(path);
-  }, (ids.length*1.1) * 15);
+  updateVisitedNodes(ids, path);
 }
 
 export {
