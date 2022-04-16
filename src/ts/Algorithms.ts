@@ -25,6 +25,11 @@ export default class Algorithms<T> {
     while(Q.length!== 0){
       let node:Node<T> = this.graph.nodes().get(Q.dequeue());
       visited.set(node.getData() ,true);
+      if(node.getData()===end){
+        for(let at = end; at !== undefined;at=prev.get(at))
+          path.unshift(at);
+        return [path , visited];
+      }
       node.getAdjNodes().forEach((edge)=>{
         if(!visited.has(edge.dest.getData())){
           visited.set(edge.dest.getData() , true);
@@ -32,11 +37,6 @@ export default class Algorithms<T> {
           Q.enqueue(edge.dest.getData());
         }
       });
-      if(node.getData()===end){
-        for(let at = end; at !== undefined;at=prev.get(at))
-          path.unshift(at);
-        return [path , visited];
-      }
     }
     return [null , visited];
   }
@@ -209,7 +209,7 @@ export default class Algorithms<T> {
     }
     return [dist, prev, visited];
   }
-  static runAlgoFromGlobalStateNoBomb(): { path: number[], visitedInOrder: Map<number, number> | Map<number, boolean> } {
+  static runAlgoFromGlobalStateNoBomb(): { path: number[], visitedInOrder: Map<number, boolean>  } {
     let path: number[] = [];
     let algo: Algorithms<number> = new Algorithms<number>(currentState.graph());
     let visitedInOrder: Map<number, boolean> = new Map();
@@ -228,7 +228,7 @@ export default class Algorithms<T> {
       path = algo.randomWalk(currentState.startNode(), currentState.endNode());
       visitedInOrder = null;
     }
-    //else //something regarding bi-directional search needs to be done.
+    //else //something regarding bidirectional search needs to be done.
     return { path, visitedInOrder };
   }
   static runAlgorithmGlobalStateYesBomb():{path:number[], visitedP1:Map<number , boolean> , visitedP2:Map<number , boolean>}{

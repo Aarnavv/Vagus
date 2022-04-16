@@ -19,6 +19,11 @@ export default class Algorithms {
         while (Q.length !== 0) {
             let node = this.graph.nodes().get(Q.dequeue());
             visited.set(node.getData(), true);
+            if (node.getData() === end) {
+                for (let at = end; at !== undefined; at = prev.get(at))
+                    path.unshift(at);
+                return [path, visited];
+            }
             node.getAdjNodes().forEach((edge) => {
                 if (!visited.has(edge.dest.getData())) {
                     visited.set(edge.dest.getData(), true);
@@ -26,11 +31,6 @@ export default class Algorithms {
                     Q.enqueue(edge.dest.getData());
                 }
             });
-            if (node.getData() === end) {
-                for (let at = end; at !== undefined; at = prev.get(at))
-                    path.unshift(at);
-                return [path, visited];
-            }
         }
         return [null, visited];
     }
@@ -212,7 +212,7 @@ export default class Algorithms {
             path = algo.randomWalk(currentState.startNode(), currentState.endNode());
             visitedInOrder = null;
         }
-        //else //something regarding bi-directional search needs to be done.
+        //else //something regarding bidirectional search needs to be done.
         return { path, visitedInOrder };
     }
     static runAlgorithmGlobalStateYesBomb() {
