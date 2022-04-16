@@ -1,4 +1,6 @@
 import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
+import { AlgoType } from "./Types";
+import currentState from "./GlobalState";
 export default class Algorithms {
     graph;
     comparator;
@@ -11,7 +13,7 @@ export default class Algorithms {
         const prev = new Map();
         const path = [];
         if (this.graph.nodes().get(start) === undefined)
-            return [path, visited, prev];
+            return [null, null];
         const Q = new PriorityQueue(() => {
             return 0;
         });
@@ -29,68 +31,68 @@ export default class Algorithms {
             if (currNode.getData() === end) {
                 for (let at = end; at !== undefined; at = prev.get(at))
                     path.unshift(at);
-                return [path, visited, prev];
+                return [path, visited];
             }
         }
-        return [path, visited, prev];
+        return [null, visited];
     }
     dfs(start, end) {
-        let isCyclic = false;
         let path = [];
         const visited = new Map();
         const internalDfs = (at) => {
-            if (visited.has(at)) {
-                isCyclic = true;
-                return;
+            if (!visited.has(at)) {
+                visited.set(at, true);
+                path.push(at);
+                if (at === end)
+                    return;
+                this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
+                    internalDfs(edge.dest.getData());
+                });
             }
-            visited.set(at, true);
-            path.push(at);
-            this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
-                internalDfs(edge.dest.getData());
-            });
         };
         internalDfs(start);
         const endIndex = path.indexOf(end);
         if (endIndex < 0)
-            return [isCyclic, visited, path];
+            return [null, visited];
         else {
             path.splice(endIndex + 1);
-            return [isCyclic, visited, path];
+            return [path, visited];
         }
     }
     dijkstras(start, end) {
-        const [dist, prev] = this.internalDijkstras(start, end);
+        const [dist, prev, visited] = this.internalDijkstras(start, end);
         // the rest is just finding the path to use.
         let path = [];
         if (dist.get(end) === Infinity)
-            return [path, dist, prev];
+            return [path, visited];
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
-        return [path, dist, prev];
+        return [path, visited];
     }
     aStar(start, end) {
-        const [dist, prev] = this.internalAStar(start, end);
+        const [dist, prev, visited] = this.internalAStar(start, end);
         // this is just to reconstruct the path for a*;
         let path = [];
         if (dist.get(end) === Infinity)
-            return [path, dist, prev];
+            return [null, visited];
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
-        return [path, dist, prev];
+        return [path, visited];
     }
     bellmanFord(start, end) {
-        const [dist, prev] = this.internalBellmanFord(start);
+        const [dist, prev, visited] = this.internalBellmanFord(start);
         console.log(prev);
         let path = [];
         if (dist.get(end) === Infinity)
-            return [path, dist, prev];
+            return [null, visited];
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
-        return [path, dist, prev];
+        return [path, visited];
     }
     internalBellmanFord(start) {
         let dist = new Map();
         let edgeList = new Map();
+        let visited = new Map();
         let prev = new Map();
         this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
@@ -100,6 +102,8 @@ export default class Algorithms {
         for (let v = 0; v < V - 1; v++) {
             this.graph.nodes().forEach((node) => {
                 node.getAdjNodes().forEach((edge) => {
+                    if (!visited.has(edge.dest.getData()))
+                        visited.set(edge.dest.getData(), true);
                     if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
                         dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
                         prev.set(edge.dest.getData(), node.getData());
@@ -107,7 +111,7 @@ export default class Algorithms {
                 });
             });
         }
-        return [dist, prev];
+        return [dist, prev, visited];
     }
     randomWalk(start, end) {
         let src = start;
@@ -123,6 +127,7 @@ export default class Algorithms {
     biDirectional(start, end) {
         const [pathFromStart, visitedFromStart] = this.bfs(start, end);
         const [pathFromEnd, visitedFromEnd] = this.bfs(end, start);
+        const visited = new Map();
         let splicePoint = pathFromEnd.length / 2;
         let visitedFromStartArray = Array.from(visitedFromStart.keys());
         let visitedFromEndArray = Array.from(visitedFromEnd.keys());
@@ -162,9 +167,9 @@ export default class Algorithms {
                 }
             });
             if (label === end)
-                return [dist, prev];
+                return [dist, prev, visited];
         }
-        return [dist, prev];
+        return [dist, prev, visited];
     }
     internalDijkstras(start, end) {
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minDist);
@@ -192,12 +197,33 @@ export default class Algorithms {
                 }
             });
             if (label === end)
-                return [dist, prev];
+                return [dist, prev, visited];
         }
-        return [dist, prev];
+        return [dist, prev, visited];
     }
-    static runAlgoFromGlobalState() {
-        //the code goes here.
-        return [undefined, undefined];
+    static runAlgoFromGlobalStateNoBomb() {
+        let path = null;
+        let algo = new Algorithms(currentState.graph());
+        let visitedInOrder = new Map();
+        let algoType = currentState.algorithm();
+        if (algoType === AlgoType.dijkstrasSearch)
+            [path, visitedInOrder] = algo.dijkstras(currentState.startNode(), currentState.endNode());
+        else if (algoType === AlgoType.aStarSearch)
+            [path, visitedInOrder] = algo.aStar(currentState.startNode(), currentState.endNode());
+        else if (algoType === AlgoType.breadthFirstSearch)
+            [path, visitedInOrder] = algo.bfs(currentState.startNode(), currentState.endNode());
+        else if (algoType === AlgoType.depthFirstSearch)
+            [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
+        else if (algoType === AlgoType.bellmanFord)
+            [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
+        else if (algoType === AlgoType.randomWalk) {
+            path = algo.randomWalk(currentState.startNode(), currentState.endNode());
+            visitedInOrder = null;
+        }
+        else //something regarding bi-directional search needs to be done.
+            return { path: path, visitedInOrder: visitedInOrder };
+    }
+    static runAlgorithmGlobalStateYesBomb() {
+        //implementation is left.
     }
 }

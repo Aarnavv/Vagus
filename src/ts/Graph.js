@@ -1,5 +1,4 @@
 import Node from "./Node";
-import Algorithms from "./Algorithms";
 export default class Graph {
     /**
      * has a Map of Nodes which are present in the graph
@@ -96,16 +95,6 @@ export default class Graph {
      */
     distBw(_this, _that) {
         return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
-    }
-    /**
-     * Returns a boolean which signifies if the present graph is cyclic or not. Does not detect negative weight cycles and
-     * uses only the Depth-first-search recursive stack trace algorithm to function.
-     * @param start the start node
-     * @param end the end node.
-     * @return boolean
-     */
-    hasCycles(start, end) {
-        return new Algorithms(this).dfs(start, end)[0];
     }
     freeze() {
         Object.freeze(this);
