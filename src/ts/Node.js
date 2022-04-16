@@ -84,4 +84,7 @@ export default class Node {
         metaData += "\n}";
         return metaData;
     }
+    getRandomNeighbour() {
+        return this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest.getData();
+    }
 }
