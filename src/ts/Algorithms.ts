@@ -3,9 +3,8 @@ import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-que
 import Edge from "./Edge";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
+import {Queue} from "queue-typescript";
 import Node from "./Node";
-import { Queue } from "queue-typescript";
-
 
 export default class Algorithms<T> {
   graph: Graph<T>;
@@ -17,29 +16,29 @@ export default class Algorithms<T> {
   }
 
   bfs(start: T, end: T): [T[], Map<T, boolean>] {
-    const visited: Map<T, boolean> = new Map();
-    const prev: Map<T, T> = new Map();
-    const path: T[] = [];
-    const Q = new Queue<T>();
+    const visited:Map<T , boolean> = new Map();
+    const prev:Map<T,T> = new Map();
+    const path:T[] =[];
+    const Q=  new Queue<T>();
     Q.enqueue(start);
-    visited.set(start, true);
-    while (Q.length !== 0) {
-      let node: Node<T> = this.graph.nodes().get(Q.dequeue());
-      visited.set(node.getData(), true);
-      node.getAdjNodes().forEach((edge) => {
-        if (!visited.has(edge.dest.getData())) {
-          visited.set(edge.dest.getData(), true);
-          prev.set(edge.dest.getData(), node.getData());
+    visited.set(start , true);
+    while(Q.length!== 0){
+      let node:Node<T> = this.graph.nodes().get(Q.dequeue());
+      visited.set(node.getData() ,true);
+      node.getAdjNodes().forEach((edge)=>{
+        if(!visited.has(edge.dest.getData())){
+          visited.set(edge.dest.getData() , true);
+          prev.set(edge.dest.getData() , node.getData());
           Q.enqueue(edge.dest.getData());
         }
       });
-      if (node.getData() === end) {
-        for (let at = end; at !== undefined; at = prev.get(at))
+      if(node.getData()===end){
+        for(let at = end; at !== undefined;at=prev.get(at))
           path.unshift(at);
-        return [path, visited];
+        return [path , visited];
       }
     }
-    return [null, visited];
+    return [null , visited];
   }
 
   dfs(start: T, end: T): [T[], Map<T, boolean>] {
@@ -70,7 +69,8 @@ export default class Algorithms<T> {
     const [dist, prev, visited] = this.internalDijkstras(start, end);
     // the rest is just finding the path to use.
     let path: T[] = [];
-    if (dist.get(end) === Infinity) return [path, visited];
+    if (dist.get(end) === Infinity)
+      return [path, visited];
     for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
     return [path, visited];
   }
@@ -155,7 +155,6 @@ export default class Algorithms<T> {
     while (!PQ.isEmpty()) {
       const { label, H, G } = PQ.dequeue();
       visited.set(label, true);
-      if (dist.get(label) < G) continue;
       this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
         const dest = edge.dest.getData();
         if (!visited.has(dest)) {

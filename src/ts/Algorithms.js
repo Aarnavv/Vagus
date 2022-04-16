@@ -146,8 +146,6 @@ export default class Algorithms {
         while (!PQ.isEmpty()) {
             const { label, H, G } = PQ.dequeue();
             visited.set(label, true);
-            if (dist.get(label) < G)
-                continue;
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
