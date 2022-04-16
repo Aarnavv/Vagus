@@ -1,5 +1,5 @@
 import { setInitialNodes } from "./HexBoardUpdate";
-import Algorithms  from "./Algorithms";
+import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
 
 /**
@@ -13,15 +13,11 @@ const StopButtonClick = (): void => {
   RemoveAllNodes('end-node');
   RemoveAllNodes('bomb-node');
   RemoveAllNodes('weight-node');
+  RemoveAllNodes('wall-node');
   setInitialNodes();
   setTimeout(() => {
     document.getElementById('stop-button').classList.remove('button-clicked');
   }, 200);
-}
-
-export const StartButtonClick = ():void =>{
-  console.log(Algorithms.runAlgoFromGlobalStateNoBomb());
-  console.log(currentState);
 }
 
 /**
@@ -31,13 +27,24 @@ export const StartButtonClick = ():void =>{
  */
 const RemoveAllNodes = (node: string): void => {
   let nodes = document.querySelectorAll(`.${node}`);
+  let svgNode = document.querySelectorAll(`.svg-${node}`);
   for (let i = 0; i < nodes.length; i++) {
     const ele = nodes[i] as HTMLElement;
     ele.classList.remove(node);
+    ele.classList.remove('node-hover');
     ele.classList.add('no-node');
+    const svgEle = svgNode[i] as HTMLElement;
+    svgEle.classList.remove(`svg-${node}`);
+    svgEle.classList.add('no-node', 'icon');
   }
 }
 
+const StartButtonClick = (): void => {
+  console.log(Algorithms.runAlgoFromGlobalStateNoBomb());
+  console.log(currentState);
+}
+
 export {
-  StopButtonClick
+  StopButtonClick,
+  StartButtonClick
 }

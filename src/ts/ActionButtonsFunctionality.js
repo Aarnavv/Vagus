@@ -12,14 +12,11 @@ const StopButtonClick = () => {
     RemoveAllNodes('end-node');
     RemoveAllNodes('bomb-node');
     RemoveAllNodes('weight-node');
+    RemoveAllNodes('wall-node');
     setInitialNodes();
     setTimeout(() => {
         document.getElementById('stop-button').classList.remove('button-clicked');
     }, 200);
-};
-export const StartButtonClick = () => {
-    console.log(Algorithms.runAlgoFromGlobalStateNoBomb());
-    console.log(currentState);
 };
 /**
  * Removes all the nodes of a certain type from the board.
@@ -28,10 +25,19 @@ export const StartButtonClick = () => {
  */
 const RemoveAllNodes = (node) => {
     let nodes = document.querySelectorAll(`.${node}`);
+    let svgNode = document.querySelectorAll(`.svg-${node}`);
     for (let i = 0; i < nodes.length; i++) {
         const ele = nodes[i];
         ele.classList.remove(node);
+        ele.classList.remove('node-hover');
         ele.classList.add('no-node');
+        const svgEle = svgNode[i];
+        svgEle.classList.remove(`svg-${node}`);
+        svgEle.classList.add('no-node', 'icon');
     }
 };
-export { StopButtonClick };
+const StartButtonClick = () => {
+    console.log(Algorithms.runAlgoFromGlobalStateNoBomb());
+    console.log(currentState);
+};
+export { StopButtonClick, StartButtonClick };
