@@ -5,7 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { StopButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick , StartButtonClick } from "./ActionButtonsFunctionality";
 
 export default class Navbar extends React.Component {
   render() {
@@ -21,7 +21,7 @@ export default class Navbar extends React.Component {
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => StopButtonClick()} />
             {/* <ActionIcons.PrevButtonIcon /> */}
-            <ActionIcons.RunButtonIcon />
+            <ActionIcons.RunButtonIcon onClick={_=> StartButtonClick()}/>
           </div>
         </div>
         <div className="folder-panel">
@@ -37,8 +37,7 @@ export default class Navbar extends React.Component {
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-4" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-5" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" divID="tsx-6" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="floydWarshallSearch.tsx" divID="tsx-7" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="johnsonsAlgorithm.tsx" divID="tsx-8" />
+                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="randomWalk.tsx" divID="tsx-7" />
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.BLUE} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">

@@ -2,7 +2,6 @@ import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
 import { updateHexIcon } from "./HexBoardUpdate";
-import currentState from "./GlobalState";
 export default class Hex extends React.Component {
     styles = {
         hexagon: {
@@ -17,7 +16,6 @@ export default class Hex extends React.Component {
     render() {
         return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon, onClick: () => {
                 updateHexIcon(`props-${this.props.id}`, parseInt(this.props.id));
-                console.log(currentState);
             } },
             React.createElement(HexIcon, { idSVG: `svg-${this.props.id}` }),
             React.createElement("div", { className: "prop-holder no-node", id: `props-${this.props.id}` })));

@@ -5,7 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { StopButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick, StartButtonClick } from "./ActionButtonsFunctionality";
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -17,7 +17,7 @@ export default class Navbar extends React.Component {
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
-                    React.createElement(ActionIcons.RunButtonIcon, null))),
+                    React.createElement(ActionIcons.RunButtonIcon, { onClick: _ => StartButtonClick() }))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
                     React.createElement("div", { className: "advanced-cp-border" },
@@ -31,8 +31,7 @@ export default class Navbar extends React.Component {
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "breadthFirstSearch.tsx", divID: "tsx-4" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "depthFirstSearch.tsx", divID: "tsx-5" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "biDirectionalSearch.tsx", divID: "tsx-6" }),
-                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "floydWarshallSearch.tsx", divID: "tsx-7" }),
-                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "johnsonsAlgorithm.tsx", divID: "tsx-8" }))),
+                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "randomWalk.tsx", divID: "tsx-7" }))),
                                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.BLUE, text: "addableNodes", divClassName: "folder advanced-cp-comp", arrowID: "addable-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "startNode.io", divID: "io-1" }),

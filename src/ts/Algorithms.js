@@ -81,7 +81,6 @@ export default class Algorithms {
     }
     bellmanFord(start, end) {
         const [dist, prev, visited] = this.internalBellmanFord(start);
-        console.log(prev);
         let path = [];
         if (dist.get(end) === Infinity)
             return [null, visited];
@@ -105,7 +104,7 @@ export default class Algorithms {
                     if (!visited.has(edge.dest.getData()))
                         visited.set(edge.dest.getData(), true);
                     if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
-                        dist.set(edge.dest.getData(), (dist.get(node.getData()) + edge.cost));
+                        dist.set(edge.dest.getData(), dist.get(node.getData()) + edge.cost);
                         prev.set(edge.dest.getData(), node.getData());
                     }
                 });
@@ -144,25 +143,24 @@ export default class Algorithms {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
         let finish = this.graph.nodes().get(end);
-        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.heuristicCost);
-        PQ.enqueue({ label: start, heuristicCost: 0 });
+        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.H);
+        PQ.enqueue({ label: start, H: this.graph.distBw(this.graph.nodes().get(start), this.graph.nodes().get(end)), G: 0 });
         while (!PQ.isEmpty()) {
-            const { label, heuristicCost } = PQ.dequeue();
+            const { label, H, G } = PQ.dequeue();
             visited.set(label, true);
-            if (dist.get(label) < heuristicCost)
+            if (dist.get(label) < G)
                 continue;
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
                     //general travelCost which is used for decision to update dest.
-                    let cost = dist.get(label) + edge.cost;
+                    let g = dist.get(label) + edge.cost;
                     //general travelCost which is used for decision to update dest.
-                    let euclideanDist = this.graph.distBw(this.graph.nodes().get(edge.dest.getData()), finish);
-                    let heuristic = euclideanDist + cost;
-                    if (cost < dist.get(dest)) {
+                    let h = this.graph.distBw(this.graph.nodes().get(edge.dest.getData()), finish);
+                    if (g < dist.get(dest)) {
                         prev.set(dest, label);
-                        dist.set(dest, cost);
-                        PQ.enqueue({ label: dest, heuristicCost: heuristic });
+                        dist.set(dest, g);
+                        PQ.enqueue({ label: dest, H: h, G: g });
                     }
                 }
             });
@@ -202,7 +200,7 @@ export default class Algorithms {
         return [dist, prev, visited];
     }
     static runAlgoFromGlobalStateNoBomb() {
-        let path = null;
+        let path = [];
         let algo = new Algorithms(currentState.graph());
         let visitedInOrder = new Map();
         let algoType = currentState.algorithm();
@@ -215,13 +213,13 @@ export default class Algorithms {
         else if (algoType === AlgoType.depthFirstSearch)
             [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
         else if (algoType === AlgoType.bellmanFord)
-            [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
+            [path, visitedInOrder] = algo.bellmanFord(currentState.startNode(), currentState.endNode());
         else if (algoType === AlgoType.randomWalk) {
             path = algo.randomWalk(currentState.startNode(), currentState.endNode());
             visitedInOrder = null;
         }
-        else //something regarding bi-directional search needs to be done.
-            return { path: path, visitedInOrder: visitedInOrder };
+        //else //something regarding bi-directional search needs to be done.
+        return { path, visitedInOrder };
     }
     static runAlgorithmGlobalStateYesBomb() {
         //implementation is left.
