@@ -1,6 +1,7 @@
-import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
+import { Queue } from "queue-typescript";
 export default class Algorithms {
     graph;
     comparator;
@@ -12,23 +13,20 @@ export default class Algorithms {
         const visited = new Map();
         const prev = new Map();
         const path = [];
-        if (this.graph.nodes().get(start) === undefined)
-            return [null, null];
-        const Q = new PriorityQueue(() => {
-            return 0;
-        });
+        const Q = new Queue();
         Q.enqueue(start);
         visited.set(start, true);
-        while (!Q.isEmpty()) {
-            let currNode = this.graph.nodes().get(Q.dequeue());
-            currNode.getAdjNodes().forEach((edge) => {
+        while (Q.length !== 0) {
+            let node = this.graph.nodes().get(Q.dequeue());
+            visited.set(node.getData(), true);
+            node.getAdjNodes().forEach((edge) => {
                 if (!visited.has(edge.dest.getData())) {
                     visited.set(edge.dest.getData(), true);
+                    prev.set(edge.dest.getData(), node.getData());
                     Q.enqueue(edge.dest.getData());
-                    prev.set(edge.dest.getData(), currNode.getData());
                 }
             });
-            if (currNode.getData() === end) {
+            if (node.getData() === end) {
                 for (let at = end; at !== undefined; at = prev.get(at))
                     path.unshift(at);
                 return [path, visited];
@@ -148,8 +146,6 @@ export default class Algorithms {
         while (!PQ.isEmpty()) {
             const { label, H, G } = PQ.dequeue();
             visited.set(label, true);
-            if (dist.get(label) < G)
-                continue;
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
                 const dest = edge.dest.getData();
                 if (!visited.has(dest)) {
