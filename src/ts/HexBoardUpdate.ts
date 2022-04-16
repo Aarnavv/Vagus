@@ -182,4 +182,5 @@ const setInitialNodes = (): void => {
 export {
   updateHexIcon,
   setInitialNodes,
+  nodeHoverAnimation,
 }

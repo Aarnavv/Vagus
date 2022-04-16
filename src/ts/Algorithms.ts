@@ -209,6 +209,7 @@ export default class Algorithms<T> {
     }
     return [dist, prev, visited];
   }
+
   static runAlgoFromGlobalStateNoBomb(): { path: number[], visitedInOrder: Map<number, boolean>  } {
     let path: number[] = [];
     let algo: Algorithms<number> = new Algorithms<number>(currentState.graph());

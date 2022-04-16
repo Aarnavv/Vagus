@@ -1,24 +1,25 @@
-import { setInitialNodes } from "./HexBoardUpdate";
 import Algorithms from "./Algorithms";
-import { updatePathNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import currentState from "./GlobalState";
+import { updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
  * Requires no parameters.
  * @return void
  */
 const StopButtonClick = () => {
-    document.getElementById('stop-button').classList.add('button-clicked');
-    RemoveAllNodes('start-node');
-    RemoveAllNodes('end-node');
-    RemoveAllNodes('bomb-node');
-    RemoveAllNodes('weight-node');
-    RemoveAllNodes('wall-node');
-    RemoveAllNodes('path-node');
-    RemoveAllNodes('visited-node');
-    setInitialNodes();
-    setTimeout(() => {
-        document.getElementById('stop-button').classList.remove('button-clicked');
-    }, 200);
+    // document.getElementById('stop-button').classList.add('button-clicked');
+    // RemoveAllNodes('start-node');
+    // RemoveAllNodes('end-node');
+    // RemoveAllNodes('bomb-node');
+    // RemoveAllNodes('weight-node');
+    // RemoveAllNodes('wall-node');
+    // RemoveAllNodes('path-node');
+    // RemoveAllNodes('visited-node');
+    // setInitialNodes();
+    // setTimeout(() => {
+    //   document.getElementById('stop-button').classList.remove('button-clicked');
+    // }, 200);
+    document.location.reload();
 };
 /**
  * Removes all the nodes of a certain type from the board.
@@ -39,15 +40,20 @@ const RemoveAllNodes = (node) => {
     }
 };
 const StartButtonClick = () => {
-    let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
-    let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
-    // console.log(path);
-    let ids = Array.from(visitedInOrder.keys());
-    // console.log(ids);
-    updateVisitedNodes(ids);
-    setTimeout(() => {
-        // console.log(1)
-        updatePathNodes(path);
-    }, (ids.length * 1.1) * 15);
+    if (currentState.bombNode() === null) {
+        let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
+        let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
+        let ids = Array.from(visitedInOrder.keys());
+        updateVisitedNodes(ids, null, path, false);
+    }
+    else {
+        let path = Algorithms.runAlgorithmGlobalStateYesBomb().path;
+        let visitedP1 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
+        let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
+        let ids1 = Array.from(visitedP1.keys());
+        let ids2 = Array.from(visitedP2.keys());
+        let ids3 = ids1.concat(ids2);
+        updateVisitedNodes(ids1, ids2, path, true);
+    }
 };
 export { StopButtonClick, StartButtonClick };

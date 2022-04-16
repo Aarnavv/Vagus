@@ -35,8 +35,8 @@ export const updateState = (divClass: string, id: string, text: string): void =>
     ele.style.backgroundColor = cssConstants.FILE_BG;
     ele.style.borderLeft = "";
   }
-  document.getElementById(id).style.backgroundColor =  cssConstants.FILE_BG_SELECTED;
-  document.getElementById(id).style.borderLeft = `2.5px solid ${ cssConstants.FILE_BORDER}`;
+  document.getElementById(id).style.backgroundColor = cssConstants.FILE_BG_SELECTED;
+  document.getElementById(id).style.borderLeft = `2.5px solid ${cssConstants.FILE_BORDER}`;
   let ext: string = text.substring(text.lastIndexOf(".") + 1);
   let textAdd: string = text.substring(0, text.lastIndexOf("."));
   switch (ext) {
@@ -83,7 +83,7 @@ const NodeAnimation = (nodeType: string) => {
         document.querySelector<HTMLElement>('.bomb-node').classList.add('node-hover');
       break;
     case 'weightNode':
-      if (document.querySelector<HTMLElement>('.weight-node')) { 
+      if (document.querySelector<HTMLElement>('.weight-node')) {
         let files = document.querySelectorAll('.weight-node');
         for (let i = 0; i < files.length; i++) {
           const ele = files[i] as HTMLElement;

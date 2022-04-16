@@ -170,4 +170,4 @@ const setInitialNodes = () => {
         }
     }
 };
-export { updateHexIcon, setInitialNodes, };
+export { updateHexIcon, setInitialNodes, nodeHoverAnimation, };
