@@ -111,15 +111,16 @@ export default class Algorithms {
         return [dist, prev, visited];
     }
     randomWalk(start, end) {
+        let visited = new Map();
         let src = start;
         let path = [];
-        while (true) {
+        while (src !== end) {
             let node = this.graph.nodes().get(src);
             path.push(src);
-            if (src === end)
-                return path;
+            visited.set(src, true);
             src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
         }
+        return path;
     }
     biDirectional(start, end) {
         const [pathFromStart, visitedFromStart] = this.bfs(start, end);
@@ -215,6 +216,41 @@ export default class Algorithms {
         return { path, visitedInOrder };
     }
     static runAlgorithmGlobalStateYesBomb() {
-        //implementation is left.
+        let path = [], pathP1 = [], pathP2 = [];
+        let visitedP1 = new Map(), visitedP2 = new Map();
+        let algo = new Algorithms(currentState.graph());
+        let algoType = currentState.algorithm();
+        switch (algoType) {
+            case AlgoType.aStarSearch:
+                [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
+                path = pathP1.concat(pathP2.slice(1));
+                break;
+            case AlgoType.breadthFirstSearch:
+                [pathP1, visitedP1] = algo.bfs(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.bfs(currentState.bombNode(), currentState.endNode());
+                path = pathP1.concat(pathP2.slice(1));
+                break;
+            case AlgoType.bellmanFord:
+                [pathP1, visitedP1] = algo.bellmanFord(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.bellmanFord(currentState.bombNode(), currentState.endNode());
+                path = pathP1.concat(pathP2.slice(1));
+                break;
+            case AlgoType.dijkstrasSearch:
+                [pathP1, visitedP1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
+                path = pathP1.concat(pathP2.slice(1));
+                break;
+            case AlgoType.depthFirstSearch:
+                [pathP1, visitedP1] = algo.dfs(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.dfs(currentState.bombNode(), currentState.endNode());
+                path = pathP1.concat(pathP2.slice(1));
+                break;
+        }
+        return {
+            path,
+            visitedP1,
+            visitedP2
+        };
     }
 }

@@ -1,5 +1,5 @@
 import Graph from './Graph';
-import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
@@ -118,14 +118,16 @@ export default class Algorithms<T> {
   }
 
   randomWalk(start: T, end: T): T[] {
+    let visited:Map<T, boolean> = new Map();
     let src: T = start;
     let path: T[] = [];
-    while (true) {
+    while (src !== end) {
       let node = this.graph.nodes().get(src);
       path.push(src);
-      if (src === end) return path;
+      visited.set(src, true);
       src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
     }
+    return path;
   }
 
   biDirectional(start: T, end: T): [T[], T[], T[]] {
@@ -229,7 +231,42 @@ export default class Algorithms<T> {
     //else //something regarding bi-directional search needs to be done.
     return { path, visitedInOrder };
   }
-  static runAlgorithmGlobalStateYesBomb() {
-    //implementation is left.
+  static runAlgorithmGlobalStateYesBomb():{path:number[], visitedP1:Map<number , boolean> , visitedP2:Map<number , boolean>}{
+    let path:number[]=[] , pathP1:number[]=[] , pathP2:number[]=[];
+    let visitedP1:Map<number,boolean> = new Map() , visitedP2:Map<number , boolean> = new Map();
+    let algo= new Algorithms(currentState.graph());
+    let algoType:AlgoType=currentState.algorithm();
+    switch(algoType){
+      case AlgoType.aStarSearch:
+        [pathP1 , visitedP1]= algo.aStar(currentState.startNode() , currentState.bombNode());
+        [pathP2 , visitedP2]= algo.aStar(currentState.bombNode() , currentState.endNode());
+        path= pathP1.concat(pathP2.slice(1));
+        break;
+      case AlgoType.breadthFirstSearch:
+        [pathP1 , visitedP1]= algo.bfs(currentState.startNode() , currentState.bombNode());
+        [pathP2 , visitedP2]= algo.bfs(currentState.bombNode() , currentState.endNode());
+        path=pathP1.concat(pathP2.slice(1));
+        break;
+      case AlgoType.bellmanFord:
+        [pathP1 , visitedP1]= algo.bellmanFord(currentState.startNode() , currentState.bombNode());
+        [pathP2 , visitedP2]= algo.bellmanFord(currentState.bombNode() , currentState.endNode());
+        path=pathP1.concat(pathP2.slice(1));
+        break;
+      case AlgoType.dijkstrasSearch:
+        [pathP1 , visitedP1]= algo.dijkstras(currentState.startNode() , currentState.bombNode());
+        [pathP2, visitedP2]= algo.dijkstras(currentState.bombNode() , currentState.endNode());
+        path=pathP1.concat(pathP2.slice(1));
+        break;
+      case AlgoType.depthFirstSearch:
+        [pathP1 , visitedP1] = algo.dfs(currentState.startNode() , currentState.bombNode() );
+        [pathP2 , visitedP2 ] =algo.dfs(currentState.bombNode() , currentState.endNode() );
+        path=pathP1.concat(pathP2.slice(1));
+        break;
+    }
+    return {
+      path ,
+      visitedP1 ,
+      visitedP2
+    }
   }
 }
