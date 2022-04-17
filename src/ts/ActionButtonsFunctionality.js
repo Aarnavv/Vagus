@@ -1,6 +1,6 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
-import { updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import { updateBiDirectionalVisitedNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
  * Requires no parameters.
@@ -42,12 +42,17 @@ const RemoveAllNodes = (node) => {
 const StartButtonClick = () => {
     if (currentState.algorithm() === null)
         alert('Please select an algorithm before continuing!');
+    else if (currentState.algorithm() === 'bd-algo') {
+        const [pathFromStart, visitedFromStartArray, visitedFromEndArray] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
+        updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
+        updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
+    }
     else {
         if (currentState.bombNode() === null) {
             let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
             let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
             let ids = Array.from(visitedInOrder.keys());
-            updateVisitedNodes(ids, null, path, false);
+            updateVisitedNodes(ids, null, path, false, 0);
         }
         else {
             let path = Algorithms.runAlgorithmGlobalStateYesBomb().path;
@@ -55,7 +60,7 @@ const StartButtonClick = () => {
             let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
             let ids1 = Array.from(visitedP1.keys());
             let ids2 = Array.from(visitedP2.keys());
-            updateVisitedNodes(ids1, ids2, path, true);
+            updateVisitedNodes(ids1, ids2, path, true, 0);
         }
     }
 };

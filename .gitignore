@@ -25,5 +25,5 @@ yarn-error.log*
 # pdfs
 *.pdf
 
-#vscode
+# vscode
 .vscode/

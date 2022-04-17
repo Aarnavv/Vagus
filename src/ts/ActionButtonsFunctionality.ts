@@ -1,7 +1,8 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
-import {updateVisitedNodes} from "./HexBoardAlgoRunUpdate";
+import {updateBiDirectionalVisitedNodes, updateVisitedNodes} from "./HexBoardAlgoRunUpdate";
 import {setInitialNodes} from "./HexBoardUpdate";
+import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
 
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
@@ -46,20 +47,25 @@ const RemoveAllNodes = (node: string): void => {
 const StartButtonClick = (): void => {
   if(currentState.algorithm() === null)
     alert('Please select an algorithm before continuing!');
+  else if (currentState.algorithm() === 'bd-algo') {
+    const [pathFromStart, visitedFromStartArray, visitedFromEndArray] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
+    updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
+    updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
+  }
   else {
     if (currentState.bombNode() === null) {
       let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;
-      let visitedInOrder: Map<number, boolean> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
+      let visitedInOrder: Set<number> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
       let ids: number[] = Array.from(visitedInOrder.keys());
-      updateVisitedNodes(ids, null, path, false);
+      updateVisitedNodes(ids, null, path, false, 0);
     }
     else {
       let path: number[] = Algorithms.runAlgorithmGlobalStateYesBomb().path;
-      let visitedP1: Map<number, boolean> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
-      let visitedP2: Map<number, boolean> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
+      let visitedP1: Set<number> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
+      let visitedP2: Set<number> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
       let ids1: number[] = Array.from(visitedP1.keys());
       let ids2: number[] = Array.from(visitedP2.keys());
-      updateVisitedNodes(ids1, ids2, path, true);
+      updateVisitedNodes(ids1, ids2, path, true, 0);
     }
   }
 }
