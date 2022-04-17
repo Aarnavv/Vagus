@@ -40,19 +40,23 @@ const RemoveAllNodes = (node) => {
     }
 };
 const StartButtonClick = () => {
-    if (currentState.bombNode() === null) {
-        let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
-        let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
-        let ids = Array.from(visitedInOrder.keys());
-        updateVisitedNodes(ids, null, path, false);
-    }
+    if (currentState.algorithm() === null)
+        alert('Please select an algorithm before continuing!');
     else {
-        let path = Algorithms.runAlgorithmGlobalStateYesBomb().path;
-        let visitedP1 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
-        let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
-        let ids1 = Array.from(visitedP1.keys());
-        let ids2 = Array.from(visitedP2.keys());
-        updateVisitedNodes(ids1, ids2, path, true);
+        if (currentState.bombNode() === null) {
+            let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
+            let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
+            let ids = Array.from(visitedInOrder.keys());
+            updateVisitedNodes(ids, null, path, false);
+        }
+        else {
+            let path = Algorithms.runAlgorithmGlobalStateYesBomb().path;
+            let visitedP1 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP1;
+            let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
+            let ids1 = Array.from(visitedP1.keys());
+            let ids2 = Array.from(visitedP2.keys());
+            updateVisitedNodes(ids1, ids2, path, true);
+        }
     }
 };
 const PrevButtonClick = () => {
