@@ -1,5 +1,5 @@
 import Graph from './Graph';
-import {MinPriorityQueue, PriorityQueue} from "@datastructures-js/priority-queue";
+import {MinPriorityQueue} from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
@@ -86,14 +86,14 @@ export default class Algorithms<T> {
   }
 
   bellmanFord(start: T, end: T): [T[], Set<T>] {
-    const [dist, prev, visited] = this.internalBellmanFord(start);
+    const [dist, prev, visited] = this.internalBellmanFord(start , end );
     let path: T[] = [];
     if (dist.get(end) === Infinity) return [null, visited];
     for (let at = end; at !== undefined; at = prev.get(at)) path.unshift(at);
     return [path, visited];
   }
 
-  internalBellmanFord(start: T ): [Map<T, number>, Map<T, T>, Set<T>] {
+  internalBellmanFord(start: T , end :T ): [Map<T, number>, Map<T, T>, Set<T>] {
     let dist: Map<T, number> = new Map();
     let edgeList: Map<T, Edge<T>[]> = new Map();
     let visited: Set<T> = new Set();
@@ -131,16 +131,12 @@ export default class Algorithms<T> {
     return path;
   }
 
-  biDirectional(start: T, end: T): [T[], T[], T[]] {
-    const [pathFromStart, visitedFromStart] = this.dijkstras(start, end);
-    const [pathFromEnd, visitedFromEnd] = this.dijkstras(end, start);
-    const visited: Map<T, boolean> = new Map();
-    let splicePoint = pathFromEnd.length / 2;
-    let visitedFromStartArray = Array.from(visitedFromStart.keys());
-    let visitedFromEndArray = Array.from(visitedFromEnd.keys());
-    visitedFromStartArray.splice(splicePoint + 1);
-    visitedFromEndArray.splice(splicePoint + 1);
-    return [pathFromStart, visitedFromStartArray, visitedFromEndArray];
+  biDirectional(start: T, end: T): [T[], Set<T>, Set<T>] {
+    const [pathFromStart] = this.dijkstras(start, end);
+    let spliceNode = pathFromStart [ pathFromStart.length / 2 ];
+    let [ p1 ,  visitedFromStart ] = this.dijkstras(start , spliceNode);
+    let [p2 , visitedFromEnd ] = this.dijkstras(end , spliceNode);
+    return [pathFromStart, visitedFromStart , visitedFromEnd];
   }
 
 

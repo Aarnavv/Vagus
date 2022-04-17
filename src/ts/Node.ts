@@ -93,7 +93,7 @@ export default class Node<T> {
     return metaData;
   }
 
-  getRandomNeighbour():T{
-  return this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest.getData();
+  getRandomNeighbour():Node<T>{
+    return this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
   }
 }

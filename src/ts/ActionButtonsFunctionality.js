@@ -61,5 +61,6 @@ const StartButtonClick = () => {
     }
 };
 const PrevButtonClick = () => {
+    // prev button implementation.
 };
 export { StopButtonClick, StartButtonClick };

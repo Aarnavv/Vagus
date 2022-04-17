@@ -66,7 +66,7 @@ const StartButtonClick = (): void => {
 }
 
 const PrevButtonClick=() :void =>{
-
+  // prev button implementation.
 }
 
 export {
