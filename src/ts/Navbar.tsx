@@ -49,7 +49,7 @@ export default class Navbar extends React.Component {
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
+                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes [Work in Progress!]" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="gridMaze.bat" divID="bat-2" />
@@ -78,7 +78,7 @@ export default class Navbar extends React.Component {
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
                 </div>
               </FolderComponent>
-              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md" divID="md-1" />
+              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1" />
             </div>
           </FolderComponent>
         </div>

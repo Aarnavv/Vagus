@@ -40,7 +40,7 @@ export default class Navbar extends React.Component {
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "bombNode.io", divID: "io-3" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "weightNode.io", divID: "io-4" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "wallNode.io", divID: "io-5" }))),
-                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
+                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes [Work in Progress!]", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "none.bat", divID: "bat-1" }),
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "gridMaze.bat", divID: "bat-2" }),
@@ -61,6 +61,6 @@ export default class Navbar extends React.Component {
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "startNode.gui", type: "start-node", divID: "gui-6" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "endNode.gui", type: "end-node", divID: "gui-7" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))),
-                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md", divID: "md-1" }))))));
+                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md [Work in Progress!]", divID: "md-1" }))))));
     }
 }
