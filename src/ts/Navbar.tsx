@@ -6,6 +6,8 @@ import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick } from "./ActionButtonsFunctionality";
+import currentState from './GlobalState';
+import Node from "./Node";
 
 export default class Navbar extends React.Component {
   render() {
@@ -20,8 +22,11 @@ export default class Navbar extends React.Component {
           <p className="project-title">Project</p>
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => StopButtonClick()} />
-             <ActionIcons.PrevButtonIcon />
-            <ActionIcons.RunButtonIcon onClick={() => StartButtonClick()} />
+            <ActionIcons.PrevButtonIcon />
+            <ActionIcons.RunButtonIcon onClick={() => {
+              let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
+              StartButtonClick(currentNode)
+            }} />
           </div>
         </div>
         <div className="folder-panel">

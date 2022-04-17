@@ -1,6 +1,6 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
-import { updateBiDirectionalVisitedNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
  * Requires no parameters.
@@ -39,13 +39,33 @@ const RemoveAllNodes = (node) => {
         svgEle.classList.add('no-node', 'icon');
     }
 };
-const StartButtonClick = () => {
+const StartButtonClick = (currentNode) => {
     if (currentState.algorithm() === null)
         alert('Please select an algorithm before continuing!');
     else if (currentState.algorithm() === 'bd-algo') {
-        const [pathFromStart, visitedFromStartArray, visitedFromEndArray] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
-        updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
-        updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
+        const [pathFromStart, visitedFromStartSet, visitedFromEndSet] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
+        const visitedFromStartArray = Array.from(visitedFromStartSet);
+        const visitedFromEndArray = Array.from(visitedFromEndSet);
+        if (visitedFromStartArray.length > visitedFromEndArray.length) {
+            updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, true, 0);
+            updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, false, 0);
+        }
+        else {
+            updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
+            updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
+        }
+    }
+    else if (currentState.algorithm() === 'rand-algo') {
+        let endNode = currentState.endNode();
+        setTimeout(() => {
+            // console.log(currentNode.getData());
+            updateRandomVisitedNodes(currentNode.getData());
+            currentNode = currentNode.getRandomNeighbour();
+            if (currentNode.getData() !== endNode)
+                StartButtonClick(currentNode);
+            else if (currentNode.getData() === endNode)
+                updateRandomVisitedNodes(endNode);
+        }, 10);
     }
     else {
         if (currentState.bombNode() === null) {

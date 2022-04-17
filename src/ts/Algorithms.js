@@ -124,15 +124,11 @@ export default class Algorithms {
         return path;
     }
     biDirectional(start, end) {
-        const [pathFromStart, visitedFromStart] = this.dijkstras(start, end);
-        const [pathFromEnd, visitedFromEnd] = this.dijkstras(end, start);
-        const visited = new Map();
-        let splicePoint = pathFromEnd.length / 2;
-        let visitedFromStartArray = Array.from(visitedFromStart.keys());
-        let visitedFromEndArray = Array.from(visitedFromEnd.keys());
-        visitedFromStartArray.splice(splicePoint + 1);
-        visitedFromEndArray.splice(splicePoint + 1);
-        return [pathFromStart, visitedFromStartArray, visitedFromEndArray];
+        const [pathFromStart] = this.dijkstras(start, end);
+        let spliceNode = pathFromStart[pathFromStart.length / 2];
+        let [p1, visitedFromStart] = this.dijkstras(start, spliceNode);
+        let [p2, visitedFromEnd] = this.dijkstras(end, spliceNode);
+        return [pathFromStart, visitedFromStart, visitedFromEnd];
     }
     internalAStar(start, end) {
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minHeuristic);

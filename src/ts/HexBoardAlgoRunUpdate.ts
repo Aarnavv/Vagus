@@ -82,6 +82,25 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: n
   }, updateSpeed())
 }
 
+export const updateRandomVisitedNodes = (pathID: number): void => {
+  setTimeout(() => {
+    let svgID = `svg-${pathID}`;
+    let propsID = `props-${pathID}`;
+    if (document.getElementById(svgID).classList.contains('svg-path-node')) {
+      document.getElementById(svgID).classList.remove('svg-path-node');
+      document.getElementById(propsID).classList.remove('path-node');
+      document.getElementById(svgID).classList.add('svg-visited-node-bomb');
+      document.getElementById(propsID).classList.add('visited-node-bomb');
+      updateRandomVisitedNodes(pathID);
+      return;
+    }
+    document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
+    document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
+    document.getElementById(svgID).classList.add('svg-path-node');
+    document.getElementById(propsID).classList.add('path-node');
+  }, 50 * updateSpeed())
+}
+
 const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
   setTimeout(() => {
     let id2 = visitedID2[i];
