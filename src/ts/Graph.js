@@ -1,4 +1,7 @@
 import Node from "./Node";
+/**
+ * Utility graph class with functions to help in maintaining state and making the algorithms work.
+ */
 export default class Graph {
     /**
      * has a Map of Nodes which are present in the graph
@@ -16,26 +19,55 @@ export default class Graph {
      *  is a boolean for if the graph is undirected or directed.
      */
     isUndirected;
+    /**
+     * constructs a new graph with a given comparator to compare the values of two nodes.
+     * @param comparator
+     */
     constructor(comparator) {
         this.comparator = comparator;
         this.isUndirected = false;
     }
+    /**
+     * Gives back a map of nodes (id , real object) present in the graph.
+     */
     nodes() {
         return this.Nodes;
     }
+    /**
+     * Sets the x and y coordinates of a particular node.
+     * @param data the node whose coordinates need to be changed .
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     setNodeCoords(data, { x, y }) {
         this.nodes().get(data).setCoords(x, y);
     }
+    /**
+     * Returns if a node is present in the graph.
+     * @param data the node to search for
+     */
     nodeExists(data) {
         return this.nodes().get(data) !== undefined;
     }
+    /**
+     * returns if there is an edge between a given source node and a given destination node. This only works if goth nodes
+     * are in the graph, else it does not work and returns false
+     * @param source the starting point of the edge
+     * @param destination the ending point of the edge
+     */
     edgeExists(source, destination) {
         const src = this.nodes().get(source);
+        if (src === undefined)
+            return false;
         const at = src.getAdjNodes().findIndex((edge) => {
             return edge.dest.getData() === destination;
         });
         return at >= 0;
     }
+    /**
+     * adds a Node object to the graph if it is not already present.
+     * @param data the node data to add.
+     */
     addNode(data) {
         let node = this.nodes().get(data);
         if (node !== undefined)
@@ -44,6 +76,11 @@ export default class Graph {
         this.nodes().set(data, node);
         return node;
     }
+    /**
+     * removes a node from the graph if it is present. This includes removal of any and all connections to and from the
+     * node in the graph.
+     * @param data the data or id of the node to be removed .
+     */
     rmNode(data) {
         const nodeToRm = this.nodes().get(data);
         if (!nodeToRm)
@@ -73,8 +110,7 @@ export default class Graph {
      * Removes an edge between a valid source node and a valid destination node. In case the graph is cyclic, it will remove
      * an edge from both the destination to source node and from the source node to the destination node. If the flag is
      * off then it will not remove the edge from the destination node to source node. This function just requires the node
-     * ids to check if the nodes are present. After that it gets the nodes from the internal storage. Again, this also will only
-     * work in case of both source and destination nodes being in active use. Else it will fail to run and no change will be made.
+     * ids to check if the nodes are present. After that it gets the nodes from the internal storage.
      * @param source the node id from which the connection starts
      * @param destination the node id at which the connection ends
      */
@@ -91,26 +127,39 @@ export default class Graph {
      * Gives the euclidean distance between two nodes in the graph based on their x and y coordinates on a 2-D plane.
      * @param _this the start node
      * @param _that the end node.
-     * @return number signifying the euclidean distance between the positions of the 2 nodes.
+     * @param whatType is the type of distance required, m for manhattan and e for euclidean
      */
-    distBw(_this, _that) {
-        return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+    distBw(_this, _that, whatType = 'e') {
+        if (whatType === 'e')
+            return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
+        else
+            return Math.abs(_this.x() - _that.x()) + Math.abs(_this.y() - _that.y());
     }
+    /**
+     * Freezes this object based on the specifications given by Object.freeze()
+     */
     freeze() {
         Object.freeze(this);
     }
+    /**
+     * The freeze() method freezes a graph. A frozen graph can no longer be changed;
+     * freezing a graph prevents new properties from being added to it, existing properties
+     * from being removed, prevents changing the enumerability, configurability, or writability
+     * of existing properties, and prevents the values of existing properties from being changed. In
+     * addition, freezing an object also prevents its prototype from being changed.
+     * @param graph the graph to be frozen
+     * @see freeze
+     */
     static freeze(graph) { Object.freeze(graph); }
     /**
-     * Modifies the given _presentGraph graph to get the state of a node present in the _initGraph. Given a node-label
-     * it will get the relevant node from the _initGraph, and it will link all of the neighbors of that node to
-     * it, and link that node to its n neighbors. It must also be noted that the _presentGraph will fail to add
-     * neighbors which are current not in use in the state of the application. To know about the different states of a Node
-     * in a graph refer to the node class documentation.
-     * @param data is the node to get from the _initGraph, this is also known as the initial state of the node and the node
-     * will be added to the graph EXACTLY like this.
-     * @param _initGraph the Graph from which to fetch the node to add
-     * @param _presentGraph the graph to which the node needs to be added.
-     * @return void
+     * Takes an initial Graph (_initGraph) and (_presentGraph), then, for a given node in the _presentGraph it reverts the nodes state
+     * back the nodes state in the _initGraph. This means that the properties of the node in _initGraph and _presentGraph
+     * should be exactly the same, unless a neighbours of it is not present in the _presentGraph. It does not make any new nodes
+     * except for the one node with a data passed in as parameter. The cost of the connections also reflect the cost in the
+     * _initGraph.
+     * @param data the node whose state needs to be reverted to from the _initGraph.
+     * @param _initGraph the _initGraph whose node state needs to be copied
+     * @param _presentGraph the present graph in which the changes need to be made.
      */
     static revertNode(data, _initGraph, _presentGraph) {
         let initialNode = _initGraph.nodes().get(data);
@@ -124,6 +173,12 @@ export default class Graph {
             }
         });
     }
+    /**
+     * Updates the cost of all incoming edges (where the node is the end point) to a certain given cost.
+     * This function only runs if a given node is present in the graph .
+     * @param data the node whose incoming edges need to be updated to that cost
+     * @param cost the cost to update the edges to.
+     */
     updateCostOfIncoming(data, cost) {
         let node = this.nodes().get(data);
         if (node === undefined)
@@ -131,6 +186,27 @@ export default class Graph {
         node.getAdjNodes().forEach((edge) => {
             if (edge.dest.getData() !== node.getData())
                 edge.dest.updateCostTo(node, cost);
+        });
+    }
+    /**
+     * copies the state of one graph to another graph and then changes the cost as specified.
+     * @param _initial the initial graph whose state needs to be copied
+     * @param _present the present graph to which the state needs to be copied
+     * @param cost the cost of edges.
+     */
+    static copy(_initial, _present, cost) {
+        //first reset all connections
+        _initial.nodes().forEach((initNode) => {
+            if (!_present.nodes().has(initNode.getData())) {
+                this.revertNode(initNode.getData(), _initial, _present);
+            }
+        });
+        //then reset all costs.
+        _initial.nodes().forEach((initNode) => {
+            initNode.getAdjNodes().forEach((edge) => {
+                if (edge.dest.getData() !== initNode.getData() && edge.cost > 1)
+                    edge.changeCost(cost);
+            });
         });
     }
 }

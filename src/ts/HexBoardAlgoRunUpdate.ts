@@ -64,7 +64,7 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
           updateBombNode(visitedID2, pathIDs);
       }
     }
-  }, 1 * updateSpeed())
+  }, updateSpeed())
 }
 
 const updateBombNode = (visitedID2: number[], pathIDs: number[]) => {
@@ -87,7 +87,7 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[]) => {
     else if (i3 === visitedID2.length)
       updatePathNodes(pathIDs);
   }
-  }, 1 * updateSpeed())
+  }, updateSpeed())
 }
 
 const updateSpeed = (): number => {

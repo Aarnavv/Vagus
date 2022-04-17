@@ -17,6 +17,7 @@ export default class Navbar extends React.Component {
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
+                    React.createElement(ActionIcons.PrevButtonIcon, null),
                     React.createElement(ActionIcons.RunButtonIcon, { onClick: () => StartButtonClick() }))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },

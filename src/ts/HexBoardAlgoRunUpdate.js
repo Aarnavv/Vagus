@@ -56,7 +56,7 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb) => {
                     updateBombNode(visitedID2, pathIDs);
             }
         }
-    }, 1 * updateSpeed());
+    }, updateSpeed());
 };
 const updateBombNode = (visitedID2, pathIDs) => {
     setTimeout(() => {
@@ -76,7 +76,7 @@ const updateBombNode = (visitedID2, pathIDs) => {
             else if (i3 === visitedID2.length)
                 updatePathNodes(pathIDs);
         }
-    }, 1 * updateSpeed());
+    }, updateSpeed());
 };
 const updateSpeed = () => {
     switch (currentState.speed()) {
