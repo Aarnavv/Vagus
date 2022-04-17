@@ -55,9 +55,10 @@ const StartButtonClick = () => {
             let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
             let ids1 = Array.from(visitedP1.keys());
             let ids2 = Array.from(visitedP2.keys());
-            let ids3 = ids1.concat(ids2);
             updateVisitedNodes(ids1, ids2, path, true);
         }
     }
+};
+const PrevButtonClick = () => {
 };
 export { StopButtonClick, StartButtonClick };

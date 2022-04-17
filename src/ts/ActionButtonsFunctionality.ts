@@ -1,7 +1,7 @@
-import { setInitialNodes } from "./HexBoardUpdate";
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
-import { updatePathNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import {updateVisitedNodes} from "./HexBoardAlgoRunUpdate";
+import {setInitialNodes} from "./HexBoardUpdate";
 
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
@@ -59,10 +59,13 @@ const StartButtonClick = (): void => {
       let visitedP2: Map<number, boolean> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
       let ids1: number[] = Array.from(visitedP1.keys());
       let ids2: number[] = Array.from(visitedP2.keys());
-      let ids3 = ids1.concat(ids2);
       updateVisitedNodes(ids1, ids2, path, true);
     }
   }
+}
+
+const PrevButtonClick=() :void =>{
+
 }
 
 export {

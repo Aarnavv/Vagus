@@ -5,41 +5,42 @@ import { Queue } from "queue-typescript";
 export default class Algorithms {
     graph;
     comparator;
+    static EPS = 1e-6;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
     }
     bfs(start, end) {
-        const visited = new Map();
+        const visited = new Set();
         const prev = new Map();
         const path = [];
         const Q = new Queue();
         Q.enqueue(start);
-        visited.set(start, true);
+        visited.add(start);
         while (Q.length !== 0) {
             let node = this.graph.nodes().get(Q.dequeue());
-            visited.set(node.getData(), true);
-            node.getAdjNodes().forEach((edge) => {
-                if (!visited.has(edge.dest.getData())) {
-                    visited.set(edge.dest.getData(), true);
-                    prev.set(edge.dest.getData(), node.getData());
-                    Q.enqueue(edge.dest.getData());
-                }
-            });
+            visited.add(node.getData());
             if (node.getData() === end) {
                 for (let at = end; at !== undefined; at = prev.get(at))
                     path.unshift(at);
                 return [path, visited];
             }
+            node.getAdjNodes().forEach((edge) => {
+                if (!visited.has(edge.dest.getData())) {
+                    visited.add(edge.dest.getData());
+                    prev.set(edge.dest.getData(), node.getData());
+                    Q.enqueue(edge.dest.getData());
+                }
+            });
         }
         return [null, visited];
     }
     dfs(start, end) {
         let path = [];
-        const visited = new Map();
+        const visited = new Set();
         const internalDfs = (at) => {
             if (!visited.has(at)) {
-                visited.set(at, true);
+                visited.add(at);
                 path.push(at);
                 if (at === end)
                     return;
@@ -89,7 +90,7 @@ export default class Algorithms {
     internalBellmanFord(start) {
         let dist = new Map();
         let edgeList = new Map();
-        let visited = new Map();
+        let visited = new Set();
         let prev = new Map();
         this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
@@ -100,7 +101,7 @@ export default class Algorithms {
             this.graph.nodes().forEach((node) => {
                 node.getAdjNodes().forEach((edge) => {
                     if (!visited.has(edge.dest.getData()))
-                        visited.set(edge.dest.getData(), true);
+                        visited.add(edge.dest.getData());
                     if (dist.get(node.getData()) + edge.cost < dist.get(edge.dest.getData())) {
                         dist.set(edge.dest.getData(), dist.get(node.getData()) + edge.cost);
                         prev.set(edge.dest.getData(), node.getData());
@@ -123,8 +124,8 @@ export default class Algorithms {
         return path;
     }
     biDirectional(start, end) {
-        const [pathFromStart, visitedFromStart] = this.bfs(start, end);
-        const [pathFromEnd, visitedFromEnd] = this.bfs(end, start);
+        const [pathFromStart, visitedFromStart] = this.dijkstras(start, end);
+        const [pathFromEnd, visitedFromEnd] = this.dijkstras(end, start);
         const visited = new Map();
         let splicePoint = pathFromEnd.length / 2;
         let visitedFromStartArray = Array.from(visitedFromStart.keys());
@@ -133,48 +134,48 @@ export default class Algorithms {
         visitedFromEndArray.splice(splicePoint + 1);
         return [pathFromStart, visitedFromStartArray, visitedFromEndArray];
     }
-    // I will have to sort out aStar, change the heuristic.
     internalAStar(start, end) {
-        let visited = new Map();
-        let dist = new Map();
-        let prev = new Map();
-        let PQ = new MinPriorityQueue(promisingNode => promisingNode.h);
-        this.graph.nodes().forEach((node) => node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(node.getData(), 0));
-        let startNode = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
-        PQ.enqueue({ label: start, g: 0, h: this.graph.distBw(startNode, endNode) });
+        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minHeuristic);
+        let dist = new Map(), prev = new Map();
+        let visited = new Set();
+        this.graph.nodes().forEach((node) => {
+            node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
+        });
+        let dest = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
+        PQ.enqueue({ label: start, minDist: 0, minHeuristic: this.graph.distBw(dest, endNode) });
         while (!PQ.isEmpty()) {
-            const { label, g, h } = PQ.dequeue();
-            visited.set(label, true);
-            if (dist.get(label) < g)
+            const { label, minDist } = PQ.dequeue();
+            visited.add(label);
+            if (dist.get(label) < minDist)
                 continue;
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
-                if (!visited.has(edge.dest.getData())) {
-                    let newCost = dist.get(label) + edge.cost;
-                    let newHeuristic = this.graph.distBw(edge.dest, endNode) + edge.cost;
-                    if (newCost < dist.get(edge.dest.getData())) {
-                        dist.set(edge.dest.getData(), newCost);
-                        prev.set(edge.dest.getData(), label);
-                        PQ.enqueue({ label: edge.dest.getData(), g: newCost, h: newHeuristic + newCost });
+                let destData = edge.dest.getData();
+                if (!visited.has(destData)) {
+                    let newDist = dist.get(label) + edge.cost;
+                    let newHeuristic = newDist + this.graph.distBw(this.graph.nodes().get(destData), endNode) * newDist;
+                    if (newDist < dist.get(destData)) {
+                        prev.set(destData, label);
+                        dist.set(destData, newDist);
+                        PQ.enqueue({ label: destData, minDist: newDist, minHeuristic: newHeuristic });
                     }
                 }
             });
-            if (label === end) {
+            if (label === end)
                 return [dist, prev, visited];
-            }
         }
         return [dist, prev, visited];
     }
     internalDijkstras(start, end) {
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minDist);
         let dist = new Map(), prev = new Map();
-        let visited = new Map();
+        let visited = new Set();
         this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
         PQ.enqueue({ label: start, minDist: 0 });
         while (!PQ.isEmpty()) {
             const { label, minDist } = PQ.dequeue();
-            visited.set(label, true);
+            visited.add(label);
             if (dist.get(label) < minDist)
                 continue;
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
@@ -196,7 +197,7 @@ export default class Algorithms {
     static runAlgoFromGlobalStateNoBomb() {
         let path = [];
         let algo = new Algorithms(currentState.graph());
-        let visitedInOrder = new Map();
+        let visitedInOrder = new Set();
         let algoType = currentState.algorithm();
         if (algoType === AlgoType.dijkstrasSearch)
             [path, visitedInOrder] = algo.dijkstras(currentState.startNode(), currentState.endNode());
@@ -212,12 +213,12 @@ export default class Algorithms {
             path = algo.randomWalk(currentState.startNode(), currentState.endNode());
             visitedInOrder = null;
         }
-        //else //something regarding bi-directional search needs to be done.
+        //else //something regarding bidirectional search needs to be done.
         return { path, visitedInOrder };
     }
     static runAlgorithmGlobalStateYesBomb() {
         let path = [], pathP1 = [], pathP2 = [];
-        let visitedP1 = new Map(), visitedP2 = new Map();
+        let visitedP1 = new Set(), visitedP2 = new Set();
         let algo = new Algorithms(currentState.graph());
         let algoType = currentState.algorithm();
         switch (algoType) {
