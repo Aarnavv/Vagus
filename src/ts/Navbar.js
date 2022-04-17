@@ -6,6 +6,7 @@ import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick } from "./ActionButtonsFunctionality";
+import currentState from './GlobalState';
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -18,7 +19,10 @@ export default class Navbar extends React.Component {
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
                     React.createElement(ActionIcons.PrevButtonIcon, null),
-                    React.createElement(ActionIcons.RunButtonIcon, { onClick: () => StartButtonClick() }))),
+                    React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
+                            let currentNode = currentState.graph().nodes().get(currentState.startNode());
+                            StartButtonClick(currentNode);
+                        } }))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
                     React.createElement("div", { className: "advanced-cp-border" },

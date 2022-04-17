@@ -5,7 +5,6 @@ import { Queue } from "queue-typescript";
 export default class Algorithms {
     graph;
     comparator;
-    static EPS = 1e-6;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
@@ -79,7 +78,7 @@ export default class Algorithms {
         return [path, visited];
     }
     bellmanFord(start, end) {
-        const [dist, prev, visited] = this.internalBellmanFord(start, end);
+        const [dist, prev, visited] = this.internalBellmanFord(start);
         let path = [];
         if (dist.get(end) === Infinity)
             return [null, visited];
@@ -87,7 +86,7 @@ export default class Algorithms {
             path.unshift(at);
         return [path, visited];
     }
-    internalBellmanFord(start, end) {
+    internalBellmanFord(start) {
         let dist = new Map();
         let edgeList = new Map();
         let visited = new Set();

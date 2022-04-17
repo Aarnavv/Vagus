@@ -1,27 +1,23 @@
 import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
-let i1 = 0;
-let i2 = 0;
-let i3 = 0;
-export const updatePathNodes = (pathIDs) => {
+export const updatePathNodes = (pathIDs, i) => {
     setTimeout(() => {
-        let id = pathIDs[i1];
+        let id = pathIDs[i];
         let svgID = `svg-${id}`;
         let propsID = `props-${id}`;
         document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
         document.getElementById(svgID).classList.add('svg-path-node');
         document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
         document.getElementById(propsID).classList.add('path-node');
-        i1++;
-        if (i1 < pathIDs.length) {
-            updatePathNodes(pathIDs);
+        if (++i < pathIDs.length) {
+            updatePathNodes(pathIDs, i);
         }
     }, 50 * updateSpeed());
 };
-export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb) => {
+export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => {
     setTimeout(() => {
         if (!bomb) {
-            let id = visitedID1[i2];
+            let id = visitedID1[i];
             let svgID = `svg-${id}`;
             let propsID = `props-${id}`;
             if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -31,15 +27,14 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb) => {
                 document.getElementById(propsID).classList.add('visited-node');
                 if (document.getElementById(propsID).classList.contains('weight-node'))
                     nodeHoverAnimation(propsID);
-                i2++;
-                if (i2 < visitedID1.length)
-                    updateVisitedNodes(visitedID1, visitedID1, pathIDs, false);
-                else if (i2 === visitedID1.length)
-                    updatePathNodes(pathIDs);
+                if (++i < visitedID1.length)
+                    updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, i);
+                else if (i === visitedID1.length)
+                    updatePathNodes(pathIDs, 0);
             }
         }
         else {
-            let id1 = visitedID1[i2];
+            let id1 = visitedID1[i];
             let svgID = `svg-${id1}`;
             let propsID = `props-${id1}`;
             if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -49,18 +44,54 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb) => {
                 document.getElementById(propsID).classList.add('visited-node');
                 if (document.getElementById(propsID).classList.contains('weight-node'))
                     nodeHoverAnimation(propsID);
-                i2++;
-                if (i2 < visitedID1.length)
-                    updateVisitedNodes(visitedID1, visitedID2, pathIDs, true);
-                else if (i2 === visitedID1.length)
-                    updateBombNode(visitedID2, pathIDs);
+                if (++i < visitedID1.length)
+                    updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
+                else if (i === visitedID1.length)
+                    updateBombNode(visitedID2, pathIDs, 0);
             }
         }
     }, updateSpeed());
 };
-const updateBombNode = (visitedID2, pathIDs) => {
+export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWait, i) => {
     setTimeout(() => {
-        let id2 = visitedID2[i3];
+        let id = visitedIDs[i];
+        let svgID = `svg-${id}`;
+        let propsID = `props-${id}`;
+        if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
+            document.getElementById(svgID).classList.remove('no-node', 'icon');
+            document.getElementById(svgID).classList.add('svg-visited-node');
+            document.getElementById(propsID).classList.remove('no-node');
+            document.getElementById(propsID).classList.add('visited-node');
+            if (document.getElementById(propsID).classList.contains('weight-node'))
+                nodeHoverAnimation(propsID);
+            if (++i < visitedIDs.length)
+                updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, i);
+            else if (i === visitedIDs.length && waitOrNoWait)
+                updatePathNodes(pathIDs, 0);
+        }
+    }, updateSpeed());
+};
+export const updateRandomVisitedNodes = (pathID) => {
+    setTimeout(() => {
+        let svgID = `svg-${pathID}`;
+        let propsID = `props-${pathID}`;
+        if (document.getElementById(svgID).classList.contains('svg-path-node')) {
+            document.getElementById(svgID).classList.remove('svg-path-node');
+            document.getElementById(propsID).classList.remove('path-node');
+            document.getElementById(svgID).classList.add('svg-visited-node-bomb');
+            document.getElementById(propsID).classList.add('visited-node-bomb');
+            updateRandomVisitedNodes(pathID);
+            return;
+        }
+        document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
+        document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
+        document.getElementById(svgID).classList.add('svg-path-node');
+        document.getElementById(propsID).classList.add('path-node');
+    }, 50 * updateSpeed());
+};
+const updateBombNode = (visitedID2, pathIDs, i) => {
+    setTimeout(() => {
+        let id2 = visitedID2[i];
         let svgID = `svg-${id2}`;
         let propsID = `props-${id2}`;
         if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -70,11 +101,10 @@ const updateBombNode = (visitedID2, pathIDs) => {
             document.getElementById(propsID).classList.add('visited-node-bomb');
             if (document.getElementById(propsID).classList.contains('weight-node'))
                 nodeHoverAnimation(propsID);
-            i3++;
-            if (i3 < visitedID2.length)
-                updateBombNode(visitedID2, pathIDs);
-            else if (i3 === visitedID2.length)
-                updatePathNodes(pathIDs);
+            if (++i < visitedID2.length)
+                updateBombNode(visitedID2, pathIDs, i);
+            else if (i === visitedID2.length)
+                updatePathNodes(pathIDs, 0);
         }
     }, updateSpeed());
 };
