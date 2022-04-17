@@ -1,5 +1,6 @@
 import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
+import { RemoveAllClasses } from './ActionButtonsFunctionality'
 
 export const updatePathNodes = (pathIDs: number[], i: number): void => {
   if (currentState.run() === false) return;
@@ -127,6 +128,88 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
     }
   }, 1 * updateSpeed())
 }
+
+export const unUpdateNodes = (pathIDs: number[], i: number, outerTime: number, innerTime: number, classToRemove: string, classToAdd: string, longer: boolean) => {
+  setTimeout(() => {
+    let id = pathIDs[i];
+    let svgID = `svg-${id}`;
+    let propsID = `props-${id}`;
+    document.getElementById(svgID).classList.remove('icon', `svg-${classToRemove}`);
+    document.getElementById(propsID).classList.remove(classToRemove);
+    document.getElementById(svgID).classList.add(`svg-${classToAdd}`);
+    document.getElementById(propsID).classList.add(classToAdd);
+    setTimeout(() => { renewNodes(pathIDs, i, classToAdd, longer) }, innerTime)
+    if (--i >= 0)
+      unUpdateNodes(pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer);
+  }, outerTime * updateSpeed())
+}
+
+const renewNodes = (pathIDs: number[], i: number, classToRemove: string, removeAll: boolean) => {
+  let id = pathIDs[i];
+  let svgID = `svg-${id}`;
+  let propsID = `props-${id}`;
+  document.getElementById(svgID).classList.remove(`svg-${classToRemove}`);
+  document.getElementById(svgID).classList.add('icon');
+  document.getElementById(propsID).classList.remove(classToRemove);
+  if (i === 0 && removeAll)
+    RemoveAllClasses(1000, []);
+}
+
+// export const unUpdatePathNodes = (pathIDs: number[], i: number) => {
+//   setTimeout(() => {
+//     let id = pathIDs[i];
+//     let svgID = `svg-${id}`;
+//     let propsID = `props-${id}`;
+//     document.getElementById(svgID).classList.remove('icon', 'svg-path-node');
+//     document.getElementById(propsID).classList.remove('path-node');
+//     document.getElementById(svgID).classList.add('svg-un-path-node');
+//     document.getElementById(propsID).classList.add('un-path-node');
+//     setTimeout(() => { renewPathNodes(pathIDs, i) }, 2000)
+//     if (--i >= 0)
+//       unUpdatePathNodes(pathIDs, i);
+//   }, 100 * updateSpeed())
+// }
+
+// const renewPathNodes = (pathIDs: number[], i: number) => {
+//   // setTimeout(() => {
+//   let id = pathIDs[i];
+//   let svgID = `svg-${id}`;
+//   let propsID = `props-${id}`;
+//   document.getElementById(svgID).classList.remove('svg-un-path-node');
+//   document.getElementById(svgID).classList.add('icon');
+//   document.getElementById(propsID).classList.remove('un-path-node');
+//   // if (i === 0) {
+//   //   RemoveAllClasses(1000, []);
+//   // }
+//   // }, 1000)
+// }
+
+// export const unUpdateVisitedNodes = (pathIDs: number[], i: number) => {
+//   setTimeout(() => {
+//     let id = pathIDs[i];
+//     let svgID = `svg-${id}`;
+//     let propsID = `props-${id}`;
+//     document.getElementById(svgID).classList.remove('icon', 'svg-visited-node');
+//     document.getElementById(propsID).classList.remove('visited-node');
+//     document.getElementById(svgID).classList.add('svg-un-visited-node');
+//     document.getElementById(propsID).classList.add('un-visited-node');
+//     setTimeout(() => { renewVisitedNodes(pathIDs, i) }, 20)
+//     if (--i >= 0)
+//       unUpdateVisitedNodes(pathIDs, i);
+//   }, 1 * updateSpeed())
+// }
+
+// const renewVisitedNodes = (pathIDs: number[], i: number) => {
+//   let id = pathIDs[i];
+//   let svgID = `svg-${id}`;
+//   let propsID = `props-${id}`;
+//   document.getElementById(svgID).classList.remove('svg-un-visited-node');
+//   document.getElementById(svgID).classList.add('icon');
+//   document.getElementById(propsID).classList.remove('un-visited-node');
+//   if (i === 0) {
+//     RemoveAllClasses(1000, []);
+//   }
+// }
 
 const updateSpeed = (): number => {
   switch (currentState.speed()) {

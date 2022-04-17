@@ -125,7 +125,7 @@ export default class Algorithms {
     }
     biDirectional(start, end) {
         const [pathFromStart] = this.dijkstras(start, end);
-        let spliceNode = pathFromStart[pathFromStart.length / 2];
+        let spliceNode = pathFromStart[pathFromStart.length >> 1];
         let [p1, visitedFromStart] = this.dijkstras(start, spliceNode);
         let [p2, visitedFromEnd] = this.dijkstras(end, spliceNode);
         return [pathFromStart, visitedFromStart, visitedFromEnd];

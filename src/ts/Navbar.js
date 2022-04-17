@@ -5,7 +5,7 @@ import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { StopButtonClick, StartButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
 export default class Navbar extends React.Component {
     render() {
@@ -21,7 +21,9 @@ export default class Navbar extends React.Component {
                             StopButtonClick();
                             StartButtonClick(null);
                         } }),
-                    React.createElement(ActionIcons.PrevButtonIcon, null),
+                    React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => {
+                            PrevButtonClick();
+                        } }),
                     React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
                             if (!currentState.run())
                                 currentState.changeRun();

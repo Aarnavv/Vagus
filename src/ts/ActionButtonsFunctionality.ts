@@ -1,6 +1,6 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
-import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes } from "./HexBoardAlgoRunUpdate";
+import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes, unUpdateNodes } from "./HexBoardAlgoRunUpdate";
 import { setInitialNodes } from "./HexBoardUpdate";
 import Graph from "./Graph";
 
@@ -10,24 +10,15 @@ import Graph from "./Graph";
  * @return void
  */
 const StopButtonClick = (): void => {
-  currentState.changeRun();
+  if (currentState.run() === true) currentState.changeRun();
   document.getElementById('stop-button').classList.add('button-clicked');
-  setTimeout(() => {
-    RemoveAllNodes('start-node');
-    RemoveAllNodes('end-node');
-    RemoveAllNodes('bomb-node');
-    RemoveAllNodes('weight-node');
-    RemoveAllNodes('wall-node');
-    RemoveAllNodes('path-node');
-    RemoveAllNodes('visited-node');
-    RemoveAllNodes('visited-node-bomb');
-    currentState.changeBombNode(null);
-    setInitialNodes();
-    Graph.copy(currentState.initGraph(), currentState.graph(), 1);
-  }, 500)
+  RemoveAllClasses(500, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
+  currentState.changeBombNode(null);
+  Graph.copy(currentState.initGraph(), currentState.graph(), 1);
   setTimeout(() => {
     document.getElementById('stop-button').classList.remove('button-clicked');
-  }, 200);
+    setInitialNodes();
+  }, 510);
 }
 
 /**
@@ -49,6 +40,12 @@ const RemoveAllNodes = (node: string): void => {
   }
 }
 
+let pathToRemove: number[] = [];
+let pathToRemoveRandom: Set<number> = new Set();
+let visitedToRemove: number[] = [];
+let visitedToRemoveBomb: number[] = [];
+let bomb: boolean = true;
+
 const StartButtonClick = (currentNode): void => {
   if (currentState.run()) {
     if (currentState.algorithm() === null)
@@ -57,6 +54,8 @@ const StartButtonClick = (currentNode): void => {
       const [pathFromStart, visitedFromStartSet, visitedFromEndSet] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
       const visitedFromStartArray = Array.from(visitedFromStartSet);
       const visitedFromEndArray = Array.from(visitedFromEndSet);
+      pathToRemove = pathFromStart;
+      visitedToRemove = visitedFromStartArray.concat(visitedFromEndArray);
       if (visitedFromStartArray.length > visitedFromEndArray.length) {
         updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, true, 0);
         updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, false, 0);
@@ -76,6 +75,7 @@ const StartButtonClick = (currentNode): void => {
         updateRandomVisitedNodes(currentNode.getData())
         let oldNode = currentNode;
         currentNode = currentNode.getRandomNeighbour()
+        pathToRemoveRandom.add(currentNode.getData());
         if (currentNode === oldNode) {
           alert("No Path Found! :(");
           return;
@@ -91,6 +91,8 @@ const StartButtonClick = (currentNode): void => {
         let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;
         let visitedInOrder: Set<number> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
         let ids: number[] = Array.from(visitedInOrder.keys());
+        pathToRemove = path;
+        visitedToRemove = ids;
         updateVisitedNodes(ids, null, path, false, 0);
         if (path === null || path.length === 0) {
           alert("No Path Found! :(");
@@ -103,6 +105,10 @@ const StartButtonClick = (currentNode): void => {
         let visitedP2: Set<number> = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
         let ids1: number[] = Array.from(visitedP1.keys());
         let ids2: number[] = Array.from(visitedP2.keys());
+        pathToRemove = path;
+        visitedToRemove = ids1;
+        visitedToRemoveBomb = ids2;
+        bomb = true;
         updateVisitedNodes(ids1, ids2, path, true, 0);
         if (path === null || path.length === 0 || path[0] === currentState.bombNode()) {
           alert("No Path Found! :(");
@@ -113,11 +119,42 @@ const StartButtonClick = (currentNode): void => {
   }
 }
 
+const RemoveAllClasses = (time: number, opt: string[]) => {
+  setTimeout(() => {
+    RemoveAllNodes('path-node');
+    RemoveAllNodes('visited-node');
+    RemoveAllNodes('visited-node-bomb');
+    RemoveAllNodes('un-path-node');
+    RemoveAllNodes('un-visited-node');
+    opt.forEach((x: string) => RemoveAllNodes(x));
+  }, time)
+}
+
 const PrevButtonClick = (): void => {
+  currentState.changeRun();
+  let longer: boolean;
+  if (pathToRemove.length === 0) {
+    pathToRemoveRandom.forEach((id) => {
+      pathToRemove.push(id);
+    })
+  }
+  visitedToRemove.shift();
+  if (pathToRemove.length >= visitedToRemove.length)
+    longer = true;
+  else longer = false;
+  // unUpdatePathNodes(pathToRemove, pathToRemove.length - 1);
+  // unUpdateVisitedNodes(visitedToRemove, visitedToRemove.length - 1);
+
+  unUpdateNodes(pathToRemove, pathToRemove.length - 1, 100, 1000, 'path-node', 'un-path-node', true);
+  // unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, 8, 80, 'visited-node', 'un-visited-node', !longer);
+  // if (bomb)
+    // unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBomb.length - 2, 8, 80, 'visited-node-bomb', 'un-visited-bomb-node', !longer);
 
 }
 
 export {
   StopButtonClick,
   StartButtonClick,
+  PrevButtonClick,
+  RemoveAllClasses,
 }
