@@ -63,7 +63,7 @@ export default class Graph<T> {
    */
   edgeExists(source: T, destination: T): boolean {
     const src = this.nodes().get(source);
-    if(src === undefined ) return false ;
+    if (src === undefined) return false;
     const at: number = src.getAdjNodes().findIndex((edge) => {
       return edge.dest.getData() === destination;
     });
@@ -137,11 +137,11 @@ export default class Graph<T> {
    * @param _that the end node.
    * @param whatType is the type of distance required, m for manhattan and e for euclidean
    */
-  distBw(_this: Node<T>, _that: Node<T> , whatType:string='e'): number {
-    if(whatType ==='e')
+  distBw(_this: Node<T>, _that: Node<T>, whatType: string = 'e'): number {
+    if (whatType === 'e')
       return Math.sqrt(Math.pow(_that.x() - _this.x(), 2) + Math.pow(_that.y() - _this.y(), 2));
     else
-      return Math.abs(_this.x() - _that.x()) + Math.abs(_this.y()-_that.y());
+      return Math.abs(_this.x() - _that.x()) + Math.abs(_this.y() - _that.y());
   }
 
   /**
@@ -173,14 +173,14 @@ export default class Graph<T> {
    * @param _presentGraph the present graph in which the changes need to be made.
    */
   static revertNode<T>(data: T, _initGraph: Graph<T>, _presentGraph: Graph<T>): void {
-    let initialNode:Node<T> = _initGraph.nodes().get(data);
+    let initialNode: Node<T> = _initGraph.nodes().get(data);
     _presentGraph.addNode(data);
-    let presentNode:Node<T> = _presentGraph.nodes().get(data);
-    initialNode.getAdjNodes().forEach((edge)=>{
-      let presentEdgeDest= _presentGraph.nodes().get(edge.dest.getData());
-      if(presentEdgeDest!==undefined){
+    let presentNode: Node<T> = _presentGraph.nodes().get(data);
+    initialNode.getAdjNodes().forEach((edge) => {
+      let presentEdgeDest = _presentGraph.nodes().get(edge.dest.getData());
+      if (presentEdgeDest !== undefined) {
         presentNode.addAdjNode(presentEdgeDest, edge.cost);
-        presentEdgeDest.addAdjNode(presentNode , edge.cost);
+        presentEdgeDest.addAdjNode(presentNode, edge.cost);
       }
     })
   }
@@ -205,15 +205,15 @@ export default class Graph<T> {
    * @param _present the present graph to which the state needs to be copied
    * @param cost the cost of edges.
    */
-  static copy<T>(_initial:Graph<T> , _present:Graph<T> ,cost : number ){
+  static copy<T>(_initial: Graph<T>, _present: Graph<T>, cost: number) {
     //first reset all connections
-    _initial.nodes().forEach((initNode)=>{
-      if(!_present.nodes().has(initNode.getData())){
-        this.revertNode(initNode.getData () , _initial , _present);
+    _initial.nodes().forEach((initNode) => {
+      if (!_present.nodes().has(initNode.getData())) {
+        this.revertNode(initNode.getData(), _initial, _present);
       }
     });
-    //then reset all costs.
-    _initial.nodes().forEach((initNode)=>{
+    //then reset all costs
+    _present.nodes().forEach((initNode)=>{
       initNode.getAdjNodes().forEach((edge)=>{
         if(edge.dest.getData () !==initNode.getData()&&edge.cost>1)
           edge.changeCost(cost);

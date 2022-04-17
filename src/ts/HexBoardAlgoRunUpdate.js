@@ -1,6 +1,8 @@
 import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
 export const updatePathNodes = (pathIDs, i) => {
+    if (currentState.run() === false)
+        return;
     setTimeout(() => {
         let id = pathIDs[i];
         let svgID = `svg-${id}`;
@@ -15,6 +17,8 @@ export const updatePathNodes = (pathIDs, i) => {
     }, 50 * updateSpeed());
 };
 export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => {
+    if (currentState.run() === false)
+        return;
     setTimeout(() => {
         if (!bomb) {
             let id = visitedID1[i];
@@ -50,9 +54,11 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => 
                     updateBombNode(visitedID2, pathIDs, 0);
             }
         }
-    }, updateSpeed());
+    }, 1 * updateSpeed());
 };
 export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWait, i) => {
+    if (currentState.run() === false)
+        return;
     setTimeout(() => {
         let id = visitedIDs[i];
         let svgID = `svg-${id}`;
@@ -69,9 +75,11 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWai
             else if (i === visitedIDs.length && waitOrNoWait)
                 updatePathNodes(pathIDs, 0);
         }
-    }, updateSpeed());
+    }, 1 * updateSpeed());
 };
 export const updateRandomVisitedNodes = (pathID) => {
+    if (currentState.run() === false)
+        return;
     setTimeout(() => {
         let svgID = `svg-${pathID}`;
         let propsID = `props-${pathID}`;
@@ -90,6 +98,8 @@ export const updateRandomVisitedNodes = (pathID) => {
     }, 50 * updateSpeed());
 };
 const updateBombNode = (visitedID2, pathIDs, i) => {
+    if (currentState.run() === false)
+        return;
     setTimeout(() => {
         let id2 = visitedID2[i];
         let svgID = `svg-${id2}`;
@@ -106,7 +116,7 @@ const updateBombNode = (visitedID2, pathIDs, i) => {
             else if (i === visitedID2.length)
                 updatePathNodes(pathIDs, 0);
         }
-    }, updateSpeed());
+    }, 1 * updateSpeed());
 };
 const updateSpeed = () => {
     switch (currentState.speed()) {

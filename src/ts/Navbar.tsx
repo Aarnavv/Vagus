@@ -21,9 +21,13 @@ export default class Navbar extends React.Component {
           <ProjectIcon />
           <p className="project-title">Project</p>
           <div className="buttons">
-            <ActionIcons.StopButtonIcon onClick={() => StopButtonClick()} />
+            <ActionIcons.StopButtonIcon onClick={() => {
+              StopButtonClick();
+              StartButtonClick(null);
+            }} />
             <ActionIcons.PrevButtonIcon />
             <ActionIcons.RunButtonIcon onClick={() => {
+              if (!currentState.run()) currentState.changeRun();
               let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
               StartButtonClick(currentNode)
             }} />

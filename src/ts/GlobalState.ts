@@ -11,6 +11,7 @@ class State<T> {
   private StartNode: T;
   private EndNode: T;
   private BombNode: T;
+  private Run: boolean;
 
   constructor(_start: T = null, _end: T = null, _graph: Graph<T> = null) {
     this.AddableNode = null;
@@ -22,6 +23,7 @@ class State<T> {
     this.BombNode = null;
     this.INIT_GRAPH = _graph;
     this.PRES_GRAPH = _graph;
+    this.Run = true;
   }
 
   graph(): Graph<T> { return this.PRES_GRAPH; }
@@ -33,6 +35,7 @@ class State<T> {
   startNode(): T { return this.StartNode; }
   endNode(): T { return this.EndNode; }
   bombNode(): T { return this.BombNode; }
+  run(): boolean { return this.Run; }
 
   changeAddableNode(toThis: NodeType) {
     this.AddableNode = toThis;
@@ -63,6 +66,9 @@ class State<T> {
   }
   changeInitGraph(toThis: Graph<T>) {
     this.INIT_GRAPH = toThis;
+  }
+  changeRun() {
+    this.Run = !this.Run;
   }
 }
 

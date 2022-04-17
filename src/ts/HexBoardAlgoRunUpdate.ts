@@ -2,6 +2,7 @@ import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
 
 export const updatePathNodes = (pathIDs: number[], i: number): void => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     let id = pathIDs[i];
     let svgID = `svg-${id}`;
@@ -18,6 +19,7 @@ export const updatePathNodes = (pathIDs: number[], i: number): void => {
 }
 
 export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], pathIDs: number[], bomb: boolean, i: number): void => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     if (!bomb) {
       let id = visitedID1[i];
@@ -57,10 +59,11 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
           updateBombNode(visitedID2, pathIDs, 0);
       }
     }
-  }, updateSpeed())
+  }, 1 * updateSpeed())
 }
 
 export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: number[], waitOrNoWait: boolean, i: number) => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     let id = visitedIDs[i];
     let svgID = `svg-${id}`;
@@ -79,10 +82,11 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: n
       else if (i === visitedIDs.length && waitOrNoWait)
         updatePathNodes(pathIDs, 0);
     }
-  }, updateSpeed())
+  }, 1 * updateSpeed())
 }
 
 export const updateRandomVisitedNodes = (pathID: number): void => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     let svgID = `svg-${pathID}`;
     let propsID = `props-${pathID}`;
@@ -102,6 +106,7 @@ export const updateRandomVisitedNodes = (pathID: number): void => {
 }
 
 const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     let id2 = visitedID2[i];
     let svgID = `svg-${id2}`;
@@ -120,7 +125,7 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
       else if (i === visitedID2.length)
         updatePathNodes(pathIDs, 0);
     }
-  }, updateSpeed())
+  }, 1 * updateSpeed())
 }
 
 const updateSpeed = (): number => {
