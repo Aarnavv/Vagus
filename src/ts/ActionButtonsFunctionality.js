@@ -46,6 +46,10 @@ const StartButtonClick = (currentNode) => {
         const [pathFromStart, visitedFromStartSet, visitedFromEndSet] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
         const visitedFromStartArray = Array.from(visitedFromStartSet);
         const visitedFromEndArray = Array.from(visitedFromEndSet);
+        if (pathFromStart.length === 0 || pathFromStart === null) {
+            alert("No Path Found! :(");
+            return;
+        }
         if (visitedFromStartArray.length > visitedFromEndArray.length) {
             updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, true, 0);
             updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, false, 0);
@@ -58,10 +62,14 @@ const StartButtonClick = (currentNode) => {
     else if (currentState.algorithm() === 'rand-algo') {
         let endNode = currentState.endNode();
         setTimeout(() => {
-            // console.log(currentNode.getData());
             updateRandomVisitedNodes(currentNode.getData());
+            let oldNode = currentNode;
             currentNode = currentNode.getRandomNeighbour();
-            if (currentNode.getData() !== endNode)
+            if (currentNode === oldNode) {
+                alert("No Path Found! :(");
+                return;
+            }
+            else if (currentNode.getData() !== endNode)
                 StartButtonClick(currentNode);
             else if (currentNode.getData() === endNode)
                 updateRandomVisitedNodes(endNode);
@@ -72,6 +80,10 @@ const StartButtonClick = (currentNode) => {
             let path = Algorithms.runAlgoFromGlobalStateNoBomb().path;
             let visitedInOrder = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
             let ids = Array.from(visitedInOrder.keys());
+            if (path === null || path.length === 0) {
+                alert("No Path Found! :(");
+                return;
+            }
             updateVisitedNodes(ids, null, path, false, 0);
         }
         else {
@@ -80,6 +92,10 @@ const StartButtonClick = (currentNode) => {
             let visitedP2 = Algorithms.runAlgorithmGlobalStateYesBomb().visitedP2;
             let ids1 = Array.from(visitedP1.keys());
             let ids2 = Array.from(visitedP2.keys());
+            if (path === null || path.length === 0 || path[0] === currentState.startNode()) {
+                alert("No Path Found! :(");
+                return;
+            }
             updateVisitedNodes(ids1, ids2, path, true, 0);
         }
     }

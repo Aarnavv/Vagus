@@ -42,7 +42,7 @@ export default class Node<T> {
     this.data = data;
     this.comparator = comparator;
     this.adjNodes = [];
-    this.adjNodes.push( new Edge ( this , 0));
+    this.adjNodes.push(new Edge(this, 0));
     this.setX(x);
     this.setY(y);
   }
@@ -56,20 +56,20 @@ export default class Node<T> {
   }
 
   addAdjNode(node: Node<T>, cost: number): void {
-    if(this.adjNodes.every((edge)=>{
-      return edge.dest.getData()!==node.getData();
+    if (this.adjNodes.every((edge) => {
+      return edge.dest.getData() !== node.getData();
     })) this.adjNodes.push(new Edge(node, cost));
     return;
   }
 
-  updateCostTo(node : Node<T> , cost : number): boolean{
-    let edgeToUpdate = this.adjNodes.find((edge)=>{
-      if(edge.dest.getData() === node.getData())
+  updateCostTo(node: Node<T>, cost: number): boolean {
+    let edgeToUpdate = this.adjNodes.find((edge) => {
+      if (edge.dest.getData() === node.getData())
         return edge;
       //added this later.
       else return undefined;
     });
-    if(edgeToUpdate===undefined ) return false ;
+    if (edgeToUpdate === undefined) return false;
     edgeToUpdate.cost = cost;
     return true;
   }
@@ -93,7 +93,11 @@ export default class Node<T> {
     return metaData;
   }
 
-  getRandomNeighbour():Node<T>{
-    return this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
+  getRandomNeighbour(): Node<T> {
+    while (true) {
+      let neighbour = this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
+      if (neighbour.getData() !== this.data || this.adjNodes.length === 1)
+        return neighbour;
+    }
   }
 }

@@ -85,6 +85,10 @@ export default class Node {
         return metaData;
     }
     getRandomNeighbour() {
-        return this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
+        while (true) {
+            let neighbour = this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
+            if (neighbour.getData() !== this.data || this.adjNodes.length === 1)
+                return neighbour;
+        }
     }
 }
