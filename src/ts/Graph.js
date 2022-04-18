@@ -202,7 +202,7 @@ export default class Graph {
             }
         });
         //then reset all costs.
-        _initial.nodes().forEach((initNode) => {
+        _present.nodes().forEach((initNode) => {
             initNode.getAdjNodes().forEach((edge) => {
                 if (edge.dest.getData() !== initNode.getData() && edge.cost > 1)
                     edge.changeCost(cost);

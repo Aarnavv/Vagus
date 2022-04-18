@@ -54,7 +54,7 @@ const StartButtonClick = (currentNode): void => {
     const [pathFromStart, visitedFromStartSet, visitedFromEndSet] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
     const visitedFromStartArray = Array.from(visitedFromStartSet);
     const visitedFromEndArray = Array.from(visitedFromEndSet);
-    if (pathFromStart.length === 0 || pathFromStart === null) {
+    if ( pathFromStart === null || pathFromStart.length === 0 ) {
       alert("No Path Found! :(");
       return;
     }
