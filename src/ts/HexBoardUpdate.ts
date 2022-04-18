@@ -6,7 +6,8 @@ import Graph from "./Graph";
 const updateHexIcon = (propID: string, id: number): void => {
   document.onmousemove = null;
   document.onmousedown = null;
-  updateStateOnClick(propID);
+  updateStateOnClick(propID); 
+  console.log(propID)
   switch (currentState.addableNode()) {
     case 'start-node':
       updateNode(propID, 'start-node');
