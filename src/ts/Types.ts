@@ -13,7 +13,8 @@ export enum AlgoType {
   breadthFirstSearch = 'bfs-algo',
   depthFirstSearch = 'dfs-algo',
   biDirectionalSearch = 'bd-algo',
-  randomWalk = 'rand-algo'
+  randomWalk = 'rand-algo' ,
+  bestFirstSearch ='best-fs'
 }
 
 export enum MazeType {

@@ -141,8 +141,8 @@ const PrevButtonClick = () => {
     // unUpdatePathNodes(pathToRemove, pathToRemove.length - 1);
     // unUpdateVisitedNodes(visitedToRemove, visitedToRemove.length - 1);
     unUpdateNodes(pathToRemove, pathToRemove.length - 1, 100, 1000, 'path-node', 'un-path-node', true);
-    // unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, 8, 80, 'visited-node', 'un-visited-node', !longer);
-    // if (bomb)
+    unUpdateNodes(pathToRemove, pathToRemove.length - 1, 100, 1000, 'path-node', 'un-path-node', true);
+    // unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, 25, 250, 'visited-node', 'un-visited-node', !longer);
     // unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBomb.length - 2, 8, 80, 'visited-node-bomb', 'un-visited-bomb-node', !longer);
 };
 export { StopButtonClick, StartButtonClick, PrevButtonClick, RemoveAllClasses, };
