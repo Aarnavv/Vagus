@@ -29,3 +29,9 @@ export enum SpeedType {
   percent50 = 50,
   percent25 = 25
 }
+
+export enum MazeGeneratorPropTypes{
+  onlyWeights='w',
+  onlyWalls='W',
+  weightsAndWalls='wW'
+}

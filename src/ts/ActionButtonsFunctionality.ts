@@ -142,9 +142,7 @@ const PrevButtonClick = (): void => {
     })
   }
   visitedToRemove.shift();
-  if (pathToRemove.length >= visitedToRemove.length)
-    longer = true;
-  else longer = false;
+  longer = pathToRemove.length >= visitedToRemove.length;
   // unUpdatePathNodes(pathToRemove, pathToRemove.length - 1);
   // unUpdateVisitedNodes(visitedToRemove, visitedToRemove.length - 1);
   unUpdateNodes(pathToRemove, pathToRemove.length - 1, 100, 1000, 'path-node', 'un-path-node', longer);

@@ -30,3 +30,9 @@ export var SpeedType;
     SpeedType[SpeedType["percent50"] = 50] = "percent50";
     SpeedType[SpeedType["percent25"] = 25] = "percent25";
 })(SpeedType || (SpeedType = {}));
+export var MazeGeneratorPropTypes;
+(function (MazeGeneratorPropTypes) {
+    MazeGeneratorPropTypes["onlyWeights"] = "w";
+    MazeGeneratorPropTypes["onlyWalls"] = "W";
+    MazeGeneratorPropTypes["weightsAndWalls"] = "wW";
+})(MazeGeneratorPropTypes || (MazeGeneratorPropTypes = {}));

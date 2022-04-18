@@ -259,7 +259,7 @@ export default class Algorithms {
             case AlgoType.aStarSearch:
                 [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
@@ -267,7 +267,7 @@ export default class Algorithms {
             case AlgoType.breadthFirstSearch:
                 [pathP1, visitedP1] = algo.bfs(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.bfs(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
@@ -275,7 +275,7 @@ export default class Algorithms {
             case AlgoType.bellmanFord:
                 [pathP1, visitedP1] = algo.bellmanFord(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.bellmanFord(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
@@ -283,7 +283,7 @@ export default class Algorithms {
             case AlgoType.dijkstrasSearch:
                 [pathP1, visitedP1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
@@ -291,7 +291,7 @@ export default class Algorithms {
             case AlgoType.depthFirstSearch:
                 [pathP1, visitedP1] = algo.dfs(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.dfs(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
@@ -299,7 +299,7 @@ export default class Algorithms {
             case AlgoType.bestFirstSearch:
                 [pathP1, visitedP1] = algo.bestFirstSearch(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.bestFirstSearch(currentState.bombNode(), currentState.endNode());
-                if (pathP1 && pathP2 !== null)
+                if (pathP1 !== null && pathP2 !== null)
                     path = pathP1.concat(pathP2.slice(1));
                 else
                     path = null;
