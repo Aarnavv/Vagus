@@ -61,7 +61,7 @@ const StartButtonClick = (currentNode) => {
                 updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
                 updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
             }
-            if (pathFromStart.length === 0 || pathFromStart === null) {
+            if (pathFromStart === null || pathFromStart.length === 0) {
                 alert("No Path Found! :(");
                 return;
             }

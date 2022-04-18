@@ -212,7 +212,7 @@ export default class Graph<T> {
         this.revertNode(initNode.getData(), _initial, _present);
       }
     });
-    //then reset all costs
+    //then reset all costs.
     _present.nodes().forEach((initNode)=>{
       initNode.getAdjNodes().forEach((edge)=>{
         if(edge.dest.getData () !==initNode.getData()&&edge.cost>1)

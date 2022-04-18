@@ -1,5 +1,5 @@
 import Graph from './Graph';
-import { MinPriorityQueue, PriorityQueue } from "@datastructures-js/priority-queue";
+import {MinPriorityQueue} from "@datastructures-js/priority-queue";
 import Edge from "./Edge";
 import { AlgoType } from "./Types";
 import currentState from "./GlobalState";
@@ -9,14 +9,16 @@ import Node from "./Node";
 export default class Algorithms<T> {
   graph: Graph<T>;
   comparator;
-  private static EPS: number = 1e-6;
+  public static EPS:number;
 
   constructor(_assignGraph: Graph<T>) {
     this.graph = _assignGraph;
     this.comparator = this.graph.comparator;
+    Algorithms.EPS=1e-5;
+    console.log(Algorithms.EPS);
   }
 
-  bfs(start: T, end: T): [T[], Set<T>] {
+  bfs(start: T, end: T): [T[] | null , Set<T>] {
     const visited: Set<T> = new Set();
     const prev: Map<T, T> = new Map();
     const path: T[] = [];
@@ -42,7 +44,7 @@ export default class Algorithms<T> {
     return [null, visited];
   }
 
-  dfs(start: T, end: T): [T[], Set<T>] {
+  dfs(start: T, end: T): [T[] | null , Set<T>] {
     let path: T[] = [];
     const visited: Set<T> = new Set();
     const internalDfs = (at: T) => {
@@ -66,30 +68,34 @@ export default class Algorithms<T> {
     }
   }
 
-  dijkstras(start: T, end: T): [T[], Set<T>] {
+  dijkstras(start: T, end: T): [T[] | null , Set<T>] {
     const [dist, prev, visited] = this.internalDijkstras(start, end);
     // the rest is just finding the path to use.
     let path: T[] = [];
     if (dist.get(end) === Infinity)
-      return [path, visited];
+      return [null, visited];
     for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
     return [path, visited];
   }
 
-  aStar(start: T, end: T): [T[], Set<T>] {
+  aStar(start: T, end: T): [T[] | null , Set<T>] {
     const [dist, prev, visited] = this.internalAStar(start, end);
     // this is just to reconstruct the path for a*;
     let path: T[] = [];
-    if (dist.get(end) === Infinity) return [null, visited];
-    for (let at: T = end; at !== undefined; at = prev.get(at)) path.unshift(at);
+    if (dist.get(end) === Infinity)
+      return [null, visited];
+    for (let at: T = end; at !== undefined; at = prev.get(at))
+      path.unshift(at);
     return [path, visited];
   }
 
-  bellmanFord(start: T, end: T): [T[], Set<T>] {
-    const [dist, prev, visited] = this.internalBellmanFord(start);
+  bellmanFord(start: T, end: T): [T[] | null, Set<T>] {
+    const [dist, prev, visited] = this.internalBellmanFord(start );
     let path: T[] = [];
-    if (dist.get(end) === Infinity) return [null, visited];
-    for (let at = end; at !== undefined; at = prev.get(at)) path.unshift(at);
+    if (dist.get(end) === Infinity)
+      return [null, visited];
+    for (let at = end; at !== undefined; at = prev.get(at))
+      path.unshift(at);
     return [path, visited];
   }
 
@@ -131,20 +137,58 @@ export default class Algorithms<T> {
     return path;
   }
 
-  biDirectional(start: T, end: T): [T[], Set<T>, Set<T>] {
+  biDirectional(start: T, end: T): [T[]|null, Set<T>, Set<T>]{
     const [pathFromStart] = this.dijkstras(start, end);
     let spliceNode = pathFromStart [pathFromStart.length>>1];
-    let [p1 , visitedFromStart ] = this.dijkstras(start , spliceNode);
+    let [ p1 ,  visitedFromStart ] = this.dijkstras(start , spliceNode);
     let [p2 , visitedFromEnd ] = this.dijkstras(end , spliceNode);
+    console.log(visitedFromStart );
+    console.log(visitedFromEnd);
     return [pathFromStart, visitedFromStart , visitedFromEnd];
   }
+
+
+  bestFirstSearch(start : T , end :T ):[T [] |null, Set<T>]{
+    let [prev , visited] = this.internalBestFirstSearch( start, end );
+    if(prev === null ) return [null , visited ] ;
+    let path: T []   = [] ;
+    for(let at = end ; at !== undefined ; at = prev.get(at))
+      path.unshift (at );
+    return [path , visited ];
+  }
+
+  private internalBestFirstSearch(start : T , end: T):[Map<T,T> , Set<T>] {
+    type Priority= {
+      label:T ,
+      minHeuristic: number
+    }
+    let PQ = new MinPriorityQueue<Priority>((promisingNode ) => promisingNode.minHeuristic);
+    let prev:Map<T , T > = new Map;
+    let visited:Set<T> = new Set();
+    let dest = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
+    PQ.enqueue({label : start , minHeuristic:this.graph.distBw(dest , endNode)});
+    while(!PQ.isEmpty()){
+      const { label } = PQ.dequeue();
+      visited.add(label);
+      this.graph.nodes().get(label).getAdjNodes().forEach((edge )=>{
+        let destData =edge.dest.getData();
+        if(!visited.has(destData)){
+          let newHeuristic = this.graph.distBw(edge.dest , endNode);
+          PQ.enqueue({label : destData , minHeuristic: newHeuristic });
+          prev.set(destData , label);
+        }
+      });
+      if(label===end ) return [prev , visited ];
+    }
+    return [null , visited];
+   }
 
 
   private internalAStar(start: T, end: T): [Map<T, number>, Map<T, T>, Set<T>] {
     type Priority = {
       label: T,
-      minDist: number;
-      minHeuristic: number;
+      minDist: number ,
+      minHeuristic: number
     }
     let PQ = new MinPriorityQueue<Priority>((promisingNode) => promisingNode.minHeuristic);
     let dist: Map<T, number> = new Map(), prev: Map<T, T> = new Map();
@@ -163,7 +207,7 @@ export default class Algorithms<T> {
         let destData = edge.dest.getData();
         if (!visited.has(destData)) {
           let newDist = dist.get(label) + edge.cost;
-          let newHeuristic = newDist + this.graph.distBw(this.graph.nodes().get(destData), endNode) * newDist;
+          let newHeuristic =(this.graph.distBw(this.graph.nodes().get(destData), endNode ,'e'))/1000000 * newDist;
           if (newDist < dist.get(destData)) {
             prev.set(destData, label);
             dist.set(destData, newDist);
@@ -228,10 +272,13 @@ export default class Algorithms<T> {
       path = algo.randomWalk(currentState.startNode(), currentState.endNode());
       visitedInOrder = null;
     }
+    else if(algoType===AlgoType.bestFirstSearch){
+      [path , visitedInOrder ] = algo.bestFirstSearch(currentState.startNode() , currentState.endNode());
+    }
     //else //something regarding bidirectional search needs to be done.
     return { path, visitedInOrder };
   }
-  static runAlgorithmGlobalStateYesBomb(): { path: number[], visitedP1: Set<number>, visitedP2: Set<number> } {
+  static runAlgorithmGlobalStateYesBomb(): { path: number[]|null, visitedP1: Set<number>, visitedP2: Set<number> } {
     let path: number[] = [], pathP1: number[] = [], pathP2: number[] = [];
     let visitedP1: Set<number> = new Set(), visitedP2: Set<number> = new Set();
     let algo = new Algorithms(currentState.graph());
@@ -240,28 +287,44 @@ export default class Algorithms<T> {
       case AlgoType.aStarSearch:
         [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
-        path = pathP1.concat(pathP2.slice(1));
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
         break;
       case AlgoType.breadthFirstSearch:
         [pathP1, visitedP1] = algo.bfs(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.bfs(currentState.bombNode(), currentState.endNode());
-        path = pathP1.concat(pathP2.slice(1));
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
         break;
       case AlgoType.bellmanFord:
         [pathP1, visitedP1] = algo.bellmanFord(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.bellmanFord(currentState.bombNode(), currentState.endNode());
-        path = pathP1.concat(pathP2.slice(1));
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
         break;
       case AlgoType.dijkstrasSearch:
         [pathP1, visitedP1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
-        path = pathP1.concat(pathP2.slice(1));
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
         break;
       case AlgoType.depthFirstSearch:
         [pathP1, visitedP1] = algo.dfs(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.dfs(currentState.bombNode(), currentState.endNode());
-        path = pathP1.concat(pathP2.slice(1));
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
         break;
+      case AlgoType.bestFirstSearch:
+        [pathP1 , visitedP1] = algo.bestFirstSearch(currentState.startNode() ,currentState.bombNode());
+        [pathP2 , visitedP2 ]= algo.bestFirstSearch(currentState.bombNode() , currentState.endNode() );
+        if(pathP1!==null&& pathP2 !== null )
+          path = pathP1.concat(pathP2.slice(1));
+        else path= null
     }
     return {
       path,

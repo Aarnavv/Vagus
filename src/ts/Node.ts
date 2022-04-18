@@ -92,8 +92,7 @@ export default class Node<T> {
     metaData += "\n}";
     return metaData;
   }
-
-  getRandomNeighbour(): Node<T> {
+  getRandomNeighbour():Node<T> {
     while (true) {
       let neighbour = this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
       if (neighbour.getData() !== this.data || this.adjNodes.length === 1)

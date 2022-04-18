@@ -5,10 +5,12 @@ import { Queue } from "queue-typescript";
 export default class Algorithms {
     graph;
     comparator;
-    static EPS = 1e-6;
+    static EPS;
     constructor(_assignGraph) {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
+        Algorithms.EPS = 1e-5;
+        console.log(Algorithms.EPS);
     }
     bfs(start, end) {
         const visited = new Set();
@@ -63,7 +65,7 @@ export default class Algorithms {
         // the rest is just finding the path to use.
         let path = [];
         if (dist.get(end) === Infinity)
-            return [path, visited];
+            return [null, visited];
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
         return [path, visited];
@@ -128,7 +130,40 @@ export default class Algorithms {
         let spliceNode = pathFromStart[pathFromStart.length >> 1];
         let [p1, visitedFromStart] = this.dijkstras(start, spliceNode);
         let [p2, visitedFromEnd] = this.dijkstras(end, spliceNode);
+        console.log(visitedFromStart);
+        console.log(visitedFromEnd);
         return [pathFromStart, visitedFromStart, visitedFromEnd];
+    }
+    bestFirstSearch(start, end) {
+        let [prev, visited] = this.internalBestFirstSearch(start, end);
+        if (prev === null)
+            return [null, visited];
+        let path = [];
+        for (let at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+        return [path, visited];
+    }
+    internalBestFirstSearch(start, end) {
+        let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minHeuristic);
+        let prev = new Map;
+        let visited = new Set();
+        let dest = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
+        PQ.enqueue({ label: start, minHeuristic: this.graph.distBw(dest, endNode) });
+        while (!PQ.isEmpty()) {
+            const { label } = PQ.dequeue();
+            visited.add(label);
+            this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
+                let destData = edge.dest.getData();
+                if (!visited.has(destData)) {
+                    let newHeuristic = this.graph.distBw(edge.dest, endNode);
+                    PQ.enqueue({ label: destData, minHeuristic: newHeuristic });
+                    prev.set(destData, label);
+                }
+            });
+            if (label === end)
+                return [prev, visited];
+        }
+        return [null, visited];
     }
     internalAStar(start, end) {
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minHeuristic);
@@ -148,7 +183,7 @@ export default class Algorithms {
                 let destData = edge.dest.getData();
                 if (!visited.has(destData)) {
                     let newDist = dist.get(label) + edge.cost;
-                    let newHeuristic = newDist + this.graph.distBw(this.graph.nodes().get(destData), endNode) * newDist;
+                    let newHeuristic = (this.graph.distBw(this.graph.nodes().get(destData), endNode, 'e')) / 1000000 * newDist;
                     if (newDist < dist.get(destData)) {
                         prev.set(destData, label);
                         dist.set(destData, newDist);
@@ -209,6 +244,9 @@ export default class Algorithms {
             path = algo.randomWalk(currentState.startNode(), currentState.endNode());
             visitedInOrder = null;
         }
+        else if (algoType === AlgoType.bestFirstSearch) {
+            [path, visitedInOrder] = algo.bestFirstSearch(currentState.startNode(), currentState.endNode());
+        }
         //else //something regarding bidirectional search needs to be done.
         return { path, visitedInOrder };
     }
@@ -221,28 +259,50 @@ export default class Algorithms {
             case AlgoType.aStarSearch:
                 [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
-                path = pathP1.concat(pathP2.slice(1));
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
                 break;
             case AlgoType.breadthFirstSearch:
                 [pathP1, visitedP1] = algo.bfs(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.bfs(currentState.bombNode(), currentState.endNode());
-                path = pathP1.concat(pathP2.slice(1));
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
                 break;
             case AlgoType.bellmanFord:
                 [pathP1, visitedP1] = algo.bellmanFord(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.bellmanFord(currentState.bombNode(), currentState.endNode());
-                path = pathP1.concat(pathP2.slice(1));
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
                 break;
             case AlgoType.dijkstrasSearch:
                 [pathP1, visitedP1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
-                path = pathP1.concat(pathP2.slice(1));
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
                 break;
             case AlgoType.depthFirstSearch:
                 [pathP1, visitedP1] = algo.dfs(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.dfs(currentState.bombNode(), currentState.endNode());
-                path = pathP1.concat(pathP2.slice(1));
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
                 break;
+            case AlgoType.bestFirstSearch:
+                [pathP1, visitedP1] = algo.bestFirstSearch(currentState.startNode(), currentState.bombNode());
+                [pathP2, visitedP2] = algo.bestFirstSearch(currentState.bombNode(), currentState.endNode());
+                if (pathP1 !== null && pathP2 !== null)
+                    path = pathP1.concat(pathP2.slice(1));
+                else
+                    path = null;
         }
         return {
             path,

@@ -1,8 +1,10 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
+
 import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes, unUpdateNodes } from "./HexBoardAlgoRunUpdate";
 import { setInitialNodes } from "./HexBoardUpdate";
 import Graph from "./Graph";
+
 
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
@@ -39,7 +41,6 @@ const RemoveAllNodes = (node: string): void => {
     svgEle.classList.add('no-node', 'icon');
   }
 }
-
 let pathToRemove: number[] = [];
 let pathToRemoveRandom: Set<number> = new Set();
 let visitedToRemove: number[] = [];
@@ -64,7 +65,7 @@ const StartButtonClick = (currentNode): void => {
         updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
         updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
       }
-      if (pathFromStart.length === 0 || pathFromStart === null) {
+      if ( pathFromStart === null || pathFromStart.length === 0 ) {
         alert("No Path Found! :(");
         return;
       }
