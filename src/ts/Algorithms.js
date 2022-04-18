@@ -127,11 +127,16 @@ export default class Algorithms {
     }
     biDirectional(start, end) {
         const [pathFromStart] = this.dijkstras(start, end);
+        if (pathFromStart === null) {
+            let [p1, visitedFromStart] = this.dijkstras(start, end);
+            let [p2, visitedFromEnd] = this.dijkstras(end, start);
+            return [pathFromStart, visitedFromStart, visitedFromEnd];
+        }
         let spliceNode = pathFromStart[pathFromStart.length >> 1];
         let [p1, visitedFromStart] = this.dijkstras(start, spliceNode);
         let [p2, visitedFromEnd] = this.dijkstras(end, spliceNode);
-        console.log(visitedFromStart);
-        console.log(visitedFromEnd);
+        // console.log(visitedFromStart);
+        // console.log(visitedFromEnd);
         return [pathFromStart, visitedFromStart, visitedFromEnd];
     }
     bestFirstSearch(start, end) {

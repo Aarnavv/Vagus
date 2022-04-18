@@ -34,6 +34,10 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => 
                     nodeHoverAnimation(propsID);
                 if (++i < visitedID1.length)
                     updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, i);
+                else if (pathIDs === null || pathIDs.length === 0) {
+                    alert("No Path Found! :(");
+                    return;
+                }
                 else if (i === visitedID1.length)
                     updatePathNodes(pathIDs, 0);
             }
@@ -51,12 +55,22 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => 
                     nodeHoverAnimation(propsID);
                 if (++i < visitedID1.length)
                     updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
+                else if (pathIDs[0] === currentState.startNode()) {
+                    alert("No Path Found! :(");
+                    return;
+                }
                 else if (i === visitedID1.length)
                     updateBombNode(visitedID2, pathIDs, 0);
             }
         }
     }, 1 * updateSpeed());
 };
+// const checkBombNodePresence = (visitedID1): boolean => {
+//   console.log(visitedID1, currentState.bombNode())
+//   if (!(visitedID1.forEach((node) => { if (node === currentState.bombNode()) return false })))
+//     return false
+//   return true;
+// }
 export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWait, i) => {
     if (currentState.run() === false)
         return;
@@ -73,6 +87,10 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWai
                 nodeHoverAnimation(propsID);
             if (++i < visitedIDs.length)
                 updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, i);
+            else if (pathIDs === null && waitOrNoWait) {
+                alert("No Path Found! :(");
+                return;
+            }
             else if (i === visitedIDs.length && waitOrNoWait)
                 updatePathNodes(pathIDs, 0);
         }
@@ -114,6 +132,10 @@ const updateBombNode = (visitedID2, pathIDs, i) => {
                 nodeHoverAnimation(propsID);
             if (++i < visitedID2.length)
                 updateBombNode(visitedID2, pathIDs, i);
+            else if (pathIDs === null || pathIDs.length === 0) {
+                alert("No Path Found! :(");
+                return;
+            }
             else if (i === visitedID2.length)
                 updatePathNodes(pathIDs, 0);
         }
@@ -121,6 +143,8 @@ const updateBombNode = (visitedID2, pathIDs, i) => {
 };
 export const unUpdateNodes = (pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer) => {
     if (currentState.run() === true)
+        return;
+    if (pathIDs === null || pathIDs.length === 0)
         return;
     setTimeout(() => {
         let id = pathIDs[i];
