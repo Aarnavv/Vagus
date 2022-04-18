@@ -49,7 +49,7 @@ export default class Navbar extends React.Component {
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-5" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" divID="tsx-6" />
                       <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="randomWalk.tsx" divID="tsx-7" />
-                      {/*<TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-7" />*/}
+                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-8" />
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.BLUE} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">
