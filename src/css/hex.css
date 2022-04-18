@@ -6,8 +6,8 @@
 
 .hexagon {
   position: absolute;
-  height:34px;
-  width:34px;
+  height: 34px;
+  width: 34px;
   transition: all 0.1s;
   overflow: hidden;
 }
@@ -25,7 +25,7 @@
 
 .start-node {
   background-image: url('../svgIcons/startNode.svg');
-  top: 0px; 
+  top: 0px;
   /* DO NOT REMOVE THE ABOVE LINE */
 }
 
@@ -51,7 +51,7 @@
 }
 
 .svg-wall-node {
-fill: var(--wall-node-color);
+  fill: var(--wall-node-color);
 }
 
 .node-hover {
@@ -66,7 +66,7 @@ fill: var(--wall-node-color);
 
 .svg-visited-node {
   fill: var(--visited-node-color);
-  transition: all 0.001s;
+  transition: all 1s;
   animation: visited-node-transform-no-bomb 1s 1 linear forwards;
 }
 
@@ -76,63 +76,159 @@ fill: var(--wall-node-color);
   animation: visited-node-transform-yes-bomb 1s 1 linear forwards;
 }
 
+.svg-un-path-node {
+  fill: var(--hex-color);
+  transition: all 0.75s;
+  /* animation: path-node-transform 1s ease-in 2 both alternate; */
+  animation: un-path-node-transform 1s 1 linear forwards;
+}
+
+.svg-un-visited-node {
+  fill: var(--hex-color);
+  transition: all 1s;
+  /* animation: visited-node-transform-no-bomb 2s 2 both alternate; */
+  animation: un-visited-node-transform-no-bomb 0.15s 1 linear forwards;
+
+}
+
+.svg-un-visited-node {
+  fill: var(--hex-color);
+  transition: all 1s;
+  animation: un-visited-node-transform-yes-bomb 0.15s 1 linear forwards;
+
+}
+
+@keyframes un-path-node-transform {
+  0% {
+    fill: var(--path-node-color-1);
+  }
+
+  20% {
+    fill: var(--path-node-color-2);
+  }
+
+  40% {
+    fill: var(--path-node-color-3);
+  }
+
+  60% {
+    fill: var(--path-node-color-4);
+  }
+
+  80% {
+    fill: var(--path-node-color-5);
+  }
+
+  100% {
+    fill: var(--hex-color);
+  }
+}
+
 @keyframes path-node-transform {
   0% {
-      fill: var(--hex-color);
+    fill: var(--hex-color);
   }
+
   20% {
-      fill: var(--path-node-color-5);
+    fill: var(--path-node-color-5);
   }
+
   40% {
-      fill: var(--path-node-color-4);
+    fill: var(--path-node-color-4);
   }
+
   60% {
-      fill: var(--path-node-color-3);
+    fill: var(--path-node-color-3);
   }
+
   80% {
-      fill: var(--path-node-color-2);
+    fill: var(--path-node-color-2);
   }
+
   100% {
-      fill: var(--path-node-color-1);
+    fill: var(--path-node-color-1);
+  }
+}
+
+@keyframes un-visited-node-transform-no-bomb {
+  0% {
+    fill: var(--visited-node-color-1);
+  }
+
+  33% {
+    fill: var(--visited-node-color-2);
+  }
+
+  66% {
+    fill: var(--visited-node-color-3);
+  }
+
+  100% {
+    fill: var(--hex-color);
   }
 }
 
 @keyframes visited-node-transform-no-bomb {
   0% {
-      fill: var(--hex-color);
+    fill: var(--hex-color);
   }
+
   33% {
-      fill: var(--visited-node-color-3);
+    fill: var(--visited-node-color-3);
   }
+
   66% {
-      fill: var(--visited-node-color-2);
+    fill: var(--visited-node-color-2);
   }
+
   100% {
-      fill: var(--visited-node-color-1);
+    fill: var(--visited-node-color-1);
+  }
+}
+
+@keyframes un-visited-node-transform-yes-bomb {
+  0% {
+    fill: var(--visited-node-color-11);
+  }
+  
+  33% {
+    fill: var(--visited-node-color-21);
+  }
+  
+  66% {
+    fill: var(--visited-node-color-31);
+  }
+  
+  100% {
+    fill: var(--hex-color);
   }
 }
 
 @keyframes visited-node-transform-yes-bomb {
   0% {
-      fill: var(--hex-color);
+    fill: var(--hex-color);
   }
+
   33% {
-      fill: var(--visited-node-color-31);
+    fill: var(--visited-node-color-31);
   }
+
   66% {
-      fill: var(--visited-node-color-21);
+    fill: var(--visited-node-color-21);
   }
+
   100% {
-      fill: var(--visited-node-color-11);
+    fill: var(--visited-node-color-11);
   }
 }
 
 @keyframes icon-pulsate {
   0% {
-      fill: var(--hex-color);
+    fill: var(--hex-color);
   }
+
   100% {
-      fill: var(--hex-color-hover);
+    fill: var(--hex-color-hover);
   }
 }
 
@@ -140,9 +236,11 @@ fill: var(--wall-node-color);
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.3);
   }
+
   100% {
     transform: scale(1);
   }

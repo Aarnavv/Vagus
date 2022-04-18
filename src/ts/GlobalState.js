@@ -10,6 +10,7 @@ class State {
     StartNode;
     EndNode;
     BombNode;
+    Run;
     constructor(_start = null, _end = null, _graph = null) {
         this.AddableNode = null;
         this.Algorithm = null;
@@ -20,6 +21,7 @@ class State {
         this.BombNode = null;
         this.INIT_GRAPH = _graph;
         this.PRES_GRAPH = _graph;
+        this.Run = true;
     }
     graph() { return this.PRES_GRAPH; }
     initGraph() { return this.INIT_GRAPH; }
@@ -30,6 +32,7 @@ class State {
     startNode() { return this.StartNode; }
     endNode() { return this.EndNode; }
     bombNode() { return this.BombNode; }
+    run() { return this.Run; }
     changeAddableNode(toThis) {
         this.AddableNode = toThis;
     }
@@ -56,6 +59,9 @@ class State {
     }
     changeInitGraph(toThis) {
         this.INIT_GRAPH = toThis;
+    }
+    changeRun() {
+        this.Run = !this.Run;
     }
 }
 let currentState = new State();
