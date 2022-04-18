@@ -130,6 +130,7 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
 }
 
 export const unUpdateNodes = (pathIDs: number[], i: number, outerTime: number, innerTime: number, classToRemove: string, classToAdd: string, longer: boolean) => {
+  if (currentState.run() === true) return
   setTimeout(() => {
     let id = pathIDs[i];
     let svgID = `svg-${id}`;
@@ -145,12 +146,14 @@ export const unUpdateNodes = (pathIDs: number[], i: number, outerTime: number, i
 }
 
 const renewNodes = (pathIDs: number[], i: number, classToRemove: string, removeAll: boolean) => {
+  if (currentState.run() === true) return
   let id = pathIDs[i];
   let svgID = `svg-${id}`;
   let propsID = `props-${id}`;
   document.getElementById(svgID).classList.remove(`svg-${classToRemove}`);
-  document.getElementById(svgID).classList.add('icon');
+  document.getElementById(svgID).classList.add('icon', 'no-node');
   document.getElementById(propsID).classList.remove(classToRemove);
+  document.getElementById(propsID).classList.add('no-node');
   if (i === 0 && removeAll)
     RemoveAllClasses(1000, []);
 }
