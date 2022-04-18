@@ -44,7 +44,7 @@ let pathToRemove: number[] = [];
 let pathToRemoveRandom: Set<number> = new Set();
 let visitedToRemove: number[] = [];
 let visitedToRemoveBomb: number[] = [];
-let bomb: boolean = true;
+let bomb: boolean = false;
 
 const StartButtonClick = (currentNode): void => {
   if (currentState.run()) {
@@ -132,26 +132,26 @@ const RemoveAllClasses = (time: number, opt: string[]) => {
 }
 
 const PrevButtonClick = (): void => {
-  console.log(currentState.run());
   if (currentState.run() === true) currentState.changeRun();
-  let longer: boolean;
   if (pathToRemove.length === 0) {
     pathToRemoveRandom.forEach((id) => {
       pathToRemove.push(id);
     })
   }
+  // let pathNodeTime: number = 10;
+  let visitedNodeTime: number = 8;
+  let pathNodeTime: number = 50;
+  // let visitedNodeTime: number = 12.5;
   visitedToRemove.shift();
-  if (pathToRemove.length >= visitedToRemove.length)
-    longer = true;
-  else longer = false;
-  // unUpdatePathNodes(pathToRemove, pathToRemove.length - 1);
-  // unUpdateVisitedNodes(visitedToRemove, visitedToRemove.length - 1);
-
-  unUpdateNodes(pathToRemove, pathToRemove.length - 1, 100, 1000, 'path-node', 'un-path-node', longer);
-  unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, 25, 250, 'visited-node', 'un-visited-node', !longer);
-  // if (bomb)
-  // unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBomb.length - 2, 8, 80, 'visited-node-bomb', 'un-visited-bomb-node', !longer);
-
+  if (!bomb) {
+    unUpdateNodes(pathToRemove, pathToRemove.length - 1, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
+    unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', true);
+  }
+  else if (bomb) {
+    unUpdateNodes(pathToRemove, pathToRemove.length - 1, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
+    unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', false);
+    unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBomb.length - 2, visitedNodeTime * 0.75, visitedNodeTime * 7.5, 'visited-node-bomb', 'un-visited-bomb-node', true);
+  }
 }
 
 export {
