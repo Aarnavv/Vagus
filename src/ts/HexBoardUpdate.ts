@@ -1,6 +1,5 @@
 import currentState from './GlobalState'
 import { updateState } from './fileStruct'
-import HexBoardInitializer from './HexBoardInitializer';
 import Graph from "./Graph";
 
 const updateHexIcon = (propID: string, id: number): void => {
@@ -157,30 +156,7 @@ const nodeHoverAnimation = (propID: string): void => {
     ele.classList.add('node-hover');
   }
 }
-
-const setInitialNodes = (): void => {
-  for (let i = 0; i < HexBoardInitializer.idVar; i++) {
-    if (i === (HexBoardInitializer.rows * 3)) {
-      setTimeout(() => {
-        let startCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25);
-        let endCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75)
-        document.getElementById(`props-${startCalculator}`).classList.remove('no-node');
-        document.getElementById(`props-${startCalculator}`).classList.add('start-node');
-        document.getElementById(`svg-${startCalculator}`).classList.remove('no-node');
-        document.getElementById(`svg-${startCalculator}`).classList.add('svg-start-node');
-        currentState.changeStartNode(startCalculator);
-        document.getElementById(`props-${endCalculator}`).classList.remove('no-node');
-        document.getElementById(`props-${endCalculator}`).classList.add('end-node');
-        document.getElementById(`svg-${endCalculator}`).classList.remove('no-node');
-        document.getElementById(`svg-${endCalculator}`).classList.add('svg-end-node');
-        currentState.changeEndNode(endCalculator);
-      }, 1)
-    }
-  }
-}
-
 export {
   updateHexIcon,
-  setInitialNodes,
   nodeHoverAnimation,
 }

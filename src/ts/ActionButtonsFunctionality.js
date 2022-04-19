@@ -1,8 +1,9 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
 import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes, unUpdateNodes } from "./HexBoardAlgoRunUpdate";
-import { setInitialNodes } from "./HexBoardUpdate";
+import HexBoardInitializer from "./HexBoardInitializer";
 import Graph from "./Graph";
+//TODO i am done with understanding this file.
 /**
  * Sets the hex board to its default initial state when the Stop button is clicked.
  * Requires no parameters.
@@ -17,7 +18,7 @@ const StopButtonClick = () => {
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
     setTimeout(() => {
         document.getElementById('stop-button').classList.remove('button-clicked');
-        setInitialNodes();
+        HexBoardInitializer.setInitialNodes();
     }, 510);
 };
 /**
