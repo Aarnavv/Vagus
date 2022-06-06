@@ -3,7 +3,7 @@ import '../css/navbar.css';
 import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
-import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
+import { TSXFile, IOFile, BATFile, SYSFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
@@ -19,16 +19,21 @@ export default class Navbar extends React.Component {
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => {
                             StopButtonClick();
-                            StartButtonClick(null);
+                            // StartButtonClick(null);
                         } }),
                     React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => {
                             PrevButtonClick();
                         } }),
                     React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
-                            if (!currentState.run())
-                                currentState.changeRun();
                             let currentNode = currentState.graph().nodes().get(currentState.startNode());
-                            StartButtonClick(currentNode);
+                            if (currentState.run()) {
+                                console.log(currentState.run());
+                                StartButtonClick(currentNode, true);
+                            }
+                            if (!currentState.run()) {
+                                currentState.changeRun();
+                                StartButtonClick(currentNode, false);
+                            }
                         } }))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
@@ -72,7 +77,6 @@ export default class Navbar extends React.Component {
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "unvisitedNode.gui", type: "unvisited", divID: "gui-5" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "startNode.gui", type: "start-node", divID: "gui-6" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "endNode.gui", type: "end-node", divID: "gui-7" }),
-                                React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))),
-                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md [Work in Progress!]", divID: "md-1" }))))));
+                                React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))))))));
     }
 }

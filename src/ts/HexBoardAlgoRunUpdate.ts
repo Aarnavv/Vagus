@@ -16,6 +16,8 @@ export const updatePathNodes = (pathIDs: number[], i: number): void => {
     if (++i < pathIDs.length) {
       updatePathNodes(pathIDs, i);
     }
+    if(i === pathIDs.length)
+      currentState.changeRun();
   }, 50 * updateSpeed())
 }
 
@@ -60,7 +62,7 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
           nodeHoverAnimation(propsID);
         if (++i < visitedID1.length)
           updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
-        else if (pathIDs[0] === currentState.startNode()) {
+        else if (pathIDs === null || pathIDs.length === 0) {
           alert("No Path Found! :(");
           return;
         }

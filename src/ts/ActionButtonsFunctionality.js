@@ -43,8 +43,11 @@ let pathToRemoveRandom = new Set();
 let visitedToRemove = [];
 let visitedToRemoveBomb = [];
 let bomb = false;
-const StartButtonClick = (currentNode) => {
-    if (currentState.run()) {
+const StartButtonClick = (currentNode, running) => {
+    console.log(running);
+    // console.log(currentState.run());
+    RemoveAllClasses(1, []);
+    if (!running) {
         if (currentState.algorithm() === null)
             alert('Please select an algorithm before continuing!');
         else if (currentState.algorithm() === 'bd-algo') {
@@ -74,7 +77,7 @@ const StartButtonClick = (currentNode) => {
                     return;
                 }
                 else if (currentNode.getData() !== endNode)
-                    StartButtonClick(currentNode);
+                    StartButtonClick(currentNode, false);
                 else if (currentNode.getData() === endNode)
                     updateRandomVisitedNodes(endNode);
             }, 10);
@@ -102,6 +105,10 @@ const StartButtonClick = (currentNode) => {
                 updateVisitedNodes(ids1, ids2, path, true, 0);
             }
         }
+    }
+    else if (running) {
+        // console.log(currentState.run());
+        currentState.changeRun();
     }
 };
 const RemoveAllClasses = (time, opt) => {

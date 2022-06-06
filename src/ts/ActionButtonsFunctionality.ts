@@ -47,8 +47,11 @@ let visitedToRemove: number[] = [];
 let visitedToRemoveBomb: number[] = [];
 let bomb: boolean = false;
 
-const StartButtonClick = (currentNode): void => {
-  if (currentState.run()) {
+const StartButtonClick = (currentNode, running): void => {
+  console.log(running);
+  // console.log(currentState.run());
+  RemoveAllClasses(1, []);
+  if (!running) {
     if (currentState.algorithm() === null)
       alert('Please select an algorithm before continuing!');
     else if (currentState.algorithm() === 'bd-algo') {
@@ -78,7 +81,7 @@ const StartButtonClick = (currentNode): void => {
           return;
         }
         else if (currentNode.getData() !== endNode)
-          StartButtonClick(currentNode);
+          StartButtonClick(currentNode, false);
         else if (currentNode.getData() === endNode)
           updateRandomVisitedNodes(endNode);
       }, 10)
@@ -106,6 +109,10 @@ const StartButtonClick = (currentNode): void => {
         updateVisitedNodes(ids1, ids2, path, true, 0);
       }
     }
+  }
+  else if(running){
+    // console.log(currentState.run());
+    currentState.changeRun();
   }
 }
 
