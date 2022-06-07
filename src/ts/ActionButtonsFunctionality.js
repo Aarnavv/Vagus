@@ -99,11 +99,6 @@ const StartButtonClick = (currentNode, running) => {
 const PrevButtonClick = () => {
     if (currentState.run() === true)
         currentState.changeRun();
-    if (pathToRemove.length === 0) {
-        pathToRemoveRandom.forEach((id) => {
-            pathToRemove.push(id);
-        });
-    }
     visitedToRemove.shift();
     if (!bomb) {
         unUpdateNodes('path-node', 'un-path-node');
