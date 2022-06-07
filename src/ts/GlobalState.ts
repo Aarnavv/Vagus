@@ -23,7 +23,7 @@ class State<T> {
     this.BombNode = null;
     this.INIT_GRAPH = _graph;
     this.PRES_GRAPH = _graph;
-    this.Run = true;
+    this.Run = false;
   }
 
   graph(): Graph<T> { return this.PRES_GRAPH; }

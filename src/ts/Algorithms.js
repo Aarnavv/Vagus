@@ -10,7 +10,7 @@ export default class Algorithms {
         this.graph = _assignGraph;
         this.comparator = this.graph.comparator;
         Algorithms.EPS = 1e-5;
-        console.log(Algorithms.EPS);
+        // console.log(Algorithms.EPS);
     }
     bfs(start, end) {
         const visited = new Set();

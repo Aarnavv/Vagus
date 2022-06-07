@@ -44,8 +44,6 @@ let visitedToRemove = [];
 let visitedToRemoveBomb = [];
 let bomb = false;
 const StartButtonClick = (currentNode, running) => {
-    console.log(running);
-    // console.log(currentState.run());
     RemoveAllClasses(1, []);
     if (!running) {
         if (currentState.algorithm() === null)
@@ -107,8 +105,12 @@ const StartButtonClick = (currentNode, running) => {
         }
     }
     else if (running) {
-        // console.log(currentState.run());
-        currentState.changeRun();
+        RemoveAllClasses(1, []);
+        currentState.changeRun(); //To stop the old
+        setTimeout(() => {
+            currentState.changeRun(); // To set state for the next run
+            StartButtonClick(currentNode, false);
+        }, 250);
     }
 };
 const RemoveAllClasses = (time, opt) => {

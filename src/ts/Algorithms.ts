@@ -15,7 +15,7 @@ export default class Algorithms<T> {
     this.graph = _assignGraph;
     this.comparator = this.graph.comparator;
     Algorithms.EPS = 1e-5;
-    console.log(Algorithms.EPS);
+    // console.log(Algorithms.EPS);
   }
 
   bfs(start: T, end: T): [T[] | null, Set<T>] {

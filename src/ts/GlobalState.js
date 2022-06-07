@@ -21,7 +21,7 @@ class State {
         this.BombNode = null;
         this.INIT_GRAPH = _graph;
         this.PRES_GRAPH = _graph;
-        this.Run = true;
+        this.Run = false;
     }
     graph() { return this.PRES_GRAPH; }
     initGraph() { return this.INIT_GRAPH; }
