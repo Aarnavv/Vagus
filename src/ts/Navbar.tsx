@@ -29,11 +29,9 @@ export default class Navbar extends React.Component {
               PrevButtonClick();
             }} />
             <ActionIcons.RunButtonIcon onClick={() => {
-              let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode());
-              if (currentState.run()) {
-                StartButtonClick(currentNode, true);
-              }
-              else if(!currentState.run()) {
+              let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
+              if (currentState.run()) StartButtonClick(currentNode, true);
+              else if (!currentState.run()) {
                 currentState.changeRun();
                 StartButtonClick(currentNode, false)
               }

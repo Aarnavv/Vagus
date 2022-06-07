@@ -1,29 +1,12 @@
-import {nodeHoverAnimation} from "./HexBoardUpdate";
+import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
-import {RemoveAllClasses} from './ActionButtonsFunctionality'
-import {SpeedType} from "./Types";
+import { RemoveAllClasses } from './ActionButtonsFunctionality'
 
-
-//TODO i am done with understanding this file too, and cleaning it up as much as i could. No more redundant code imo.
-function util_update(id:string , rm_tokens:string [] ,add_tokens: string[]):void{
-  document.getElementById(id).classList.remove(...rm_tokens);
-  document.getElementById(id).classList.add(...add_tokens);
-}
-function util_bombAnimationOnVisit(id:string){
-  if (document.getElementById(id).classList.contains('weight-node'))
-    nodeHoverAnimation(id);
-}
-
-function util_extractIDs(pathIDs:number [] , i : number):[string ,string]{
-  return [`svg-${pathIDs[i]}`,`props-${pathIDs[i]}`];
-}
-
-
-
-export const updatePathNodes = (pathIDs: number[], i: number): void => {
+export const updatePathNodes = (pathIDs: number[], pathToRemove: number[], i: number): void => {
   if (currentState.run() === false) return;
   setTimeout(() => {
     let id = pathIDs[i];
+    pathToRemove.push(id);
     let svgID = `svg-${id}`;
     let propsID = `props-${id}`;
     document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
@@ -32,19 +15,21 @@ export const updatePathNodes = (pathIDs: number[], i: number): void => {
     document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
     document.getElementById(propsID).classList.add('path-node');
     if (++i < pathIDs.length) {
-      updatePathNodes(pathIDs, i);
+      updatePathNodes(pathIDs, pathToRemove, i);
     }
-    if(i === pathIDs.length)
+    if (i === pathIDs.length)
       currentState.changeRun();
   }, 50 * updateSpeed())
 }
 
-export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], pathIDs: number[], bomb: boolean, i: number): void => {
-  if (currentState.run() === false  ||i>visitedID1.length)
-    return;
+export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], pathIDs: number[], visitedToRemove: number[], visitedToRemoveBomb: number[], pathToRemove: number[], bomb: boolean, i: number): void => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
     if (!bomb) {
-      let [svgID , propsID] = util_extractIDs(visitedID1, i);
+      let id = visitedID1[i];
+      visitedToRemove.push(id);
+      let svgID = `svg-${id}`;
+      let propsID = `props-${id}`;
       if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
         document.getElementById(svgID).classList.remove('no-node', 'icon')
         document.getElementById(svgID).classList.add('svg-visited-node');
@@ -55,17 +40,20 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
         if (document.getElementById(propsID).classList.contains('weight-node'))
           nodeHoverAnimation(propsID);
         if (++i < visitedID1.length)
-          updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, i);
+          updateVisitedNodes(visitedID1, visitedID1, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, false, i);
         else if (pathIDs === null || pathIDs.length === 0) {
           alert("No Path Found! :(");
           return;
         }
         else if (i === visitedID1.length)
-          updatePathNodes(pathIDs, 0);
+          updatePathNodes(pathIDs, pathToRemove, 0);
       }
     }
     else {
-      let [svgID , propsID] = util_extractIDs(visitedID1, i);
+      let id1 = visitedID1[i];
+      visitedToRemove.push(id1);
+      let svgID = `svg-${id1}`;
+      let propsID = `props-${id1}`;
       if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
         document.getElementById(svgID).classList.remove('no-node', 'icon')
         document.getElementById(svgID).classList.add('svg-visited-node');
@@ -76,30 +64,25 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
         if (document.getElementById(propsID).classList.contains('weight-node'))
           nodeHoverAnimation(propsID);
         if (++i < visitedID1.length)
-          updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
+          updateVisitedNodes(visitedID1, visitedID2, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, true, i);
         else if (pathIDs === null || pathIDs.length === 0) {
           alert("No Path Found! :(");
           return;
         }
         else if (i === visitedID1.length)
-          updateBombNode(visitedID2, pathIDs, 0);
+          updateBombNode(visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, 0);
       }
     }
   }, 1 * updateSpeed())
 }
 
-// const checkBombNodePresence = (visitedID1): boolean => {
-//   console.log(visitedID1, currentState.bombNode())
-//   if (!(visitedID1.forEach((node) => { if (node === currentState.bombNode()) return false })))
-//     return false
-//   return true;
-// }
-
-export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: number[], waitOrNoWait: boolean, i: number) => {
-  if (currentState.run() === false || i>visitedIDs.length)
-    return;
+export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: number[], visitedToRemove: number[], pathToRemove: number[], waitOrNoWait: boolean, i: number) => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
-    let [svgID , propsID] = util_extractIDs(visitedIDs, i);
+    let id = visitedIDs[i];
+    visitedToRemove.push(id);
+    let svgID = `svg-${id}`;
+    let propsID = `props-${id}`;
     if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
       document.getElementById(svgID).classList.remove('no-node', 'icon')
       document.getElementById(svgID).classList.add('svg-visited-node');
@@ -110,38 +93,44 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: n
       if (document.getElementById(propsID).classList.contains('weight-node'))
         nodeHoverAnimation(propsID);
       if (++i < visitedIDs.length)
-        updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, i);
+        updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, visitedToRemove, pathToRemove, waitOrNoWait, i);
       else if (pathIDs === null && waitOrNoWait) {
         alert("No Path Found! :(");
         return;
       }
       else if (i === visitedIDs.length && waitOrNoWait)
-        updatePathNodes(pathIDs, 0);
+        updatePathNodes(pathIDs, pathToRemove, 0);
     }
   }, 1 * updateSpeed())
 }
 
 export const updateRandomVisitedNodes = (pathID: number): void => {
-  if (currentState.run() === false)
-    return;
-  setTimeout(_=> {
-    let [svgID , propsID] = util_extractIDs([pathID ] , 0 );
+  if (currentState.run() === false) return;
+  setTimeout(() => {
+    let svgID = `svg-${pathID}`;
+    let propsID = `props-${pathID}`;
     if (document.getElementById(svgID).classList.contains('svg-path-node')) {
-      util_update(svgID,['svg-path-node'],['svg-visited-node-bomb']);
-      util_update(propsID, ['path-node'],['visited-node-bomb']);
+      document.getElementById(svgID).classList.remove('svg-path-node');
+      document.getElementById(propsID).classList.remove('path-node');
+      document.getElementById(svgID).classList.add('svg-visited-node-bomb');
+      document.getElementById(propsID).classList.add('visited-node-bomb');
       updateRandomVisitedNodes(pathID);
       return;
     }
-    util_update(svgID, ['no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb'],['svg-path-node'])
-    util_update(propsID,['no-node', 'visited-node', 'visited-node-bomb'] , ['path-node']);
+    document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
+    document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
+    document.getElementById(svgID).classList.add('svg-path-node');
+    document.getElementById(propsID).classList.add('path-node');
   }, 50 * updateSpeed())
 }
 
-const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
-  if (currentState.run() === false || i > visitedID2.length)
-    return;
+const updateBombNode = (visitedID2: number[], pathIDs: number[], visitedToRemoveBomb: number[], pathToRemove: number[], i) => {
+  if (currentState.run() === false) return;
   setTimeout(() => {
-    let [svgID , propsID] = util_extractIDs(visitedID2 , i ) ;
+    let id2 = visitedID2[i];
+    visitedToRemoveBomb.push(id2);
+    let svgID = `svg-${id2}`;
+    let propsID = `props-${id2}`;
     if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
       document.getElementById(svgID).classList.remove('no-node', 'icon')
       document.getElementById(svgID).classList.add('svg-visited-node-bomb');
@@ -152,52 +141,58 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
       if (document.getElementById(propsID).classList.contains('weight-node'))
         nodeHoverAnimation(propsID);
       if (++i < visitedID2.length)
-        updateBombNode(visitedID2, pathIDs, i);
+        updateBombNode(visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, i);
       else if (pathIDs === null || pathIDs.length === 0) {
         alert("No Path Found! :(");
         return;
       }
       else if (i === visitedID2.length)
-        updatePathNodes(pathIDs, 0);
+        updatePathNodes(pathIDs, pathToRemove, 0);
     }
   }, 1 * updateSpeed())
 }
 
-export const unUpdateNodes = (pathIDs: number[], i: number, outerTime: number, innerTime: number, classToRemove: string, classToAdd: string, longer: boolean) => {
+export const unUpdateNodes = (classToRemove: string, classToAdd: string) => {
   if (currentState.run() === true) return;
-  if (pathIDs === null || pathIDs.length === 0) return;
-  setTimeout(() => {
-    let id = pathIDs[i];
-    let svgID = `svg-${id}`;
-    let propsID = `props-${id}`;
-    if (!(document.getElementById(svgID) === null)) {
-      util_update(svgID ,['icon', `svg-${classToRemove}`] , [`svg-${classToAdd}`]);
-      util_update(propsID , [classToRemove] ,[classToAdd]);
-    }
-    setTimeout(_ => renewNodes(pathIDs, i, classToAdd, longer) , innerTime)
-    unUpdateNodes(pathIDs, --i, outerTime, innerTime, classToRemove, classToAdd, longer);
-  }, outerTime)
+  let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+  for (let i = 0; i < pathsSVG.length; i++) {
+    const ele = pathsSVG[i] as HTMLElement;
+    ele.classList.remove('icon', `svg-${classToRemove}`);
+    ele.classList.add(`svg-${classToAdd}`);
+  }
+  let paths = document.querySelectorAll(`.${classToRemove}`);
+  for (let i = 0; i < paths.length; i++) {
+    const ele = paths[i] as HTMLElement;
+    ele.classList.remove(classToRemove);
+    ele.classList.add(classToAdd);
+  }
+  setTimeout(() => { renewNodes(classToAdd) }, 1100)
 }
 
-const renewNodes = (pathIDs: number[], i: number, classToRemove: string, removeAll: boolean) => {
-  if (currentState.run() === true)
-    return
-  let [svgID , propsID ] = util_extractIDs(pathIDs , i ) ;
-  if (!(document.getElementById(svgID) === null)) {
-    util_update(svgID ,[`svg-${classToRemove}`] , ['icon', 'no-node'] );
-    util_update(propsID ,[classToRemove] , ['no-node']);
+const renewNodes = (classToRemove: string) => {
+  if (currentState.run() === true) return
+  let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+  for (let i = 0; i < pathsSVG.length; i++) {
+    const ele = pathsSVG[i] as HTMLElement;
+    ele.classList.remove('icon', `svg-${classToRemove}`);
+    ele.classList.add('icon', 'no-node');
   }
-  if (i === 0 && removeAll)
-    RemoveAllClasses(1000, []);
+  let paths = document.querySelectorAll(`.${classToRemove}`);
+  for (let i = 0; i < paths.length; i++) {
+    const ele = paths[i] as HTMLElement;
+    ele.classList.remove(classToRemove);
+    ele.classList.add('no-node');
+  }
+  RemoveAllClasses(1, []);
 }
 
 const updateSpeed = (): number => {
   switch (currentState.speed()) {
-    case SpeedType.percent100:
+    case 100:
       return 1;
-    case SpeedType.percent50:
+    case 50:
       return 2;
-    case SpeedType.percent25:
+    case 25:
       return 4;
   }
 }

@@ -26,9 +26,8 @@ export default class Navbar extends React.Component {
                         } }),
                     React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
                             let currentNode = currentState.graph().nodes().get(currentState.startNode());
-                            if (currentState.run()) {
+                            if (currentState.run())
                                 StartButtonClick(currentNode, true);
-                            }
                             else if (!currentState.run()) {
                                 currentState.changeRun();
                                 StartButtonClick(currentNode, false);

@@ -87,14 +87,14 @@
   fill: var(--hex-color);
   transition: all 1s;
   /* animation: visited-node-transform-no-bomb 2s 2 both alternate; */
-  animation: un-visited-node-transform-no-bomb 0.01s 1 linear forwards;
+  animation: un-visited-node-transform-no-bomb 1s 1 linear forwards;
 
 }
 
 .svg-un-visited-bomb-node {
   fill: var(--hex-color);
   transition: all 1s;
-  animation: un-visited-node-transform-yes-bomb 0.01s 1 linear forwards;
+  animation: un-visited-node-transform-yes-bomb 1s 1 linear forwards;
 
 }
 
