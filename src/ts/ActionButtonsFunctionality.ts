@@ -1,9 +1,15 @@
 import Algorithms from "./Algorithms";
 import currentState from "./GlobalState";
 
-import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisitedNodes, unUpdateNodes } from "./HexBoardAlgoRunUpdate";
+import {
+  updateBiDirectionalVisitedNodes,
+  updateRandomVisitedNodes,
+  updateVisitedNodes,
+  unUpdateNodes
+} from "./HexBoardAlgoRunUpdate";
 import HexBoardInitializer from "./HexBoardInitializer";
 import Graph from "./Graph";
+import Node from './Node'
 
 //TODO i am done with understanding this file.
 /**
@@ -12,7 +18,8 @@ import Graph from "./Graph";
  * @return void
  */
 const StopButtonClick = (): void => {
-  if (currentState.run() === true) currentState.changeRun();
+  if (currentState.run() === true)
+    currentState.changeRun();
   document.getElementById('stop-button').classList.add('button-clicked');
   RemoveAllClasses(500, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
   currentState.changeBombNode(null);
@@ -41,14 +48,19 @@ const RemoveAllNodes = (node: string): void => {
     svgEle.classList.add('no-node', 'icon');
   }
 }
+
 let pathToRemove: number[] = [];
 let pathToRemoveRandom: Set<number> = new Set();
 let visitedToRemove: number[] = [];
 let visitedToRemoveBomb: number[] = [];
 let bomb: boolean = false;
 
-const StartButtonClick = (currentNode): void => {
-  if (currentState.run()) {
+const StartButtonClick = (
+  currentNode:Node<number>,
+  running:boolean
+): void => {
+  RemoveAllClasses(1, []);
+  if (!running) {
     if (currentState.algorithm() === null)
       alert('Please select an algorithm before continuing!');
     else if (currentState.algorithm() === 'bd-algo') {
@@ -65,10 +77,6 @@ const StartButtonClick = (currentNode): void => {
         updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, false, 0);
         updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, true, 0);
       }
-      if ( pathFromStart === null || pathFromStart.length === 0 ) {
-        alert("No Path Found! :(");
-        return;
-      }
     }
     else if (currentState.algorithm() === 'rand-algo') {
       let endNode: number = currentState.endNode();
@@ -82,7 +90,7 @@ const StartButtonClick = (currentNode): void => {
           return;
         }
         else if (currentNode.getData() !== endNode)
-          StartButtonClick(currentNode);
+          StartButtonClick(currentNode, false);
         else if (currentNode.getData() === endNode)
           updateRandomVisitedNodes(endNode);
       }, 10)
@@ -95,10 +103,6 @@ const StartButtonClick = (currentNode): void => {
         pathToRemove = path;
         visitedToRemove = ids;
         updateVisitedNodes(ids, null, path, false, 0);
-        if (path === null || path.length === 0) {
-          alert("No Path Found! :(");
-          return;
-        }
       }
       else {
         let path: number[] = Algorithms.runAlgorithmGlobalStateYesBomb().path;
@@ -111,16 +115,18 @@ const StartButtonClick = (currentNode): void => {
         visitedToRemoveBomb = ids2;
         bomb = true;
         updateVisitedNodes(ids1, ids2, path, true, 0);
-        if (path === null || path.length === 0 || path[0] === currentState.bombNode()) {
-          alert("No Path Found! :(");
-          return;
-        }
       }
     }
   }
+  else if(running){
+    currentState.changeRun();
+  }
 }
 
-const RemoveAllClasses = (time: number, opt: string[]) => {
+const RemoveAllClasses = (
+  time: number,
+  opt: string[]
+) => {
   setTimeout(() => {
     RemoveAllNodes('path-node');
     RemoveAllNodes('visited-node');
@@ -134,24 +140,79 @@ const RemoveAllClasses = (time: number, opt: string[]) => {
 
 const PrevButtonClick = (): void => {
   if (currentState.run() === true) currentState.changeRun();
-  if (pathToRemove.length === 0) {
-    pathToRemoveRandom.forEach((id) => {
-      pathToRemove.push(id);
-    })
+  let visitedNodeTime: number;
+  let pathNodeTime: number;
+  let pathToRemoveLength: number;
+  let visitedToRemoveLength: number;
+  let visitedToRemoveBombLength: number;
+  if (pathToRemove === null) {
+    visitedNodeTime = 8;
+    pathNodeTime = null;
+    pathToRemoveLength = null;
+    visitedToRemoveLength = visitedToRemove.length - 2;
+    visitedToRemoveBombLength = visitedToRemoveBomb.length - 2;
   }
-  // let pathNodeTime: number = 10;
-  let visitedNodeTime: number = 8;
-  let pathNodeTime: number = 50;
-  // let visitedNodeTime: number = 12.5;
+  else {
+    if (pathToRemove.length === 0) {
+      pathToRemoveRandom.forEach((id) => {
+        pathToRemove.push(id);
+      })
+    }
+    visitedNodeTime = 8;
+    pathNodeTime = 50;
+    pathToRemoveLength = pathToRemove.length - 1;
+    visitedToRemoveLength = visitedToRemove.length - 2;
+    visitedToRemoveBombLength = visitedToRemoveBomb.length - 2;
+  }
   visitedToRemove.shift();
   if (!bomb) {
-    unUpdateNodes(pathToRemove, pathToRemove.length - 1, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
-    unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', true);
+    unUpdateNodes(
+      pathToRemove,
+      pathToRemoveLength,
+      pathNodeTime,
+      pathNodeTime * 10,
+      'path-node',
+      'un-path-node',
+      false
+    );
+    unUpdateNodes(
+      visitedToRemove,
+      visitedToRemoveLength,
+      visitedNodeTime,
+      visitedNodeTime * 10,
+      'visited-node',
+      'un-visited-node',
+      true
+    );
   }
   else if (bomb) {
-    unUpdateNodes(pathToRemove, pathToRemove.length - 1, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
-    unUpdateNodes(visitedToRemove, visitedToRemove.length - 2, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', false);
-    unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBomb.length - 2, visitedNodeTime * 0.75, visitedNodeTime * 7.5, 'visited-node-bomb', 'un-visited-bomb-node', true);
+    unUpdateNodes(
+      pathToRemove,
+      pathToRemoveLength,
+      pathNodeTime,
+      pathNodeTime * 10,
+      'path-node',
+      'un-path-node',
+      false
+    );
+    unUpdateNodes(
+      visitedToRemove,
+      visitedToRemoveLength,
+      visitedNodeTime,
+      visitedNodeTime * 10,
+      'visited-node',
+      'un-visited-node',
+      false
+    );
+    unUpdateNodes(
+      visitedToRemoveBomb,
+      visitedToRemoveBombLength,
+      visitedNodeTime * 0.75,
+      visitedNodeTime * 7.5,
+      'visited-node-bomb',
+      'un-visited-bomb-node',
+      true
+    );
   }
 }
 

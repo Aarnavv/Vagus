@@ -23,15 +23,20 @@ export default class Navbar extends React.Component {
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => {
               StopButtonClick();
-              StartButtonClick(null);
+              // StartButtonClick(null);
             }} />
             <ActionIcons.PrevButtonIcon onClick={() => {
               PrevButtonClick();
             }} />
             <ActionIcons.RunButtonIcon onClick={() => {
-              if (!currentState.run()) currentState.changeRun();
-              let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
-              StartButtonClick(currentNode)
+              let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode());
+              if (currentState.run()) {
+                StartButtonClick(currentNode, true);
+              }
+              else if(!currentState.run()) {
+                currentState.changeRun();
+                StartButtonClick(currentNode, false)
+              }
             }} />
           </div>
         </div>
@@ -90,7 +95,7 @@ export default class Navbar extends React.Component {
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
                 </div>
               </FolderComponent>
-              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1" />
+              {/* <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1" /> */}
             </div>
           </FolderComponent>
         </div>

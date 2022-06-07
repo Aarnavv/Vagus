@@ -15,13 +15,21 @@ function util_extractIDs(pathIDs, i) {
     return [`svg-${pathIDs[i]}`, `props-${pathIDs[i]}`];
 }
 export const updatePathNodes = (pathIDs, i) => {
-    if (currentState.run() === false || i == pathIDs.length)
+    if (currentState.run() === false)
         return;
-    setTimeout(_ => {
-        let [svgID, propsID] = util_extractIDs(pathIDs, i);
-        util_update(svgID, ['no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb'], ['svg-path-node']);
-        util_update(propsID, ['no-node', 'visited-node', 'visited-node-bomb'], ['path-node']);
-        updatePathNodes(pathIDs, ++i);
+    setTimeout(() => {
+        let id = pathIDs[i];
+        let svgID = `svg-${id}`;
+        let propsID = `props-${id}`;
+        document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
+        document.getElementById(svgID).classList.add('svg-path-node');
+        document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
+        document.getElementById(propsID).classList.add('path-node');
+        if (++i < pathIDs.length) {
+            updatePathNodes(pathIDs, i);
+        }
+        if (i === pathIDs.length)
+            currentState.changeRun();
     }, 50 * updateSpeed());
 };
 export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => {
@@ -31,38 +39,68 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, bomb, i) => 
         if (!bomb) {
             let [svgID, propsID] = util_extractIDs(visitedID1, i);
             if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
-                util_update(svgID, ['no-node', 'icon'], ['svg-visited-node']);
-                util_update(propsID, ['no-node'], ['visited-node']);
-                util_bombAnimationOnVisit(propsID);
-                updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, ++i);
-                if (i === visitedID1.length)
+                document.getElementById(svgID).classList.remove('no-node', 'icon');
+                document.getElementById(svgID).classList.add('svg-visited-node');
+                document.getElementById(propsID).classList.remove('no-node');
+                document.getElementById(propsID).classList.add('visited-node');
+                if (document.getElementById(propsID).classList.contains('weight-node'))
+                    nodeHoverAnimation(propsID);
+                if (++i < visitedID1.length)
+                    updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, i);
+                else if (pathIDs === null || pathIDs.length === 0) {
+                    alert("No Path Found! :(");
+                    return;
+                }
+                else if (i === visitedID1.length)
                     updatePathNodes(pathIDs, 0);
             }
         }
         else {
             let [svgID, propsID] = util_extractIDs(visitedID1, i);
             if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
-                util_update(svgID, ['no-node', 'icon'], ['svg-visited-node']);
-                util_update(propsID, ['no-node'], ['visited-node']);
-                util_bombAnimationOnVisit(propsID);
-                updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, ++i);
-                if (i === visitedID1.length)
+                document.getElementById(svgID).classList.remove('no-node', 'icon');
+                document.getElementById(svgID).classList.add('svg-visited-node');
+                document.getElementById(propsID).classList.remove('no-node');
+                document.getElementById(propsID).classList.add('visited-node');
+                if (document.getElementById(propsID).classList.contains('weight-node'))
+                    nodeHoverAnimation(propsID);
+                if (++i < visitedID1.length)
+                    updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
+                else if (pathIDs === null || pathIDs.length === 0) {
+                    alert("No Path Found! :(");
+                    return;
+                }
+                else if (i === visitedID1.length)
                     updateBombNode(visitedID2, pathIDs, 0);
             }
         }
     }, 1 * updateSpeed());
 };
+// const checkBombNodePresence = (visitedID1): boolean => {
+//   console.log(visitedID1, currentState.bombNode())
+//   if (!(visitedID1.forEach((node) => { if (node === currentState.bombNode()) return false })))
+//     return false
+//   return true;
+// }
 export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, waitOrNoWait, i) => {
     if (currentState.run() === false || i > visitedIDs.length)
         return;
     setTimeout(() => {
         let [svgID, propsID] = util_extractIDs(visitedIDs, i);
         if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
-            util_update(svgID, ['no-node', 'icon'], ['svg-visited-node']);
-            util_update(propsID, ['no-node'], ['visited-node']);
-            util_bombAnimationOnVisit(propsID);
-            updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, ++i);
-            if (i === visitedIDs.length && waitOrNoWait)
+            document.getElementById(svgID).classList.remove('no-node', 'icon');
+            document.getElementById(svgID).classList.add('svg-visited-node');
+            document.getElementById(propsID).classList.remove('no-node');
+            document.getElementById(propsID).classList.add('visited-node');
+            if (document.getElementById(propsID).classList.contains('weight-node'))
+                nodeHoverAnimation(propsID);
+            if (++i < visitedIDs.length)
+                updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, i);
+            else if (pathIDs === null && waitOrNoWait) {
+                alert("No Path Found! :(");
+                return;
+            }
+            else if (i === visitedIDs.length && waitOrNoWait)
                 updatePathNodes(pathIDs, 0);
         }
     }, 1 * updateSpeed());
@@ -88,20 +126,32 @@ const updateBombNode = (visitedID2, pathIDs, i) => {
     setTimeout(() => {
         let [svgID, propsID] = util_extractIDs(visitedID2, i);
         if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
-            util_update(svgID, ['no-node', 'icon'], ['svg-visited-node-bomb']);
-            util_update(propsID, ['no-node'], ['visited-node-bomb']);
-            util_bombAnimationOnVisit(propsID);
-            updateBombNode(visitedID2, pathIDs, ++i);
-            if (i === visitedID2.length)
+            document.getElementById(svgID).classList.remove('no-node', 'icon');
+            document.getElementById(svgID).classList.add('svg-visited-node-bomb');
+            document.getElementById(propsID).classList.remove('no-node');
+            document.getElementById(propsID).classList.add('visited-node-bomb');
+            if (document.getElementById(propsID).classList.contains('weight-node'))
+                nodeHoverAnimation(propsID);
+            if (++i < visitedID2.length)
+                updateBombNode(visitedID2, pathIDs, i);
+            else if (pathIDs === null || pathIDs.length === 0) {
+                alert("No Path Found! :(");
+                return;
+            }
+            else if (i === visitedID2.length)
                 updatePathNodes(pathIDs, 0);
         }
     }, 1 * updateSpeed());
 };
 export const unUpdateNodes = (pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer) => {
-    if (currentState.run() === true || i < 0)
+    if (currentState.run() === true)
         return;
-    setTimeout(_ => {
-        let [svgID, propsID] = util_extractIDs(pathIDs, i);
+    if (pathIDs === null || pathIDs.length === 0)
+        return;
+    setTimeout(() => {
+        let id = pathIDs[i];
+        let svgID = `svg-${id}`;
+        let propsID = `props-${id}`;
         if (!(document.getElementById(svgID) === null)) {
             util_update(svgID, ['icon', `svg-${classToRemove}`], [`svg-${classToAdd}`]);
             util_update(propsID, [classToRemove], [classToAdd]);
