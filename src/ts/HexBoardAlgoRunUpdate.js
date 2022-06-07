@@ -142,40 +142,39 @@ const updateBombNode = (visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, 
         }
     }, 1 * updateSpeed());
 };
-export const unUpdateNodes = (pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer) => {
+export const unUpdateNodes = (classToRemove, classToAdd) => {
     if (currentState.run() === true)
         return;
-    if (pathIDs === null || pathIDs.length === 0)
-        return;
-    setTimeout(() => {
-        let id = pathIDs[i];
-        let svgID = `svg-${id}`;
-        let propsID = `props-${id}`;
-        if (!(document.getElementById(svgID) === null)) {
-            document.getElementById(svgID).classList.remove('icon', `svg-${classToRemove}`);
-            document.getElementById(propsID).classList.remove(classToRemove);
-            document.getElementById(svgID).classList.add(`svg-${classToAdd}`);
-            document.getElementById(propsID).classList.add(classToAdd);
-        }
-        setTimeout(() => { renewNodes(pathIDs, i, classToAdd, longer); }, innerTime);
-        if (--i >= 0)
-            unUpdateNodes(pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer);
-    }, outerTime);
-};
-const renewNodes = (pathIDs, i, classToRemove, removeAll) => {
-    if (currentState.run() === true)
-        return;
-    let id = pathIDs[i];
-    let svgID = `svg-${id}`;
-    let propsID = `props-${id}`;
-    if (!(document.getElementById(svgID) === null)) {
-        document.getElementById(svgID).classList.remove(`svg-${classToRemove}`);
-        document.getElementById(svgID).classList.add('icon', 'no-node');
-        document.getElementById(propsID).classList.remove(classToRemove);
-        document.getElementById(propsID).classList.add('no-node');
+    let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+    for (let i = 0; i < pathsSVG.length; i++) {
+        const ele = pathsSVG[i];
+        ele.classList.remove('icon', `svg-${classToRemove}`);
+        ele.classList.add(`svg-${classToAdd}`);
     }
-    if (i === 0 && removeAll)
-        RemoveAllClasses(1000, []);
+    let paths = document.querySelectorAll(`.${classToRemove}`);
+    for (let i = 0; i < paths.length; i++) {
+        const ele = paths[i];
+        ele.classList.remove(classToRemove);
+        ele.classList.add(classToAdd);
+    }
+    setTimeout(() => { renewNodes(classToAdd); }, 1100);
+};
+const renewNodes = (classToRemove) => {
+    if (currentState.run() === true)
+        return;
+    let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+    for (let i = 0; i < pathsSVG.length; i++) {
+        const ele = pathsSVG[i];
+        ele.classList.remove('icon', `svg-${classToRemove}`);
+        ele.classList.add('icon', 'no-node');
+    }
+    let paths = document.querySelectorAll(`.${classToRemove}`);
+    for (let i = 0; i < paths.length; i++) {
+        const ele = paths[i];
+        ele.classList.remove(classToRemove);
+        ele.classList.add('no-node');
+    }
+    RemoveAllClasses(1, []);
 };
 const updateSpeed = () => {
     switch (currentState.speed()) {

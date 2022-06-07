@@ -147,43 +147,43 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], visitedToRemove
         return;
       }
       else if (i === visitedID2.length)
-        updatePathNodes(pathIDs, pathToRemove,0);
+        updatePathNodes(pathIDs, pathToRemove, 0);
     }
   }, 1 * updateSpeed())
 }
 
-export const unUpdateNodes = (pathIDs: number[], i: number, outerTime: number, innerTime: number, classToRemove: string, classToAdd: string, longer: boolean) => {
+export const unUpdateNodes = (classToRemove: string, classToAdd: string) => {
   if (currentState.run() === true) return;
-  if (pathIDs === null || pathIDs.length === 0) return;
-  setTimeout(() => {
-    let id = pathIDs[i];
-    let svgID = `svg-${id}`;
-    let propsID = `props-${id}`;
-    if (!(document.getElementById(svgID) === null)) {
-      document.getElementById(svgID).classList.remove('icon', `svg-${classToRemove}`);
-      document.getElementById(propsID).classList.remove(classToRemove);
-      document.getElementById(svgID).classList.add(`svg-${classToAdd}`);
-      document.getElementById(propsID).classList.add(classToAdd);
-    }
-    setTimeout(() => { renewNodes(pathIDs, i, classToAdd, longer) }, innerTime)
-    if (--i >= 0)
-      unUpdateNodes(pathIDs, i, outerTime, innerTime, classToRemove, classToAdd, longer);
-  }, outerTime)
+  let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+  for (let i = 0; i < pathsSVG.length; i++) {
+    const ele = pathsSVG[i] as HTMLElement;
+    ele.classList.remove('icon', `svg-${classToRemove}`);
+    ele.classList.add(`svg-${classToAdd}`);
+  }
+  let paths = document.querySelectorAll(`.${classToRemove}`);
+  for (let i = 0; i < paths.length; i++) {
+    const ele = paths[i] as HTMLElement;
+    ele.classList.remove(classToRemove);
+    ele.classList.add(classToAdd);
+  }
+  setTimeout(() => { renewNodes(classToAdd) }, 1100)
 }
 
-const renewNodes = (pathIDs: number[], i: number, classToRemove: string, removeAll: boolean) => {
+const renewNodes = (classToRemove: string) => {
   if (currentState.run() === true) return
-  let id = pathIDs[i];
-  let svgID = `svg-${id}`;
-  let propsID = `props-${id}`;
-  if (!(document.getElementById(svgID) === null)) {
-    document.getElementById(svgID).classList.remove(`svg-${classToRemove}`);
-    document.getElementById(svgID).classList.add('icon', 'no-node');
-    document.getElementById(propsID).classList.remove(classToRemove);
-    document.getElementById(propsID).classList.add('no-node');
+  let pathsSVG = document.querySelectorAll(`.svg-${classToRemove}`);
+  for (let i = 0; i < pathsSVG.length; i++) {
+    const ele = pathsSVG[i] as HTMLElement;
+    ele.classList.remove('icon', `svg-${classToRemove}`);
+    ele.classList.add('icon', 'no-node');
   }
-  if (i === 0 && removeAll)
-    RemoveAllClasses(1000, []);
+  let paths = document.querySelectorAll(`.${classToRemove}`);
+  for (let i = 0; i < paths.length; i++) {
+    const ele = paths[i] as HTMLElement;
+    ele.classList.remove(classToRemove);
+    ele.classList.add('no-node');
+  }
+  RemoveAllClasses(1, []);
 }
 
 const updateSpeed = (): number => {

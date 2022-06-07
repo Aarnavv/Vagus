@@ -29,14 +29,18 @@ const StopButtonClick = (): void => {
 }
 
 const StartButtonClick = (currentNode, running): void => {
-  RemoveAllClasses(1, []);
   if (!running) {
     if (currentState.algorithm() === null)
       alert('Please select an algorithm before continuing!');
     else if (currentState.algorithm() === 'bd-algo') {
+      RemoveAllClasses(1, []);
       const [pathFromStart, visitedFromStartSet, visitedFromEndSet] = new Algorithms(currentState.graph()).biDirectional(currentState.startNode(), currentState.endNode());
       const visitedFromStartArray = Array.from(visitedFromStartSet);
       const visitedFromEndArray = Array.from(visitedFromEndSet);
+      if (currentState.bombNode() != null) {
+        alert("BiDirectional Search and Random Walk cannot be used with a bomb node!");
+        return;
+      }
       if (visitedFromStartArray.length > visitedFromEndArray.length) {
         updateBiDirectionalVisitedNodes(visitedFromStartArray, pathFromStart, visitedToRemove, pathToRemove, true, 0);
         updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, visitedToRemove, pathToRemove, false, 0);
@@ -53,6 +57,10 @@ const StartButtonClick = (currentNode, running): void => {
         let oldNode = currentNode;
         currentNode = currentNode.getRandomNeighbour()
         pathToRemoveRandom.add(currentNode.getData());
+        if (currentState.bombNode() != null) {
+          alert("BiDirectional Search and Random Walk cannot be used with a bomb node!");
+          return;
+        }
         if (currentNode === oldNode) {
           alert("No Path Found! :(");
           return;
@@ -64,6 +72,7 @@ const StartButtonClick = (currentNode, running): void => {
       }, 10)
     }
     else {
+      RemoveAllClasses(1, []);
       if (currentState.bombNode() === null) {
         let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;
         let visitedInOrder: Set<number> = Algorithms.runAlgoFromGlobalStateNoBomb().visitedInOrder;
@@ -93,39 +102,20 @@ const StartButtonClick = (currentNode, running): void => {
 
 const PrevButtonClick = (): void => {
   if (currentState.run() === true) currentState.changeRun();
-  let visitedNodeTime: number;
-  let pathNodeTime: number;
-  let pathToRemoveLength: number;
-  let visitedToRemoveLength: number;
-  let visitedToRemoveBombLength: number;
-  if (pathToRemove === null) {
-    visitedNodeTime = 8;
-    pathNodeTime = null;
-    pathToRemoveLength = null;
-    visitedToRemoveLength = visitedToRemove.length - 2;
-    visitedToRemoveBombLength = visitedToRemoveBomb.length - 2;
-  }
-  else {
-    if (pathToRemove.length === 0) {
-      pathToRemoveRandom.forEach((id) => {
-        pathToRemove.push(id);
-      })
-    }
-    visitedNodeTime = 8;
-    pathNodeTime = 50;
-    pathToRemoveLength = pathToRemove.length - 1;
-    visitedToRemoveLength = visitedToRemove.length - 2;
-    visitedToRemoveBombLength = visitedToRemoveBomb.length - 2;
+  if (pathToRemove.length === 0) {
+    pathToRemoveRandom.forEach((id) => {
+      pathToRemove.push(id);
+    })
   }
   visitedToRemove.shift();
   if (!bomb) {
-    unUpdateNodes(pathToRemove, pathToRemoveLength, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
-    unUpdateNodes(visitedToRemove, visitedToRemoveLength, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', true);
+    unUpdateNodes('path-node', 'un-path-node');
+    unUpdateNodes('visited-node', 'un-visited-node');
   }
   else if (bomb) {
-    unUpdateNodes(pathToRemove, pathToRemoveLength, pathNodeTime, pathNodeTime * 10, 'path-node', 'un-path-node', false);
-    unUpdateNodes(visitedToRemove, visitedToRemoveLength, visitedNodeTime, visitedNodeTime * 10, 'visited-node', 'un-visited-node', false);
-    unUpdateNodes(visitedToRemoveBomb, visitedToRemoveBombLength, visitedNodeTime * 0.75, visitedNodeTime * 7.5, 'visited-node-bomb', 'un-visited-bomb-node', true);
+    unUpdateNodes('path-node', 'un-path-node');
+    unUpdateNodes('visited-node', 'un-visited-node');
+    unUpdateNodes('visited-node-bomb', 'un-visited-bomb-node');
   }
   ResetReferenceVariables();
 }
