@@ -8,10 +8,8 @@ export class MazeGenerator {
   static workableColumns;
 
   static setRowsAndCols() {
-    setTimeout(() => {
       MazeGenerator.workableRows = HexBoardInitializer.rows;
       MazeGenerator.workableColumns = HexBoardInitializer.cols;
-    }, 1000)
   }
 
   private constructor() {
