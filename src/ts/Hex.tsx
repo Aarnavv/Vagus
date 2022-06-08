@@ -2,6 +2,7 @@ import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
 import { updateHexIcon } from "./HexBoardUpdate";
+import {MazeGenerator} from "./MazeGenerator";
 
 type props = {
   x: number,
@@ -25,6 +26,7 @@ export default class Hex extends React.Component<props> {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {
         updateHexIcon(`props-${this.props.id}` , parseInt(this.props.id));
+        console.log(MazeGenerator.workableRows)
       }}>
         <HexIcon idSVG={`svg-${this.props.id}`}/>
         <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>

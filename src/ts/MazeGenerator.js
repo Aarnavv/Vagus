@@ -2,9 +2,13 @@ import HexBoardInitializer from "./HexBoardInitializer";
 import currentState from "./GlobalState";
 import Algorithms from "./Algorithms";
 import Graph from "./Graph";
-class MazeGenerator {
-    workableRows = HexBoardInitializer.rows;
-    workableColumns = HexBoardInitializer.cols;
+export class MazeGenerator {
+    static workableRows;
+    static workableColumns;
+    static setRowsAndCols() {
+        MazeGenerator.workableRows = HexBoardInitializer.rows;
+        MazeGenerator.workableColumns = HexBoardInitializer.cols;
+    }
     constructor() {
     }
     static generateHeartMaze() {
