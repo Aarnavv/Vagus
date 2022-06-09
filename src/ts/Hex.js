@@ -18,7 +18,8 @@ export default class Hex extends React.Component {
         return (React.createElement("div", { className: "hexagon", id: this.props.id, style: this.styles.hexagon, onClick: () => {
                 updateHexIcon(`props-${this.props.id}`, parseInt(this.props.id));
                 MazeGenerator.setProps();
-                console.log(MazeGenerator.generateRidges());
+                let mazeGenerateRidges = MazeGenerator.generateRidges();
+                console.log(mazeGenerateRidges);
                 // console.log(this.props.id);
             } },
             React.createElement(HexIcon, { idSVG: `svg-${this.props.id}` }),

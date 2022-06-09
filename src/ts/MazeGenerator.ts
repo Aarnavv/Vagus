@@ -63,16 +63,16 @@ export class MazeGenerator {
     }
 
     //main loop which assigns the walls and entry points to the Array of Sets.
-    for (let i: number = 0 , indx = 0 ; i < this.workableColumns; i++) {
-      let entryPoints = generateRandomEntries(i);
+    for (let i: number = 0 ; i < this.workableColumns; i++) {
       let colRidge: Set<number> = new Set();
       if (i % 2 === 0) {
+        let entryPoints = generateRandomEntries(i);
         for (let j: number = i * this.workableColumns; j < i * this.workableColumns + this.workableRows; j++) {
           if (j !== entryPoints.p1 && j !== entryPoints.p2) {
             colRidge.add(j);
           }
         }
-        ridges[indx++] = colRidge;
+        ridges.push(colRidge);
       }
     }
 
@@ -81,8 +81,8 @@ export class MazeGenerator {
     ridges.forEach((ridgeCol) => {
       ridgeCol.forEach(nodeID => {
         currentState.graph().rmNode(nodeID);
-      })
-    })
+      });
+    });
     return ridges;
   }
 
@@ -96,12 +96,13 @@ export class MazeGenerator {
    */
   static generateRandomMaze(): Map<number, boolean> {
     let path: Map<number, boolean> = new Map();
-
-
-    for (let i = 0; i < currentState.graph().nodes().size / 100; i++) {
-      let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
-      if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
+    let i: number = 0;
+    while (path.size !== currentState.graph().nodes().size / 10) {
+      let randomID: number = Math.floor(Math.random() * currentState.graph().nodes().size);
+      if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode()) {
         path.set(randomID, false);
+        console.log(path.size);
+      }
     }
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
 
