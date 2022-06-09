@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "homepage": "https://Aarnavv.github.io/Vagus",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@algorithm.ts/priority-queue": "^2.0.8-alpha.0",
     "@datastructures-js/priority-queue": "^6.0.0",

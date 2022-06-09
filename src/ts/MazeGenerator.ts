@@ -4,12 +4,22 @@ import Algorithms from "./Algorithms";
 import Graph from "./Graph";
 export class MazeGenerator {
 
-  static workableRows;
-  static workableColumns;
+  // Gets the number of rows which are present in the current
+  // frame of reference.
+  static workableRows: number;
 
-  static setRowsAndCols() {
-      MazeGenerator.workableRows = HexBoardInitializer.rows;
-      MazeGenerator.workableColumns = HexBoardInitializer.cols;
+  // Gets the number of columns which are present in the current
+  // frame of reference
+  static workableColumns : number;
+
+  /**
+   * static function to initialise all the properties
+   * present in the class
+   * @returns void
+   */
+  static setProps():void{
+    this.workableRows = HexBoardInitializer.rows;
+    this.workableColumns = HexBoardInitializer.cols;
   }
 
   private constructor() {
@@ -21,24 +31,90 @@ export class MazeGenerator {
   static generateCubeMaze() {
     //TODO
   }
-  static generateHexMaze() {
-    //TODO
+
+  /**
+   * Generates a maze which has a column filled with walls except for 2 psuedo random
+   * hexes.
+   * Does not take care of the event in which a hex containing a bomb, start or end node is
+   * assigned as a wall node.
+   *
+   * @returns An array of Sets.
+   * Each Set contains a collection of IDs for the nodes which
+   * can be blocked or changed to wall nodes on the website
+   */
+  static generateRidges(): Set<number>[] | null {
+
+    // first check for nullity case
+    if (this.workableColumns < 2 || this.workableRows < 2) {
+      return null;
+    }
+
+    // array to hold the "ridges"
+    let ridges: Set<number>[] = [];
+
+    // function which can be used to create 2 at random entry points for the path.
+    function generateRandomEntries(colNo: number): { p1: number, p2: number }{
+      let p1: number = Math.floor(Math.random() * MazeGenerator.workableRows) +colNo;
+      let p2 : number = p1 + 1;
+      return {
+        p1,
+        p2
+      }
+    }
+
+    //main loop which assigns the walls and entry points to the Array of Sets.
+    for (let i: number = 0 , indx = 0 ; i < this.workableColumns; i++) {
+      let entryPoints = generateRandomEntries(i);
+      let colRidge: Set<number> = new Set();
+      if (i % 2 === 0) {
+        for (let j: number = i * this.workableColumns; j < i * this.workableColumns + this.workableRows; j++) {
+          if (j !== entryPoints.p1 && j !== entryPoints.p2) {
+            colRidge.add(j);
+          }
+        }
+        ridges[indx++] = colRidge;
+      }
+    }
+
+    Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+
+    ridges.forEach((ridgeCol) => {
+      ridgeCol.forEach(nodeID => {
+        currentState.graph().rmNode(nodeID);
+      })
+    })
+    return ridges;
   }
+
+  /**
+   * Generates a random maze with both a mixture of weights and walls.
+   * It does take into consideration the IDs present in the StartNode, EndNode and BombNode entities.
+   *
+   * @returns Returns a Map, the way to interpret the Map is that the keys contain the ID and,
+   * the the boolean true or false represents the type of block.
+   * A true represents a wall and a false represents a weight. The probability is psuedorandom.
+   */
   static generateRandomMaze(): Map<number, boolean> {
     let path: Map<number, boolean> = new Map();
+
+
     for (let i = 0; i < currentState.graph().nodes().size / 100; i++) {
       let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
       if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
         path.set(randomID, false);
     }
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+
+
     path.forEach((_, nodeID) => {
-      let probability = Math.floor(Math.random() * ((2 - 1) + 1));
-      if (probability % 2 == 0) {
+      let probability = Math.floor(Math.random() * 2);
+
+      if (probability % 2 === 0) {
         //true then wall
         path.set(nodeID, true);
         currentState.graph().rmNode(nodeID);
       }
+
       else {
         // false then weight
         path.set(nodeID, false);
@@ -47,27 +123,40 @@ export class MazeGenerator {
     })
     return path;
   }
-  static generateLeastCostPathBlocker(): number[] | null {
+
+  /**
+   * Generates a maze that blocks the least cost path in the grid
+   *
+   * @returns a Path which highlights the nodes to be blocked because they are part of the least cost path.
+   */
+  static generateLeastCostPathBlocker(): number[] {
     let algo = new Algorithms(currentState.graph());
     let path: number[] = [];
+
     if (currentState.bombNode() !== null) {
-      let [p1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
-      let [p2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
+      let p1 = algo.dijkstras(currentState.startNode(), currentState.bombNode())[0];
+      let p2 = algo.dijkstras(currentState.bombNode(), currentState.endNode())[0];
+
       if (p1 !== null && p2 !== null) {
+
         p1.forEach((nodeID) => {
           if (nodeID !== currentState.bombNode() && nodeID !== currentState.startNode())
             path.push(nodeID);
         });
+
         p2.forEach(nodeID => {
           if (nodeID !== currentState.bombNode() && nodeID !== currentState.endNode())
             path.push(nodeID);
         })
+
         path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
+
         return path;
       }
     }
+
     else {
-      [path] = algo.dijkstras(currentState.startNode(), currentState.endNode());
+      path = algo.dijkstras(currentState.startNode(), currentState.endNode())[0];
       if (path !== null) {
         path.pop();
         path.shift();
@@ -75,36 +164,5 @@ export class MazeGenerator {
         return path;
       }
     }
-    return null;
-  }
-  static generateShortestPathBlocker(): number[] | null {
-    let algo = new Algorithms(currentState.graph());
-    let path: number[] = [];
-    if (currentState.bombNode() !== null) {
-      let [p1] = algo.aStar(currentState.startNode(), currentState.bombNode());
-      let [p2] = algo.aStar(currentState.bombNode(), currentState.endNode());
-      if (p1 !== null && p2 !== null) {
-        p1.forEach((nodeID) => {
-          if (nodeID !== currentState.bombNode() && nodeID !== currentState.startNode())
-            path.push(nodeID);
-        });
-        p2.forEach(nodeID => {
-          if (nodeID !== currentState.bombNode() && nodeID !== currentState.endNode())
-            path.push(nodeID);
-        })
-        path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
-        return path;
-      }
-    }
-    else {
-      [path] = algo.aStar(currentState.startNode(), currentState.endNode());
-      if (path !== null) {
-        path.pop();
-        path.shift();
-        path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
-        return path;
-      }
-    }
-    return null;
   }
 }
