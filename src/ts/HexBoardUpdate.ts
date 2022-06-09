@@ -1,7 +1,10 @@
 import currentState from './GlobalState'
 import { updateState } from './fileStruct'
 import HexBoardInitializer from './HexBoardInitializer';
+import { MazeGenerator } from './MazeGenerator';
+import { MazeType } from './Types';
 import Graph from "./Graph";
+import { RemoveAllClasses } from './ActionButtonsFunctionality';
 
 const updateHexIcon = (propID: string, id: number): void => {
   document.onmousemove = null;
@@ -179,8 +182,60 @@ const setInitialNodes = (): void => {
   }
 }
 
+const updateNodeUtil = (id: string, classesRM: string[], classesADD: string[]): void => {
+  document.getElementById(id).classList.remove(...classesRM);
+  document.getElementById(id).classList.add(...classesADD);
+}
+
+const displayMaze = (randomMap: Map<number, boolean>, mazeArray: number[] | Set<number>[]): void => {
+  if (currentState.maze() === MazeType.randomMaze) {
+    for (let [id, state] of randomMap) {
+      if (state) {
+        updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+        updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+      }
+      else {
+        updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
+        updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
+      }
+    }
+  }
+  else {
+    mazeArray.forEach(id => {
+      updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+      updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+    })
+  }
+}
+
+const updateMaze = (): void => {
+  RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
+  currentState.changeBombNode(null);
+  Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+  setInitialNodes();
+  setTimeout(() => {
+    switch (currentState.maze()) {
+      case MazeType.none:
+        break;
+      case MazeType.randomMaze:
+        let mazeMap: Map<number, boolean> = MazeGenerator.generateRandomMaze();
+        displayMaze(mazeMap, null);
+        break;
+      case MazeType.leastCostPathBlocker:
+        let mazeLeastPathBlocker: number[] = MazeGenerator.generateLeastCostPathBlocker();
+        displayMaze(null, mazeLeastPathBlocker);
+        break;
+      case MazeType.generateRidges:
+        let mazeGenerateRidges: Set<number>[] = MazeGenerator.generateRidges();
+        console.log(mazeGenerateRidges)
+        displayMaze(null, mazeGenerateRidges);
+    }
+  }, 5)
+}
+
 export {
   updateHexIcon,
   setInitialNodes,
   nodeHoverAnimation,
+  updateMaze,
 }

@@ -64,12 +64,14 @@ export default class Navbar extends React.Component {
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes [Work in Progress!]" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
+                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes [Works! somewhat...]" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="gridMaze.bat" divID="bat-2" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="randomMaze.bat" divID="bat-3" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="diagonalCutMaze.bat" divID="bat-4" />
+                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="leastCostPathBlocker.bat" divID="bat-5" />
+                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRidges.bat" divID="bat-6" />
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.YELLOW} text="speeds" divClassName="folder advanced-cp-comp" arrowID="speeds-arrow">

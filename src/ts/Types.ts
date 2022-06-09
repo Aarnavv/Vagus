@@ -21,7 +21,9 @@ export enum MazeType {
   none = 'none',
   gridMaze = 'gridMaze-maze',
   randomMaze = 'randomMaze-maze',
-  diagonalCutMaze = 'diagonalCutMaze-maze'
+  diagonalCutMaze = 'diagonalCutMaze-maze',
+  leastCostPathBlocker = 'leastCostPathBlockerMaze-maze',
+  generateRidges = 'generateRidges-maze',
 }
 
 export enum SpeedType {

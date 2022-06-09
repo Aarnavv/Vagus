@@ -83,7 +83,7 @@ export class MazeGenerator {
      */
     static generateRandomMaze() {
         let path = new Map();
-        for (let i = 0; i < currentState.graph().nodes().size / 100; i++) {
+        for (let i = 0; i < currentState.graph().nodes().size / 7.5; i++) {
             let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
             if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
                 path.set(randomID, false);

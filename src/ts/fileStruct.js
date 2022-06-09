@@ -4,6 +4,7 @@ import { BATIcon, BOMBNode, ENDNode, IOIcon, MDIcon, SHORTESTPATHNode, STARTNode
 import currentState from "./GlobalState";
 import cssConstants from "./cssConstants";
 import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import { updateMaze } from "./HexBoardUpdate";
 /**
  * Makes the changes in the Global States for the algorithm, node type, maze type, and speed.
  * Also makes the required the changes in the visual representation of the command board.
@@ -89,7 +90,10 @@ export function IOFile(props) {
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
 export function BATFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => updateState('.bat-file', props.divID, props.text) },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => {
+            updateState('.bat-file', props.divID, props.text);
+            updateMaze();
+        } },
         React.createElement(BATIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }

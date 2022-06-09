@@ -1,7 +1,10 @@
 import currentState from './GlobalState';
 import { updateState } from './fileStruct';
 import HexBoardInitializer from './HexBoardInitializer';
+import { MazeGenerator } from './MazeGenerator';
+import { MazeType } from './Types';
 import Graph from "./Graph";
+import { RemoveAllClasses } from './ActionButtonsFunctionality';
 const updateHexIcon = (propID, id) => {
     document.onmousemove = null;
     document.onmousedown = null;
@@ -170,4 +173,52 @@ const setInitialNodes = () => {
         }
     }
 };
-export { updateHexIcon, setInitialNodes, nodeHoverAnimation, };
+const updateNodeUtil = (id, classesRM, classesADD) => {
+    document.getElementById(id).classList.remove(...classesRM);
+    document.getElementById(id).classList.add(...classesADD);
+};
+const displayMaze = (randomMap, mazeArray) => {
+    if (currentState.maze() === MazeType.randomMaze) {
+        for (let [id, state] of randomMap) {
+            if (state) {
+                updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+                updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+            }
+            else {
+                updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
+                updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
+            }
+        }
+    }
+    else {
+        mazeArray.forEach(id => {
+            updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+            updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+        });
+    }
+};
+const updateMaze = () => {
+    RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
+    currentState.changeBombNode(null);
+    Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+    setInitialNodes();
+    setTimeout(() => {
+        switch (currentState.maze()) {
+            case MazeType.none:
+                break;
+            case MazeType.randomMaze:
+                let mazeMap = MazeGenerator.generateRandomMaze();
+                displayMaze(mazeMap, null);
+                break;
+            case MazeType.leastCostPathBlocker:
+                let mazeLeastPathBlocker = MazeGenerator.generateLeastCostPathBlocker();
+                displayMaze(null, mazeLeastPathBlocker);
+                break;
+            case MazeType.generateRidges:
+                let mazeGenerateRidges = MazeGenerator.generateRidges();
+                console.log(mazeGenerateRidges);
+                displayMaze(null, mazeGenerateRidges);
+        }
+    }, 5);
+};
+export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, };
