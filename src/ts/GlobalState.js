@@ -1,4 +1,4 @@
-import { MazeType, SpeedType } from "./Types";
+import { MazeGenerationType, SpeedType } from "./Types";
 import Graph from "./Graph";
 class State {
     PRES_GRAPH;
@@ -14,7 +14,7 @@ class State {
     constructor(_start = null, _end = null, _graph = null) {
         this.AddableNode = null;
         this.Algorithm = null;
-        this.Maze = MazeType.none;
+        this.Maze = MazeGenerationType.none;
         this.Speed = SpeedType.percent100;
         this.StartNode = _start;
         this.EndNode = _end;

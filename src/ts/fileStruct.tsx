@@ -17,7 +17,7 @@ import {
 } from "../svgIcons/fileSVGIconComponent";
 import currentState from "./GlobalState";
 import cssConstants from "./cssConstants";
-import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import { AlgoType, MazeGenerationType, NodeType, SpeedType } from "./Types";
 import { updateMaze } from "./HexBoardUpdate"
 
 /**
@@ -48,7 +48,7 @@ export const updateState = (divClass: string, id: string, text: string): void =>
       currentState.changeAddableNode(NodeType[textAdd]);
       break;
     case "bat":
-      currentState.changeMaze(MazeType[textAdd]);
+      currentState.changeMaze(MazeGenerationType[textAdd]);
       break;
     case "sys":
       currentState.changeSpeed(parseInt(SpeedType[`percent${text.substring(0, text.indexOf('p'))}`]));
