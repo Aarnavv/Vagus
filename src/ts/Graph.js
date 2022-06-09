@@ -184,8 +184,9 @@ export default class Graph {
         if (node === undefined)
             return;
         node.getAdjNodes().forEach((edge) => {
-            if (edge.dest.getData() !== node.getData())
+            if (edge.dest.getData() !== node.getData()) {
                 edge.dest.updateCostTo(node, cost);
+            }
         });
     }
     /**

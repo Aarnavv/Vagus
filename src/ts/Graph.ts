@@ -195,8 +195,11 @@ export default class Graph<T> {
     let node: Node<T> = this.nodes().get(data);
     if (node === undefined) return;
     node.getAdjNodes().forEach((edge) => {
-      if (edge.dest.getData() !== node.getData()) edge.dest.updateCostTo(node, cost)
+      if (edge.dest.getData() !== node.getData()) {
+        edge.dest.updateCostTo(node, cost);
+      }
     });
+
   }
 
   /**

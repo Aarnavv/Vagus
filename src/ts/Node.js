@@ -54,8 +54,9 @@ export default class Node {
     }
     updateCostTo(node, cost) {
         let edgeToUpdate = this.adjNodes.find((edge) => {
-            if (edge.dest.getData() === node.getData())
+            if (edge.dest.getData() === node.getData()) {
                 return edge;
+            }
             //added this later.
             else
                 return undefined;
