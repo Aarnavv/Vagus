@@ -27,15 +27,15 @@ export class MazeGenerator {
         //TODO
     }
     /**
-     * Generates a maze which has a column filled with walls except for 2 psuedo random
-     * hexes.
-     * Does not take care of the event in which a hex containing a bomb, start or end node is
-     * assigned as a wall node.
-     *
-     * @returns An array of Sets.
-     * Each Set contains a collection of IDs for the nodes which
-     * can be blocked or changed to wall nodes on the website
-     */
+       * Generates a maze which has a column filled with walls except for 2 psuedo random
+       * hexes.
+       * Does not take care of the event in which a hex containing a bomb, start or end node is
+       * assigned as a wall node.
+       *
+       * @returns An array of Sets.
+       * Each Set contains a collection of IDs for the nodes which
+       * can be blocked or changed to wall nodes on the website
+       */
     static generateRidges() {
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
@@ -53,16 +53,16 @@ export class MazeGenerator {
             };
         }
         //main loop which assigns the walls and entry points to the Array of Sets.
-        for (let i = 0, indx = 0; i < this.workableColumns; i++) {
-            let entryPoints = generateRandomEntries(i);
+        for (let i = 0; i < this.workableColumns; i++) {
             let colRidge = new Set();
             if (i % 2 === 0) {
+                let entryPoints = generateRandomEntries(i);
                 for (let j = i * this.workableColumns; j < i * this.workableColumns + this.workableRows; j++) {
                     if (j !== entryPoints.p1 && j !== entryPoints.p2) {
                         colRidge.add(j);
                     }
                 }
-                ridges[indx++] = colRidge;
+                ridges.push(colRidge);
             }
         }
         Graph.copy(currentState.initGraph(), currentState.graph(), 1);

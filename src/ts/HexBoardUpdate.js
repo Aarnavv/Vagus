@@ -177,7 +177,7 @@ const updateNodeUtil = (id, classesRM, classesADD) => {
     document.getElementById(id).classList.remove(...classesRM);
     document.getElementById(id).classList.add(...classesADD);
 };
-const displayMaze = (randomMap, mazeArray) => {
+const displayMaze = (randomMap, mazeLeastCostArray, mazeRidges) => {
     if (currentState.maze() === MazeType.randomMaze) {
         for (let [id, state] of randomMap) {
             if (state) {
@@ -190,10 +190,18 @@ const displayMaze = (randomMap, mazeArray) => {
             }
         }
     }
-    else {
-        mazeArray.forEach(id => {
+    else if (currentState.maze() === MazeType.leastCostPathBlocker) {
+        mazeLeastCostArray.forEach(id => {
             updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
             updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+        });
+    }
+    else if (currentState.maze() === MazeType.generateRidges) {
+        mazeRidges.forEach(ridge => {
+            ridge.forEach(id => {
+                updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+                updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+            });
         });
     }
 };
@@ -202,22 +210,24 @@ const updateMaze = () => {
     currentState.changeBombNode(null);
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
     setInitialNodes();
+    MazeGenerator.setProps();
     setTimeout(() => {
         switch (currentState.maze()) {
             case MazeType.none:
                 break;
             case MazeType.randomMaze:
                 let mazeMap = MazeGenerator.generateRandomMaze();
-                displayMaze(mazeMap, null);
+                displayMaze(mazeMap, null, null);
                 break;
             case MazeType.leastCostPathBlocker:
                 let mazeLeastPathBlocker = MazeGenerator.generateLeastCostPathBlocker();
-                displayMaze(null, mazeLeastPathBlocker);
+                displayMaze(null, mazeLeastPathBlocker, null);
                 break;
             case MazeType.generateRidges:
                 let mazeGenerateRidges = MazeGenerator.generateRidges();
                 console.log(mazeGenerateRidges);
-                displayMaze(null, mazeGenerateRidges);
+                displayMaze(null, null, mazeGenerateRidges);
+                break;
         }
     }, 5);
 };

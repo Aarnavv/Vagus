@@ -187,7 +187,7 @@ const updateNodeUtil = (id: string, classesRM: string[], classesADD: string[]): 
   document.getElementById(id).classList.add(...classesADD);
 }
 
-const displayMaze = (randomMap: Map<number, boolean>, mazeArray: number[] | Set<number>[]): void => {
+const displayMaze = (randomMap: Map<number, boolean>, mazeLeastCostArray: number[], mazeRidges: Set<number>[]): void => {
   if (currentState.maze() === MazeType.randomMaze) {
     for (let [id, state] of randomMap) {
       if (state) {
@@ -200,10 +200,18 @@ const displayMaze = (randomMap: Map<number, boolean>, mazeArray: number[] | Set<
       }
     }
   }
-  else {
-    mazeArray.forEach(id => {
+  else if (currentState.maze() === MazeType.leastCostPathBlocker) {
+    mazeLeastCostArray.forEach(id => {
       updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
       updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+    })
+  }
+  else if (currentState.maze() === MazeType.generateRidges) {
+    mazeRidges.forEach(ridge => {
+      ridge.forEach(id => { // probably giving ids of nodes that are not present
+        updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+        updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+      })
     })
   }
 }
@@ -213,22 +221,24 @@ const updateMaze = (): void => {
   currentState.changeBombNode(null);
   Graph.copy(currentState.initGraph(), currentState.graph(), 1);
   setInitialNodes();
+  MazeGenerator.setProps();
   setTimeout(() => {
     switch (currentState.maze()) {
       case MazeType.none:
         break;
       case MazeType.randomMaze:
         let mazeMap: Map<number, boolean> = MazeGenerator.generateRandomMaze();
-        displayMaze(mazeMap, null);
+        displayMaze(mazeMap, null, null);
         break;
       case MazeType.leastCostPathBlocker:
         let mazeLeastPathBlocker: number[] = MazeGenerator.generateLeastCostPathBlocker();
-        displayMaze(null, mazeLeastPathBlocker);
+        displayMaze(null, mazeLeastPathBlocker, null);
         break;
       case MazeType.generateRidges:
         let mazeGenerateRidges: Set<number>[] = MazeGenerator.generateRidges();
         console.log(mazeGenerateRidges)
-        displayMaze(null, mazeGenerateRidges);
+        displayMaze(null, null, mazeGenerateRidges);
+        break;
     }
   }, 5)
 }
