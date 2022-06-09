@@ -55,7 +55,6 @@ export default class Node {
     updateCostTo(node, cost) {
         let edgeToUpdate = this.adjNodes.find((edge) => {
             if (edge.dest.getData() === node.getData()) {
-                console.log(edge.dest.getData());
                 return edge;
             }
             //added this later.
@@ -85,5 +84,12 @@ export default class Node {
         metaData += "\n     y:" + this.yCoord;
         metaData += "\n}";
         return metaData;
+    }
+    getRandomNeighbour() {
+        while (true) {
+            let neighbour = this.getAdjNodes()[Math.floor(Math.random() * this.getAdjNodes().length)].dest;
+            if (neighbour.getData() !== this.data || this.adjNodes.length === 1)
+                return neighbour;
+        }
     }
 }

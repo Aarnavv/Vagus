@@ -7,13 +7,14 @@ export enum NodeType {
 }
 
 export enum AlgoType {
-  dijkstrasSearch = "dijkstras-algo",//this will be djikstras-algo
+  dijkstrasSearch = "dijkstras-algo",
   aStarSearch = 'a*-algo',
   bellmanFord = 'bellmanFord-algo',
   breadthFirstSearch = 'bfs-algo',
   depthFirstSearch = 'dfs-algo',
   biDirectionalSearch = 'bd-algo',
-  randomWalk = 'rand-algo'
+  randomWalk = 'rand-algo' ,
+  bestFirstSearch ='best-fs'
 }
 
 export enum MazeType {
@@ -27,4 +28,10 @@ export enum SpeedType {
   percent100 = 100,
   percent50 = 50,
   percent25 = 25
+}
+
+export enum MazeGeneratorPropTypes{
+  onlyWeights='w',
+  onlyWalls='W',
+  weightsAndWalls='wW'
 }

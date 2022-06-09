@@ -3,9 +3,10 @@ import '../css/navbar.css';
 import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
-import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
+import { TSXFile, IOFile, BATFile, SYSFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
-import { StopButtonClick } from "./ActionButtonsFunctionality";
+import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
+import currentState from './GlobalState';
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -16,8 +17,22 @@ export default class Navbar extends React.Component {
                 React.createElement(ProjectIcon, null),
                 React.createElement("p", { className: "project-title" }, "Project"),
                 React.createElement("div", { className: "buttons" },
-                    React.createElement(ActionIcons.StopButtonIcon, { onClick: () => StopButtonClick() }),
-                    React.createElement(ActionIcons.RunButtonIcon, null))),
+                    React.createElement(ActionIcons.StopButtonIcon, { onClick: () => {
+                            StopButtonClick();
+                            // StartButtonClick(null);
+                        } }),
+                    React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => {
+                            PrevButtonClick();
+                        } }),
+                    React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
+                            let currentNode = currentState.graph().nodes().get(currentState.startNode());
+                            if (currentState.run())
+                                StartButtonClick(currentNode, true);
+                            else if (!currentState.run()) {
+                                currentState.changeRun();
+                                StartButtonClick(currentNode, false);
+                            }
+                        } }))),
             React.createElement("div", { className: "folder-panel" },
                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
                     React.createElement("div", { className: "advanced-cp-border" },
@@ -31,8 +46,8 @@ export default class Navbar extends React.Component {
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "breadthFirstSearch.tsx", divID: "tsx-4" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "depthFirstSearch.tsx", divID: "tsx-5" }),
                                         React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "biDirectionalSearch.tsx", divID: "tsx-6" }),
-                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "floydWarshallSearch.tsx", divID: "tsx-7" }),
-                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "johnsonsAlgorithm.tsx", divID: "tsx-8" }))),
+                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "randomWalk.tsx", divID: "tsx-7" }),
+                                        React.createElement(TSXFile, { divClassName: "file tsx-file", pClassName: "tsx-name file-name", text: "bestFirstSearch.tsx", divID: "tsx-8" }))),
                                 React.createElement(FolderComponent, { colorOfFolder: cssConstants.BLUE, text: "addableNodes", divClassName: "folder advanced-cp-comp", arrowID: "addable-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "startNode.io", divID: "io-1" }),
@@ -40,7 +55,7 @@ export default class Navbar extends React.Component {
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "bombNode.io", divID: "io-3" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "weightNode.io", divID: "io-4" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "wallNode.io", divID: "io-5" }))),
-                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
+                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes [Work in Progress!]", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "none.bat", divID: "bat-1" }),
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "gridMaze.bat", divID: "bat-2" }),
@@ -60,7 +75,6 @@ export default class Navbar extends React.Component {
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "unvisitedNode.gui", type: "unvisited", divID: "gui-5" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "startNode.gui", type: "start-node", divID: "gui-6" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "endNode.gui", type: "end-node", divID: "gui-7" }),
-                                React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))),
-                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md", divID: "md-1" }))))));
+                                React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))))))));
     }
 }

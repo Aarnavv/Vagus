@@ -16,6 +16,17 @@
   --hex-color: #282C34;
   --hex-color-hover: #1B8BCD;
   --wall-node-color: #484E5B;
+  --path-node-color-1: #FFA500;
+  --path-node-color-2: #FF9000;
+  --path-node-color-3: #FF7B00;
+  --path-node-color-4: #FF6702;
+  --path-node-color-5: #FF5000;
+  --visited-node-color-1: #175ab5;
+  --visited-node-color-2: #1b8bcd;
+  --visited-node-color-3: #25c8cf;
+  --visited-node-color-11: #BF4286;
+  --visited-node-color-21: #D15FDA;
+  --visited-node-color-31: #85404F;
 }
 
 .content {

@@ -6,8 +6,8 @@
 
 .hexagon {
   position: absolute;
-  height:34px;
-  width:34px;
+  height: 34px;
+  width: 34px;
   transition: all 0.1s;
   overflow: hidden;
 }
@@ -25,7 +25,7 @@
 
 .start-node {
   background-image: url('../svgIcons/startNode.svg');
-  top: 0px; 
+  top: 0px;
   /* DO NOT REMOVE THE ABOVE LINE */
 }
 
@@ -50,20 +50,185 @@
   animation: icon-pulsate 0.2s 1 linear forwards;
 }
 
-svg.wall-node {
-fill: var(--wall-node-color);
+.svg-wall-node {
+  fill: var(--wall-node-color);
 }
 
 .node-hover {
   animation: node-pulsate 1s infinite linear;
 }
 
+.svg-path-node {
+  fill: var(--path-node-color);
+  transition: all 0.75s;
+  animation: path-node-transform 1s 1 linear forwards;
+}
+
+.svg-visited-node {
+  fill: var(--visited-node-color);
+  transition: all 1s;
+  animation: visited-node-transform-no-bomb 1s 1 linear forwards;
+}
+
+.svg-visited-node-bomb {
+  fill: var(--visited-node-color);
+  transition: all 0.001s;
+  animation: visited-node-transform-yes-bomb 1s 1 linear forwards;
+}
+
+.svg-un-path-node {
+  fill: var(--hex-color);
+  transition: all 0.75s;
+  /* animation: path-node-transform 1s ease-in 2 both alternate; */
+  animation: un-path-node-transform 1s 1 linear forwards;
+}
+
+.svg-un-visited-node {
+  fill: var(--hex-color);
+  transition: all 1s;
+  /* animation: visited-node-transform-no-bomb 2s 2 both alternate; */
+  animation: un-visited-node-transform-no-bomb 1s 1 linear forwards;
+
+}
+
+.svg-un-visited-bomb-node {
+  fill: var(--hex-color);
+  transition: all 1s;
+  animation: un-visited-node-transform-yes-bomb 1s 1 linear forwards;
+
+}
+
+@keyframes un-path-node-transform {
+  0% {
+    fill: var(--path-node-color-1);
+  }
+
+  20% {
+    fill: var(--path-node-color-2);
+  }
+
+  40% {
+    fill: var(--path-node-color-3);
+  }
+
+  60% {
+    fill: var(--path-node-color-4);
+  }
+
+  80% {
+    fill: var(--path-node-color-5);
+  }
+
+  100% {
+    fill: var(--hex-color);
+  }
+}
+
+@keyframes path-node-transform {
+  0% {
+    fill: var(--hex-color);
+  }
+
+  20% {
+    fill: var(--path-node-color-5);
+  }
+
+  40% {
+    fill: var(--path-node-color-4);
+  }
+
+  60% {
+    fill: var(--path-node-color-3);
+  }
+
+  80% {
+    fill: var(--path-node-color-2);
+  }
+
+  100% {
+    fill: var(--path-node-color-1);
+  }
+}
+
+@keyframes un-visited-node-transform-no-bomb {
+  0% {
+    fill: var(--visited-node-color-1);
+  }
+
+  33% {
+    fill: var(--visited-node-color-2);
+  }
+
+  66% {
+    fill: var(--visited-node-color-3);
+  }
+
+  100% {
+    fill: var(--hex-color);
+  }
+}
+
+@keyframes visited-node-transform-no-bomb {
+  0% {
+    fill: var(--hex-color);
+  }
+
+  33% {
+    fill: var(--visited-node-color-3);
+  }
+
+  66% {
+    fill: var(--visited-node-color-2);
+  }
+
+  100% {
+    fill: var(--visited-node-color-1);
+  }
+}
+
+@keyframes un-visited-node-transform-yes-bomb {
+  0% {
+    fill: var(--visited-node-color-11);
+  }
+  
+  33% {
+    fill: var(--visited-node-color-21);
+  }
+  
+  66% {
+    fill: var(--visited-node-color-31);
+  }
+  
+  100% {
+    fill: var(--hex-color);
+  }
+}
+
+@keyframes visited-node-transform-yes-bomb {
+  0% {
+    fill: var(--hex-color);
+  }
+
+  33% {
+    fill: var(--visited-node-color-31);
+  }
+
+  66% {
+    fill: var(--visited-node-color-21);
+  }
+
+  100% {
+    fill: var(--visited-node-color-11);
+  }
+}
+
 @keyframes icon-pulsate {
   0% {
-      fill: var(--hex-color);
+    fill: var(--hex-color);
   }
+
   100% {
-      fill: var(--hex-color-hover);
+    fill: var(--hex-color-hover);
   }
 }
 
@@ -71,52 +236,12 @@ fill: var(--wall-node-color);
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.3);
   }
+
   100% {
     transform: scale(1);
   }
 }
-
-/* .rect {
-  position:absolute;
-  background-color: #282C34;
-  box-sizing:border-box;
-  height:23px;
-  width:13.9px;
-  border-radius:1px;
-  transition: all 0.1s;
-}
-
-.rect:after {
-  content:"";
-  height:30px;
-  position:absolute;
-  transform:rotate(-30deg);
-  width:15px;
-  transition: all 0.1s;
-}
-
-.nw-se {
-  transform:rotateZ(60deg);
-  transition: all 0.1s;
-}
-
-.sw-ne {
-  transition: all 0.1s;
-  transform:rotateZ(-60deg);
-}
-
-.rect:hover ~ .sw-ne:hover ~ .nw-se:hover {
-  animation: hexagon-pulsate 0.2s 1 linear forwards;
-}
-
-@keyframes hexagon-pulsate{
-  0% {
-    background-color: #282C34;
-  }
-  100% {
-    background-color: #1B8BCD;
-  }
-} */

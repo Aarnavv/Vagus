@@ -15,6 +15,7 @@ export var AlgoType;
     AlgoType["depthFirstSearch"] = "dfs-algo";
     AlgoType["biDirectionalSearch"] = "bd-algo";
     AlgoType["randomWalk"] = "rand-algo";
+    AlgoType["bestFirstSearch"] = "best-fs";
 })(AlgoType || (AlgoType = {}));
 export var MazeType;
 (function (MazeType) {
@@ -29,3 +30,9 @@ export var SpeedType;
     SpeedType[SpeedType["percent50"] = 50] = "percent50";
     SpeedType[SpeedType["percent25"] = 25] = "percent25";
 })(SpeedType || (SpeedType = {}));
+export var MazeGeneratorPropTypes;
+(function (MazeGeneratorPropTypes) {
+    MazeGeneratorPropTypes["onlyWeights"] = "w";
+    MazeGeneratorPropTypes["onlyWalls"] = "W";
+    MazeGeneratorPropTypes["weightsAndWalls"] = "wW";
+})(MazeGeneratorPropTypes || (MazeGeneratorPropTypes = {}));
