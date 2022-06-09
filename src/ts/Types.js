@@ -23,6 +23,8 @@ export var MazeType;
     MazeType["gridMaze"] = "gridMaze-maze";
     MazeType["randomMaze"] = "randomMaze-maze";
     MazeType["diagonalCutMaze"] = "diagonalCutMaze-maze";
+    MazeType["leastCostPathBlocker"] = "leastCostPathBlockerMaze-maze";
+    MazeType["generateRidges"] = "generateRidges-maze";
 })(MazeType || (MazeType = {}));
 export var SpeedType;
 (function (SpeedType) {

@@ -27,15 +27,15 @@ export class MazeGenerator {
         //TODO
     }
     /**
-     * Generates a maze which has a column filled with walls except for 2 psuedo random
-     * hexes.
-     * Does not take care of the event in which a hex containing a bomb, start or end node is
-     * assigned as a wall node.
-     *
-     * @returns An array of Sets.
-     * Each Set contains a collection of IDs for the nodes which
-     * can be blocked or changed to wall nodes on the website
-     */
+       * Generates a maze which has a column filled with walls except for 2 psuedo random
+       * hexes.
+       * Does not take care of the event in which a hex containing a bomb, start or end node is
+       * assigned as a wall node.
+       *
+       * @returns An array of Sets.
+       * Each Set contains a collection of IDs for the nodes which
+       * can be blocked or changed to wall nodes on the website
+       */
     static generateRidges() {
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
@@ -83,13 +83,11 @@ export class MazeGenerator {
      */
     static generateRandomMaze() {
         let path = new Map();
-        let i = 0;
-        while (path.size !== currentState.graph().nodes().size / 10) {
+        for (let i = 0; i < currentState.graph().nodes().size / 7.5; i++) {
             let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
-            if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode()) {
+            if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
                 path.set(randomID, false);
-                console.log(path.size);
-            }
+            console.log(path.size);
         }
         Graph.copy(currentState.initGraph(), currentState.graph(), 1);
         path.forEach((_, nodeID) => {

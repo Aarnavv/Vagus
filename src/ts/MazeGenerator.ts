@@ -10,14 +10,14 @@ export class MazeGenerator {
 
   // Gets the number of columns which are present in the current
   // frame of reference
-  static workableColumns : number;
+  static workableColumns: number;
 
   /**
    * static function to initialise all the properties
    * present in the class
    * @returns void
    */
-  static setProps():void{
+  static setProps(): void {
     this.workableRows = HexBoardInitializer.rows;
     this.workableColumns = HexBoardInitializer.cols;
   }
@@ -33,15 +33,15 @@ export class MazeGenerator {
   }
 
   /**
-   * Generates a maze which has a column filled with walls except for 2 psuedo random
-   * hexes.
-   * Does not take care of the event in which a hex containing a bomb, start or end node is
-   * assigned as a wall node.
-   *
-   * @returns An array of Sets.
-   * Each Set contains a collection of IDs for the nodes which
-   * can be blocked or changed to wall nodes on the website
-   */
+     * Generates a maze which has a column filled with walls except for 2 psuedo random
+     * hexes.
+     * Does not take care of the event in which a hex containing a bomb, start or end node is
+     * assigned as a wall node.
+     *
+     * @returns An array of Sets.
+     * Each Set contains a collection of IDs for the nodes which
+     * can be blocked or changed to wall nodes on the website
+     */
   static generateRidges(): Set<number>[] | null {
 
     // first check for nullity case
@@ -53,9 +53,9 @@ export class MazeGenerator {
     let ridges: Set<number>[] = [];
 
     // function which can be used to create 2 at random entry points for the path.
-    function generateRandomEntries(colNo: number): { p1: number, p2: number }{
-      let p1: number = Math.floor(Math.random() * MazeGenerator.workableRows) +colNo;
-      let p2 : number = p1 + 1;
+    function generateRandomEntries(colNo: number): { p1: number, p2: number } {
+      let p1: number = Math.floor(Math.random() * MazeGenerator.workableRows) + colNo;
+      let p2: number = p1 + 1;
       return {
         p1,
         p2
@@ -63,7 +63,7 @@ export class MazeGenerator {
     }
 
     //main loop which assigns the walls and entry points to the Array of Sets.
-    for (let i: number = 0 ; i < this.workableColumns; i++) {
+    for (let i: number = 0; i < this.workableColumns; i++) {
       let colRidge: Set<number> = new Set();
       if (i % 2 === 0) {
         let entryPoints = generateRandomEntries(i);
@@ -96,13 +96,11 @@ export class MazeGenerator {
    */
   static generateRandomMaze(): Map<number, boolean> {
     let path: Map<number, boolean> = new Map();
-    let i: number = 0;
-    while (path.size !== currentState.graph().nodes().size / 10) {
-      let randomID: number = Math.floor(Math.random() * currentState.graph().nodes().size);
-      if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode()) {
-        path.set(randomID, false);
-        console.log(path.size);
-      }
+    for (let i = 0; i < currentState.graph().nodes().size / 7.5; i++) {
+      let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
+      if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
+      path.set(randomID, false);
+      console.log(path.size);
     }
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
 

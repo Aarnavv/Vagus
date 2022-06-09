@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="18496eca-b43b-4684-b868-02df36833bd5" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="289MtuoxogKI1Bzo4Ru8g8WuPVi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.TypeScript",
+    "ts.external.directory.path": "C:\\Users\\adi\\git\\.js\\Vagus\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="18496eca-b43b-4684-b868-02df36833bd5" name="Changes" comment="" />
+      <created>1650624573783</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1650624573783</updated>
+      <workItem from="1650624578059" duration="8000" />
+      <workItem from="1650624776097" duration="5000" />
+      <workItem from="1652960215010" duration="1036000" />
+      <workItem from="1653366949054" duration="1290000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/ts/Types.js" />
+        <option value="$PROJECT_DIR$/src/ts/Graph.js" />
+        <option value="$PROJECT_DIR$/src/ts/Edge.js" />
+        <option value="$PROJECT_DIR$/src/ts/HexBoardUpdate.js" />
+        <option value="$PROJECT_DIR$/src/ts/MazeGenerator.js" />
+        <option value="$PROJECT_DIR$/src/ts/GlobalState.js" />
+        <option value="$PROJECT_DIR$/src/ts/ActionButtonsFunctionality.js" />
+        <option value="$PROJECT_DIR$/src/ts/HexBoardAlgoRunUpdate.js" />
+        <option value="$PROJECT_DIR$/src/ts/Algorithms.js" />
+        <option value="$PROJECT_DIR$/src/ts/cssConstants.js" />
+        <option value="$PROJECT_DIR$/src/ts/Node.js" />
+        <option value="$PROJECT_DIR$/src/ts/HexBoard.js" />
+        <option value="$PROJECT_DIR$/src/ts/Hex.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/actionButtons.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/hexagonSVGIconComponent.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/arrowSVGIcons.js" />
+        <option value="$PROJECT_DIR$/src/ts/folderStruct.js" />
+        <option value="$PROJECT_DIR$/src/ts/HexBoardInitializer.js" />
+        <option value="$PROJECT_DIR$/src/ts/App.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/folderSVGIconComponent.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/projectSVGIconComponent.js" />
+        <option value="$PROJECT_DIR$/src/svgIcons/fileSVGIconComponent.js" />
+        <option value="$PROJECT_DIR$/src/ts/Navbar.js" />
+        <option value="$PROJECT_DIR$/src/ts/fileStruct.js" />
+      </list>
+    </option>
+  </component>
+</project>
