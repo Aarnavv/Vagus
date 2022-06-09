@@ -13,8 +13,8 @@ export enum AlgoType {
   breadthFirstSearch = 'bfs-algo',
   depthFirstSearch = 'dfs-algo',
   biDirectionalSearch = 'bd-algo',
-  randomWalk = 'rand-algo' ,
-  bestFirstSearch ='best-fs'
+  randomWalk = 'rand-algo',
+  bestFirstSearch = 'best-fs'
 }
 
 export enum MazeType {
@@ -30,8 +30,8 @@ export enum SpeedType {
   percent25 = 25
 }
 
-export enum MazeGeneratorPropTypes{
-  onlyWeights='w',
-  onlyWalls='W',
-  weightsAndWalls='wW'
+export enum MazeGeneratorPropTypes {
+  onlyWeights = 'w',
+  onlyWalls = 'W',
+  weightsAndWalls = 'wW'
 }

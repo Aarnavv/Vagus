@@ -15,7 +15,6 @@ export default class Algorithms<T> {
     this.graph = _assignGraph;
     this.comparator = this.graph.comparator;
     Algorithms.EPS = 1e-5;
-    // console.log(Algorithms.EPS);
   }
 
   bfs(start: T, end: T): [T[] | null, Set<T>] {
@@ -139,16 +138,14 @@ export default class Algorithms<T> {
 
   biDirectional(start: T, end: T): [T[] | null, Set<T>, Set<T>] {
     const [pathFromStart] = this.dijkstras(start, end);
-    if (pathFromStart === null) { 
-      let [p1, visitedFromStart] = this.dijkstras(start, end);
-      let [p2, visitedFromEnd] = this.dijkstras(end, start);
-      return [pathFromStart, visitedFromStart, visitedFromEnd]; 
+    if (pathFromStart === null) {
+      let visitedFromStart = this.dijkstras(start, end)[1];
+      let visitedFromEnd = this.dijkstras(end, start)[1];
+      return [pathFromStart, visitedFromStart, visitedFromEnd];
     }
     let spliceNode = pathFromStart[pathFromStart.length >> 1];
-    let [p1, visitedFromStart] = this.dijkstras(start, spliceNode);
-    let [p2, visitedFromEnd] = this.dijkstras(end, spliceNode);
-    // console.log(visitedFromStart);
-    // console.log(visitedFromEnd);
+    let visitedFromStart = this.dijkstras(start, spliceNode)[1];
+    let visitedFromEnd = this.dijkstras(end, spliceNode)[1];
     return [pathFromStart, visitedFromStart, visitedFromEnd];
   }
 
@@ -168,7 +165,7 @@ export default class Algorithms<T> {
       minHeuristic: number
     }
     let PQ = new MinPriorityQueue<Priority>((promisingNode) => promisingNode.minHeuristic);
-    let prev: Map<T, T> = new Map;
+    let prev: Map<T, T> = new Map();
     let visited: Set<T> = new Set();
     let dest = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
     PQ.enqueue({ label: start, minHeuristic: this.graph.distBw(dest, endNode) });
@@ -330,6 +327,9 @@ export default class Algorithms<T> {
         if (pathP1 !== null && pathP2 !== null)
           path = pathP1.concat(pathP2.slice(1));
         else path = null
+        break;
+      default:
+        console.error("Internal error, the algorithm selected does not match with the algorithms possible");
     }
     return {
       path,
