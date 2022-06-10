@@ -273,4 +273,5 @@ export {
   setInitialNodes,
   nodeHoverAnimation,
   updateMaze,
+  updateNodeUtil,
 }

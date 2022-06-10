@@ -251,4 +251,4 @@ const updateMaze = () => {
         }
     }, 5);
 };
-export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, };
+export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, updateNodeUtil, };

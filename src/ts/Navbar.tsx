@@ -3,7 +3,7 @@ import '../css/navbar.css';
 import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
-import { TSXFile, IOFile, BATFile, SYSFile, GUIFile } from "./fileStruct";
+import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
@@ -97,7 +97,7 @@ export default class Navbar extends React.Component {
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
                 </div>
               </FolderComponent>
-              {/* <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1" /> */}
+              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1"/>
             </div>
           </FolderComponent>
         </div>
