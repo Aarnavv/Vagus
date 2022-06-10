@@ -17,24 +17,18 @@ export var AlgoType;
     AlgoType["randomWalk"] = "rand-algo";
     AlgoType["bestFirstSearch"] = "best-fs";
 })(AlgoType || (AlgoType = {}));
-export var MazeType;
-(function (MazeType) {
-    MazeType["none"] = "none";
-    MazeType["gridMaze"] = "gridMaze-maze";
-    MazeType["randomMaze"] = "randomMaze-maze";
-    MazeType["diagonalCutMaze"] = "diagonalCutMaze-maze";
-    MazeType["leastCostPathBlocker"] = "leastCostPathBlockerMaze-maze";
-    MazeType["generateRidges"] = "generateRidges-maze";
-})(MazeType || (MazeType = {}));
+export var MazeGenerationType;
+(function (MazeGenerationType) {
+    MazeGenerationType["none"] = "none";
+    MazeGenerationType["generateRandomMaze"] = "generateRandomMaze-maze";
+    MazeGenerationType["generateLeastCostPathBlocker"] = "generateLeastCostPathBlockerMaze-maze";
+    MazeGenerationType["generateRidges"] = "generateRidges-maze";
+    MazeGenerationType["generateWeightedRandomMaze"] = "generateWeightedRandomMaze-maze";
+    MazeGenerationType["generateBlockedRandomMaze"] = "generateBlockedRandomMaze-maze";
+})(MazeGenerationType || (MazeGenerationType = {}));
 export var SpeedType;
 (function (SpeedType) {
     SpeedType[SpeedType["percent100"] = 100] = "percent100";
     SpeedType[SpeedType["percent50"] = 50] = "percent50";
     SpeedType[SpeedType["percent25"] = 25] = "percent25";
 })(SpeedType || (SpeedType = {}));
-export var MazeGeneratorPropTypes;
-(function (MazeGeneratorPropTypes) {
-    MazeGeneratorPropTypes["onlyWeights"] = "w";
-    MazeGeneratorPropTypes["onlyWalls"] = "W";
-    MazeGeneratorPropTypes["weightsAndWalls"] = "wW";
-})(MazeGeneratorPropTypes || (MazeGeneratorPropTypes = {}));

@@ -25,7 +25,12 @@ export default class Hex extends React.Component<props> {
     render() {
     return (
       <div className="hexagon" id={this.props.id} style={this.styles.hexagon} onClick={() => {
-            updateHexIcon(`props-${this.props.id}`, parseInt(this.props.id));
+        updateHexIcon(`props-${this.props.id}`, parseInt(this.props.id));
+        MazeGenerator.setProps();
+        let mazeGenerateRidges  : Set<number>[]= MazeGenerator.generateRidges();
+        console.log(mazeGenerateRidges);
+        // console.log(this.props.id);
+
       }}>
         <HexIcon idSVG={`svg-${this.props.id}`}/>
         <div className="prop-holder no-node" id={`props-${this.props.id}`}></div>

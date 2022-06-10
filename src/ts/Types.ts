@@ -17,23 +17,17 @@ export enum AlgoType {
   bestFirstSearch = 'best-fs'
 }
 
-export enum MazeType {
+export enum MazeGenerationType {
   none = 'none',
-  gridMaze = 'gridMaze-maze',
-  randomMaze = 'randomMaze-maze',
-  diagonalCutMaze = 'diagonalCutMaze-maze',
-  leastCostPathBlocker = 'leastCostPathBlockerMaze-maze',
+  generateRandomMaze = 'generateRandomMaze-maze',
+  generateLeastCostPathBlocker = 'generateLeastCostPathBlockerMaze-maze',
   generateRidges = 'generateRidges-maze',
+  generateWeightedRandomMaze = 'generateWeightedRandomMaze-maze',
+  generateBlockedRandomMaze = 'generateBlockedRandomMaze-maze'
 }
 
 export enum SpeedType {
   percent100 = 100,
   percent50 = 50,
   percent25 = 25
-}
-
-export enum MazeGeneratorPropTypes {
-  onlyWeights = 'w',
-  onlyWalls = 'W',
-  weightsAndWalls = 'wW'
 }

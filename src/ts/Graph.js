@@ -196,18 +196,37 @@ export default class Graph {
      * @param cost the cost of edges.
      */
     static copy(_initial, _present, cost) {
-        //first reset all connections
+        //first reset all actove connections
         _initial.nodes().forEach((initNode) => {
             if (!_present.nodes().has(initNode.getData())) {
                 this.revertNode(initNode.getData(), _initial, _present);
             }
         });
-        //then reset all costs.
+        //then reset all active costs.
         _present.nodes().forEach((initNode) => {
             initNode.getAdjNodes().forEach((edge) => {
                 if (edge.dest.getData() !== initNode.getData() && edge.cost > 1)
                     edge.changeCost(cost);
             });
         });
+    }
+    static reset(_initial, _present) {
+        let _replacement = new Graph(_present.comparator);
+        //First add all the nodes
+        _initial.nodes().forEach(initNode => {
+            _replacement.addNode(initNode.getData());
+        });
+        //reset all the connections
+        _initial.nodes().forEach(node => {
+            node.getAdjNodes().forEach(edge => {
+                _replacement.addEdge(node.getData(), edge.dest.getData(), edge.cost);
+            });
+        });
+        console.log(_replacement);
+        console.log(_initial);
+        _present = _replacement;
+    }
+    static equals(_g1, _g2) {
+        return true;
     }
 }

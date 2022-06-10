@@ -1,4 +1,4 @@
-import { AlgoType, MazeType, NodeType, SpeedType } from "./Types";
+import { AlgoType, MazeGenerationType, NodeType, SpeedType } from "./Types";
 import Graph from "./Graph";
 
 class State<T> {
@@ -6,7 +6,7 @@ class State<T> {
   private INIT_GRAPH: Graph<T>;
   private AddableNode: NodeType;
   private Algorithm: AlgoType;
-  private Maze: MazeType;
+  private Maze: MazeGenerationType;
   private Speed: SpeedType;
   private StartNode: T;
   private EndNode: T;
@@ -16,7 +16,7 @@ class State<T> {
   constructor(_start: T = null, _end: T = null, _graph: Graph<T> = null) {
     this.AddableNode = null;
     this.Algorithm = null;
-    this.Maze = MazeType.none;
+    this.Maze = MazeGenerationType.none;
     this.Speed = SpeedType.percent100;
     this.StartNode = _start;
     this.EndNode = _end;
@@ -30,7 +30,7 @@ class State<T> {
   initGraph(): Graph<T> { return this.INIT_GRAPH; }
   addableNode(): NodeType { return this.AddableNode; }
   algorithm(): AlgoType { return this.Algorithm; }
-  maze(): MazeType { return this.Maze; }
+  maze(): MazeGenerationType { return this.Maze; }
   speed(): SpeedType { return this.Speed; }
   startNode(): T { return this.StartNode; }
   endNode(): T { return this.EndNode; }
@@ -45,7 +45,7 @@ class State<T> {
     this.Algorithm = toThis;
   }
 
-  changeMaze(toThis: MazeType) {
+  changeMaze(toThis: MazeGenerationType) {
     this.Maze = toThis;
   }
 
