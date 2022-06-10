@@ -205,16 +205,16 @@ const displayMaze = (randomMap, mazeLeastCostArray, mazeRidges, weightedSet, blo
         });
     }
     else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze) {
-        for (let id of weightedSet) {
+        weightedSet.forEach(id => {
             updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
             updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
-        }
+        });
     }
     else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze) {
-        for (let id of blockedSet) {
+        blockedSet.forEach(id => {
             updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
             updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
-        }
+        });
     }
 };
 const updateMaze = () => {
@@ -232,6 +232,7 @@ const updateMaze = () => {
             case MazeGenerationType.generateWeightedRandomMaze:
                 let mazeSet = MazeGenerator.generateRandomTypedMaze();
                 displayMaze(null, null, null, mazeSet, null);
+                break;
             case MazeGenerationType.generateLeastCostPathBlocker:
                 let mazeLeastPathBlocker = MazeGenerator.generateLeastCostPathBlocker();
                 displayMaze(null, mazeLeastPathBlocker, null, null, null);

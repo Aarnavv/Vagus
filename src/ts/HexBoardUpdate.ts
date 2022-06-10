@@ -188,11 +188,11 @@ const updateNodeUtil = (id: string, classesRM: string[], classesADD: string[]): 
 }
 
 const displayMaze = (
-  randomMap : Map<number, boolean>,
-  mazeLeastCostArray : number[],
-  mazeRidges : Set<number>[],
+  randomMap: Map<number, boolean>,
+  mazeLeastCostArray: number[],
+  mazeRidges: Set<number>[],
   weightedSet: Set<number>,
-  blockedSet : Set<number>
+  blockedSet: Set<number>
 ): void => {
   if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
     for (let [id, state] of randomMap) {
@@ -221,16 +221,16 @@ const displayMaze = (
     })
   }
   else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze) {
-    for (let id of weightedSet) {
-        updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
-        updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
-    }
+    weightedSet.forEach(id => {
+      updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
+      updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
+    })
   }
   else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze) {
-    for (let id of blockedSet) {
+    blockedSet.forEach(id => {
       updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
       updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
-    }
+    })
   }
 }
 
@@ -244,14 +244,15 @@ const updateMaze = (): void => {
     switch (currentState.maze()) {
       case MazeGenerationType.generateRandomMaze:
         let mazeMap: Map<number, boolean> = MazeGenerator.generateRandomMaze();
-        displayMaze(mazeMap, null, null , null, null);
+        displayMaze(mazeMap, null, null, null, null);
         break;
       case MazeGenerationType.generateWeightedRandomMaze:
         let mazeSet: Set<number> = MazeGenerator.generateRandomTypedMaze();
-        displayMaze(null, null, null, mazeSet , null );
+        displayMaze(null, null, null, mazeSet, null);
+        break;
       case MazeGenerationType.generateLeastCostPathBlocker:
         let mazeLeastPathBlocker: number[] = MazeGenerator.generateLeastCostPathBlocker();
-        displayMaze(null, mazeLeastPathBlocker, null, null, null );
+        displayMaze(null, mazeLeastPathBlocker, null, null, null);
         break;
       case MazeGenerationType.generateRidges:
         let mazeGenerateRidges: Set<number>[] = MazeGenerator.generateRidges();
