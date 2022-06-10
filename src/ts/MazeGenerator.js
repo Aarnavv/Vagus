@@ -20,12 +20,6 @@ export class MazeGenerator {
     }
     constructor() {
     }
-    static generateHeartMaze() {
-        //TODO
-    }
-    static generateCubeMaze() {
-        //TODO
-    }
     /**
        * Generates a maze which has a column filled with walls except for 2 psuedo random
        * hexes.
@@ -37,16 +31,16 @@ export class MazeGenerator {
        * can be blocked or changed to wall nodes on the website
        */
     static generateRidges() {
-        this.setProps();
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
             return null;
         }
         // array to hold the "ridges"
         let ridges = [];
+        console.log(this.workableColumns + "," + this.workableRows);
         // function which can be used to create 2 at random entry points for the path.
         function generateRandomEntries(colNo) {
-            let p1 = Math.floor(Math.random() * MazeGenerator.workableRows) + colNo;
+            let p1 = Math.floor(Math.random() * (MazeGenerator.workableRows) + (colNo * MazeGenerator.workableRows));
             let p2 = p1 + 1;
             return {
                 p1,
@@ -56,10 +50,10 @@ export class MazeGenerator {
         //main loop which assigns the walls and entry points to the Array of Sets.
         for (let i = 0; i < this.workableColumns; i++) {
             let colRidge = new Set();
-            if (i % 2 === 0) {
+            if (i % 2 === 1) {
                 let entryPoints = generateRandomEntries(i);
-                for (let j = i * this.workableColumns; j < i * this.workableColumns + this.workableRows; j++) {
-                    if (j !== entryPoints.p1 && j !== entryPoints.p2) {
+                for (let j = i * this.workableRows; j < this.workableRows * (i + 1); j++) {
+                    if (j !== entryPoints.p1 && j !== entryPoints.p2 && j !== currentState.startNode() && j !== currentState.endNode() && j !== currentState.bombNode()) {
                         colRidge.add(j);
                     }
                 }
@@ -84,10 +78,11 @@ export class MazeGenerator {
      */
     static generateRandomMaze() {
         let path = new Map();
-        for (let i = 0; i < currentState.graph().nodes().size / 7.5; i++) {
+        for (let i = 0; i < currentState.graph().nodes().size - 5; i++) {
             let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
             if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
                 path.set(randomID, false);
+            console.log(path.size);
         }
         Graph.copy(currentState.initGraph(), currentState.graph(), 1);
         path.forEach((_, nodeID) => {
@@ -126,7 +121,6 @@ export class MazeGenerator {
                         path.push(nodeID);
                 });
                 path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
-                return path;
             }
         }
         else {
@@ -135,8 +129,26 @@ export class MazeGenerator {
                 path.pop();
                 path.shift();
                 path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
-                return path;
             }
         }
+        return path;
+    }
+    static generateRandomTypedMaze(weighted = true) {
+        let path = new Set();
+        for (let i = 0; i < currentState.graph().nodes().size - 5; i++) {
+            let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
+            if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
+                path.add(randomID);
+        }
+        Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+        path.forEach(nodeID => {
+            if (weighted) {
+                currentState.graph().updateCostOfIncoming(nodeID, 10);
+            }
+            else {
+                currentState.graph().rmNode(nodeID);
+            }
+        });
+        return path;
     }
 }

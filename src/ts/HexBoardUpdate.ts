@@ -187,7 +187,13 @@ const updateNodeUtil = (id: string, classesRM: string[], classesADD: string[]): 
   document.getElementById(id).classList.add(...classesADD);
 }
 
-const displayMaze = (randomMap: Map<number, boolean>, mazeLeastCostArray: number[], mazeRidges: Set<number>[]): void => {
+const displayMaze = (
+  randomMap: Map<number, boolean>,
+  mazeLeastCostArray: number[],
+  mazeRidges: Set<number>[],
+  weightedSet: Set<number>,
+  blockedSet: Set<number>
+): void => {
   if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
     for (let [id, state] of randomMap) {
       if (state) {
@@ -214,28 +220,50 @@ const displayMaze = (randomMap: Map<number, boolean>, mazeLeastCostArray: number
       })
     })
   }
+  else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze) {
+    weightedSet.forEach(id => {
+      updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
+      updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
+    })
+  }
+  else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze) {
+    blockedSet.forEach(id => {
+      updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
+      updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
+    })
+  }
 }
 
 const updateMaze = (): void => {
-  RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node']);
+  RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
+  currentState.changeBombNode(null);
   Graph.copy(currentState.initGraph(), currentState.graph(), 1);
   setInitialNodes();
+  MazeGenerator.setProps();
   setTimeout(() => {
     switch (currentState.maze()) {
-      case MazeGenerationType.none:
-        break;
       case MazeGenerationType.generateRandomMaze:
         let mazeMap: Map<number, boolean> = MazeGenerator.generateRandomMaze();
-        displayMaze(mazeMap, null, null);
+        displayMaze(mazeMap, null, null, null, null);
+        break;
+      case MazeGenerationType.generateWeightedRandomMaze:
+        let mazeSet: Set<number> = MazeGenerator.generateRandomTypedMaze();
+        displayMaze(null, null, null, mazeSet, null);
         break;
       case MazeGenerationType.generateLeastCostPathBlocker:
         let mazeLeastPathBlocker: number[] = MazeGenerator.generateLeastCostPathBlocker();
-        displayMaze(null, mazeLeastPathBlocker, null);
+        displayMaze(null, mazeLeastPathBlocker, null, null, null);
         break;
       case MazeGenerationType.generateRidges:
         let mazeGenerateRidges: Set<number>[] = MazeGenerator.generateRidges();
         console.log(mazeGenerateRidges)
-        displayMaze(null, null, mazeGenerateRidges);
+        displayMaze(null, null, mazeGenerateRidges, null, null);
+        break;
+      case MazeGenerationType.generateBlockedRandomMaze:
+        let blockedMazeSet: Set<number> = MazeGenerator.generateRandomTypedMaze(false);
+        displayMaze(null, null, null, null, blockedMazeSet);
+        break;
+      default:
         break;
     }
   }, 5)
