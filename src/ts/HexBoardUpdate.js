@@ -218,11 +218,9 @@ const displayMaze = (randomMap, mazeLeastCostArray, mazeRidges, weightedSet, blo
     }
 };
 const updateMaze = () => {
-    RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
-    currentState.changeBombNode(null);
+    RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node']);
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
     setInitialNodes();
-    MazeGenerator.setProps();
     setTimeout(() => {
         switch (currentState.maze()) {
             case MazeGenerationType.generateRandomMaze:

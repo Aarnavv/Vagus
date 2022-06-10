@@ -31,6 +31,7 @@ export class MazeGenerator {
        * can be blocked or changed to wall nodes on the website
        */
     static generateRidges() {
+        this.setProps();
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
             return null;
