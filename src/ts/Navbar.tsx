@@ -3,10 +3,11 @@ import '../css/navbar.css';
 import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
-import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
+import { TSXFile, IOFile, BATFile, SYSFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
+import { RemoveAllClasses } from './ActionButtonsFunctionality';
 import Node from "./Node";
 
 export default class Navbar extends React.Component {
@@ -30,6 +31,7 @@ export default class Navbar extends React.Component {
             }} />
             <ActionIcons.RunButtonIcon onClick={() => {
               let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
+              RemoveAllClasses(1, []);
               if (currentState.run()) StartButtonClick(currentNode, true);
               else if (!currentState.run()) {
                 currentState.changeRun();
@@ -64,14 +66,14 @@ export default class Navbar extends React.Component {
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes [Works! somewhat...]" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
+                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRandomMaze.bat" divID="bat-2" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateLeastCostPathBlocker.bat" divID="bat-3" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRidges.bat" divID="bat-4" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRandomMaze.bat" divID="bat-5" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRandomMaze.bat" divID="bat-6"/>
+                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRandomMaze.bat" divID="bat-6" />
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.YELLOW} text="speeds" divClassName="folder advanced-cp-comp" arrowID="speeds-arrow">

@@ -7,6 +7,7 @@ import { TSXFile, IOFile, BATFile, SYSFile, GUIFile } from "./fileStruct";
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
+import { RemoveAllClasses } from './ActionButtonsFunctionality';
 export default class Navbar extends React.Component {
     render() {
         return (React.createElement("div", { className: "navbar" },
@@ -26,6 +27,7 @@ export default class Navbar extends React.Component {
                         } }),
                     React.createElement(ActionIcons.RunButtonIcon, { onClick: () => {
                             let currentNode = currentState.graph().nodes().get(currentState.startNode());
+                            RemoveAllClasses(1, []);
                             if (currentState.run())
                                 StartButtonClick(currentNode, true);
                             else if (!currentState.run()) {
@@ -55,7 +57,7 @@ export default class Navbar extends React.Component {
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "bombNode.io", divID: "io-3" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "weightNode.io", divID: "io-4" }),
                                         React.createElement(IOFile, { divClassName: "file io-file", pClassName: "node-name file-name", text: "wallNode.io", divID: "io-5" }))),
-                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes [Works! somewhat...]", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
+                                React.createElement(FolderComponent, { colorOfFolder: cssConstants.GREEN, text: "mazes", divClassName: "folder advanced-cp-comp", arrowID: "mazes-arrow" },
                                     React.createElement("div", { className: "folder-drop-inner" },
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "none.bat", divID: "bat-1" }),
                                         React.createElement(BATFile, { divClassName: "file bat-file", pClassName: "maze-name file-name", text: "generateRandomMaze.bat", divID: "bat-2" }),

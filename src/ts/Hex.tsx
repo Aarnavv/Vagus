@@ -2,7 +2,6 @@ import * as React from "react";
 import '../css/hex.css';
 import { HexIcon } from "../svgIcons/hexagonSVGIconComponent";
 import { updateHexIcon } from "./HexBoardUpdate";
-import {MazeGenerator} from "./MazeGenerator";
 
 type props = {
   x: number,
