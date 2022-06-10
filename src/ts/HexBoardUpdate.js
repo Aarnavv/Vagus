@@ -218,6 +218,8 @@ const displayMaze = (randomMap, mazeLeastCostArray, mazeRidges, weightedSet, blo
     }
 };
 const updateMaze = () => {
+    if (currentState.run() === true)
+        return;
     RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
     currentState.changeBombNode(null);
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
