@@ -224,7 +224,6 @@ const updateMaze = () => {
     currentState.changeBombNode(null);
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
     setInitialNodes();
-    MazeGenerator.setProps();
     setTimeout(() => {
         switch (currentState.maze()) {
             case MazeGenerationType.generateRandomMaze:
