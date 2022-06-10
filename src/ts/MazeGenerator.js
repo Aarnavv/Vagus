@@ -30,14 +30,13 @@ export class MazeGenerator {
        * Each Set contains a collection of IDs for the nodes which
        * can be blocked or changed to wall nodes on the website
        */
-    static generateRidges() {
+    static generateRidges(weighted = true) {
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
             return null;
         }
         // array to hold the "ridges"
         let ridges = [];
-        console.log(this.workableColumns + "," + this.workableRows);
         // function which can be used to create 2 at random entry points for the path.
         function generateRandomEntries(colNo) {
             let p1 = Math.floor(Math.random() * (MazeGenerator.workableRows) + (colNo * MazeGenerator.workableRows));
@@ -60,10 +59,15 @@ export class MazeGenerator {
                 ridges.push(colRidge);
             }
         }
-        Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+        console.log(Graph.equals(currentState.initGraph(), currentState.graph()));
         ridges.forEach((ridgeCol) => {
             ridgeCol.forEach(nodeID => {
-                currentState.graph().rmNode(nodeID);
+                if (weighted) {
+                    currentState.graph().updateCostOfIncoming(nodeID, 10);
+                }
+                else {
+                    currentState.graph().rmNode(nodeID);
+                }
             });
         });
         return ridges;
@@ -82,9 +86,8 @@ export class MazeGenerator {
             let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
             if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
                 path.set(randomID, false);
-            console.log(path.size);
         }
-        Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+        console.log(Graph.equals(currentState.initGraph(), currentState.graph()));
         path.forEach((_, nodeID) => {
             let probability = Math.floor(Math.random() * 2);
             if (probability % 2 === 0) {
@@ -108,6 +111,7 @@ export class MazeGenerator {
     static generateLeastCostPathBlocker() {
         let algo = new Algorithms(currentState.graph());
         let path = [];
+        console.log(Graph.equals(currentState.initGraph(), currentState.graph()));
         if (currentState.bombNode() !== null) {
             let p1 = algo.dijkstras(currentState.startNode(), currentState.bombNode())[0];
             let p2 = algo.dijkstras(currentState.bombNode(), currentState.endNode())[0];
@@ -133,14 +137,44 @@ export class MazeGenerator {
         }
         return path;
     }
+    static generateShortestPathBlocker() {
+        let algo = new Algorithms(currentState.graph());
+        let path = [];
+        console.log(Graph.equals(currentState.initGraph(), currentState.graph()));
+        if (currentState.bombNode() !== null) {
+            let p1 = algo.bfs(currentState.startNode(), currentState.bombNode())[0];
+            let p2 = algo.bfs(currentState.bombNode(), currentState.endNode())[0];
+            if (p1 !== null && p2 !== null) {
+                p1.forEach((nodeID) => {
+                    if (nodeID !== currentState.bombNode() && nodeID !== currentState.startNode())
+                        path.push(nodeID);
+                });
+                p2.forEach(nodeID => {
+                    if (nodeID !== currentState.bombNode() && nodeID !== currentState.endNode())
+                        path.push(nodeID);
+                });
+                path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
+            }
+        }
+        else {
+            path = algo.bfs(currentState.startNode(), currentState.endNode())[0];
+            if (path !== null) {
+                path.pop();
+                path.shift();
+                path.forEach((nodeID) => currentState.graph().rmNode(nodeID));
+            }
+        }
+        return path;
+    }
+    // FIXME
     static generateRandomTypedMaze(weighted = true) {
         let path = new Set();
-        for (let i = 0; i < currentState.graph().nodes().size - 5; i++) {
+        for (let i = 0; i < currentState.graph().nodes().size; i++) {
             let randomID = Math.floor(Math.random() * currentState.graph().nodes().size);
             if (randomID !== currentState.startNode() && randomID !== currentState.endNode() && randomID !== currentState.bombNode())
                 path.add(randomID);
         }
-        Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+        console.log(Graph.equals(currentState.initGraph(), currentState.graph()));
         path.forEach(nodeID => {
             if (weighted) {
                 currentState.graph().updateCostOfIncoming(nodeID, 10);
@@ -149,6 +183,8 @@ export class MazeGenerator {
                 currentState.graph().rmNode(nodeID);
             }
         });
+        let route = new Algorithms(currentState.graph()).dijkstras(currentState.startNode(), currentState.endNode())[0];
+        console.log(route);
         return path;
     }
 }

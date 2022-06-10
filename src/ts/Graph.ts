@@ -209,18 +209,43 @@ export default class Graph<T> {
    * @param cost the cost of edges.
    */
   static copy<T>(_initial: Graph<T>, _present: Graph<T>, cost: number) {
-    //first reset all connections
+    //first reset all actove connections
     _initial.nodes().forEach((initNode) => {
       if (!_present.nodes().has(initNode.getData())) {
         this.revertNode(initNode.getData(), _initial, _present);
       }
     });
-    //then reset all costs.
+    //then reset all active costs.
     _present.nodes().forEach((initNode)=>{
-      initNode.getAdjNodes().forEach((edge)=>{
-        if(edge.dest.getData () !==initNode.getData()&&edge.cost>1)
+      initNode.getAdjNodes().forEach((edge) => {
+        if (edge.dest.getData() !== initNode.getData() && edge.cost > 1)
           edge.changeCost(cost);
-      })
+      });
     });
+  }
+
+  static reset<T>(_initial: Graph<T>, _present: Graph<T>) : void {
+    let _replacement: Graph<T> = new Graph(_present.comparator);
+
+    //First add all the nodes
+    _initial.nodes().forEach(initNode => {
+      _replacement.addNode(initNode.getData());
+    });
+
+    //reset all the connections
+    _initial.nodes().forEach(node => {
+      node.getAdjNodes().forEach(edge => {
+        _replacement.addEdge(node.getData(), edge.dest.getData(), edge.cost);
+      });
+    });
+    console.log(_replacement);
+    console.log(_initial);
+
+    _present = _replacement;
+
+  }
+
+  static equals<T>(_g1: Graph<T>, _g2: Graph<T>): boolean{
+    return true;
   }
 }

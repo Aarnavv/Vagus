@@ -205,22 +205,24 @@ const displayMaze = (randomMap, mazeLeastCostArray, mazeRidges, weightedSet, blo
         });
     }
     else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze) {
-        for (let id of weightedSet) {
+        console.log(weightedSet);
+        weightedSet.forEach(id => {
             updateNodeUtil(`props-${id}`, ['no-node'], ['weight-node']);
             updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-weight-node']);
-        }
+        });
     }
     else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze) {
-        for (let id of blockedSet) {
+        blockedSet.forEach(id => {
             updateNodeUtil(`props-${id}`, ['no-node'], ['wall-node']);
             updateNodeUtil(`svg-${id}`, ['no-node'], ['svg-wall-node']);
-        }
+        });
     }
 };
+// FIXME
 const updateMaze = () => {
     RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
     currentState.changeBombNode(null);
-    Graph.copy(currentState.initGraph(), currentState.graph(), 1);
+    Graph.reset(currentState.initGraph(), currentState.graph());
     setInitialNodes();
     MazeGenerator.setProps();
     setTimeout(() => {
@@ -231,6 +233,7 @@ const updateMaze = () => {
                 break;
             case MazeGenerationType.generateWeightedRandomMaze:
                 let mazeSet = MazeGenerator.generateRandomTypedMaze();
+                console.log(mazeSet);
                 displayMaze(null, null, null, mazeSet, null);
             case MazeGenerationType.generateLeastCostPathBlocker:
                 let mazeLeastPathBlocker = MazeGenerator.generateLeastCostPathBlocker();
