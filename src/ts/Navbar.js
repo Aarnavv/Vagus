@@ -80,6 +80,6 @@ export default class Navbar extends React.Component {
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "startNode.gui", type: "start-node", divID: "gui-6" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "endNode.gui", type: "end-node", divID: "gui-7" }),
                                 React.createElement(GUIFile, { divClassName: "file gui-file", pClassName: "legend-name file-name", text: "weightNode.gui", type: "weight", divID: "gui-8" }))),
-                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "README.md [Work in Progress!]", divID: "md-1" }))))));
+                        React.createElement(MDFile, { divClassName: "folder-less-file file md-file advanced-cp-comp", pClassName: "file-name", text: "settings.json [Work in Progress!]", divID: "md-1" }))))));
     }
 }
