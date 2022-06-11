@@ -50,20 +50,22 @@ export default class Algorithms<T> {
       if (!visited.has(at)) {
         visited.add(at);
         path.push(at);
-        if (at === end)
-          return;
-        this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
-          internalDfs(edge.dest.getData())
-        })
+        if (at !== end) {
+          this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
+            internalDfs(edge.dest.getData())
+          });
+        }
+        return;
       }
     }
 
     internalDfs(start);
     const endIndex = path.indexOf(end);
-    if (endIndex < 0) return [null, visited];
+    if (endIndex < 0)
+      return [null, visited];
     else {
       path.splice(endIndex + 1)
-      return [path, visited];
+      return [path, new Set(path)];
     }
   }
 

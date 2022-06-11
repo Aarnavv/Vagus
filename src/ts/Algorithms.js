@@ -43,11 +43,12 @@ export default class Algorithms {
             if (!visited.has(at)) {
                 visited.add(at);
                 path.push(at);
-                if (at === end)
-                    return;
-                this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
-                    internalDfs(edge.dest.getData());
-                });
+                if (at !== end) {
+                    this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
+                        internalDfs(edge.dest.getData());
+                    });
+                }
+                return;
             }
         };
         internalDfs(start);
@@ -56,7 +57,7 @@ export default class Algorithms {
             return [null, visited];
         else {
             path.splice(endIndex + 1);
-            return [path, visited];
+            return [path, new Set(path)];
         }
     }
     dijkstras(start, end) {

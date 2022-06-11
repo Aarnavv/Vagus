@@ -3,6 +3,12 @@ import currentState from "./GlobalState";
 import Algorithms from "./Algorithms";
 import Graph from "./Graph";
 
+/**
+ * The basic maze generator class which builds the Sets required for
+ * drawing the maze on the website.
+ *
+ * @author aditya, <adityavikramsinha19@gmail.com>
+ */
 export class MazeGenerator {
 
   // Gets the number of rows which are present in the current
@@ -28,17 +34,19 @@ export class MazeGenerator {
   }
 
   /**
-     * Generates a maze which has a column filled with walls except for 2 psuedo random
+     * Generates a maze which has a column filled with walls or weights except for 2 psuedo random
      * hexes.
-     * Does not take care of the event in which a hex containing a bomb, start or end node is
+     * Does take care of the event in which a hex containing a bomb, start or end node is
      * assigned as a wall node.
      *
+     * @param weighted boolean to show if the typed random maze will be weighted or not. Default is true.
      * @returns An array of Sets.
      * Each Set contains a collection of IDs for the nodes which
      * can be blocked or changed to wall nodes on the website
      */
-  static generateRidges(): Set<number>[] | null {
+  static generateTypedRidges(weighted:boolean =true): Set<number>[] | null {
     this.setProps();
+
     // first check for nullity case
     if (this.workableColumns < 2 || this.workableRows < 2) {
       return null;
@@ -75,7 +83,12 @@ export class MazeGenerator {
 
     ridges.forEach((ridgeCol) => {
       ridgeCol.forEach(nodeID => {
-        currentState.graph().rmNode(nodeID);
+        if (weighted) {
+          currentState.graph().updateCostOfIncoming(nodeID, 10);
+        }
+        else {
+          currentState.graph().rmNode(nodeID);
+        }
       });
     });
     return ridges;
@@ -85,7 +98,8 @@ export class MazeGenerator {
    * Generates a random maze with both a mixture of weights and walls.
    * It does take into consideration the IDs present in the StartNode, EndNode and BombNode entities.
    *
-   * @returns Returns a Map, the way to interpret the Map is that the keys contain the ID and,
+   * @returns
+   * Returns a Map, the way to interpret the Map is that the keys contain the ID and,
    * the the boolean true or false represents the type of block.
    * A true represents a wall and a false represents a weight. The probability is psuedorandom.
    */
@@ -158,6 +172,13 @@ export class MazeGenerator {
     return path;
   }
 
+  /**
+   * Generates a random maze either filled with walls or weights.
+   * It does take the start-node , bomb-node , end-node into consideration.
+   *
+   * @param weighted boolean to show if the typed random maze will be weighted or not. Default is true.
+   * @returns a Set having the drawable IDs
+   */
   static generateRandomTypedMaze(weighted : boolean = true): Set<number> {
     let path: Set<number> = new Set();
     for (let i = 0; i < currentState.graph().nodes().size - 5; i++) {

@@ -1,3 +1,9 @@
+
+
+
+/**
+ * Contains the node types for the website. 
+ */
 export enum NodeType {
   startNode = 'start-node',
   endNode = 'end-node',
@@ -6,6 +12,9 @@ export enum NodeType {
   wallNode = 'wall-node'
 }
 
+/**
+ * Contains the algo-types for the website
+ */
 export enum AlgoType {
   dijkstrasSearch = "dijkstras-algo",
   aStarSearch = 'a*-algo',
@@ -17,15 +26,22 @@ export enum AlgoType {
   bestFirstSearch = 'best-fs'
 }
 
+/**
+ * Contains the maze generatable types for the website
+ */
 export enum MazeGenerationType {
   none = 'none',
   generateRandomMaze = 'generateRandomMaze-maze',
   generateLeastCostPathBlocker = 'generateLeastCostPathBlockerMaze-maze',
-  generateRidges = 'generateRidges-maze',
+  generateWeightedRidges = 'generateWeigtedRidges-maze',
+  generateBlockedRidges = 'generateBlockedRidges-maze' ,
   generateWeightedRandomMaze = 'generateWeightedRandomMaze-maze',
   generateBlockedRandomMaze = 'generateBlockedRandomMaze-maze'
 }
 
+/**
+ * Contains the SpeedTypes for the website
+ */
 export enum SpeedType {
   percent100 = 100,
   percent50 = 50,
