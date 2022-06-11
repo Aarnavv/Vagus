@@ -30,7 +30,7 @@ export class MazeGenerator {
        * Each Set contains a collection of IDs for the nodes which
        * can be blocked or changed to wall nodes on the website
        */
-    static generateRidges() {
+    static generateTypedRidges(weighted = true) {
         this.setProps();
         // first check for nullity case
         if (this.workableColumns < 2 || this.workableRows < 2) {
@@ -64,10 +64,16 @@ export class MazeGenerator {
         Graph.copy(currentState.initGraph(), currentState.graph(), 1);
         ridges.forEach((ridgeCol) => {
             ridgeCol.forEach(nodeID => {
-                currentState.graph().rmNode(nodeID);
+                if (weighted) {
+                    currentState.graph().updateCostOfIncoming(nodeID, 10);
+                }
+                else {
+                    currentState.graph().rmNode(nodeID);
+                }
             });
         });
-        return ridges;
+      console.log(currentState.graph());
+      return ridges;
     }
     /**
      * Generates a random maze with both a mixture of weights and walls.

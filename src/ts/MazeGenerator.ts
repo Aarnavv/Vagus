@@ -37,7 +37,7 @@ export class MazeGenerator {
      * Each Set contains a collection of IDs for the nodes which
      * can be blocked or changed to wall nodes on the website
      */
-  static generateRidges(): Set<number>[] | null {
+  static generateTypedRidges(weighted:boolean =true): Set<number>[] | null {
     this.setProps();
     // first check for nullity case
     if (this.workableColumns < 2 || this.workableRows < 2) {
@@ -75,7 +75,12 @@ export class MazeGenerator {
 
     ridges.forEach((ridgeCol) => {
       ridgeCol.forEach(nodeID => {
-        currentState.graph().rmNode(nodeID);
+        if (weighted) {
+          currentState.graph().updateCostOfIncoming(nodeID, 10);
+        }
+        else {
+          currentState.graph().rmNode(nodeID);
+        }
       });
     });
     return ridges;

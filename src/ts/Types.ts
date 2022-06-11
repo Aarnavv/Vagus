@@ -21,7 +21,8 @@ export enum MazeGenerationType {
   none = 'none',
   generateRandomMaze = 'generateRandomMaze-maze',
   generateLeastCostPathBlocker = 'generateLeastCostPathBlockerMaze-maze',
-  generateRidges = 'generateRidges-maze',
+  generateWeightedRidges = 'generateWeigtedRidges-maze',
+  generateBlockedRidges = 'generateBlockedRidges-maze' , 
   generateWeightedRandomMaze = 'generateWeightedRandomMaze-maze',
   generateBlockedRandomMaze = 'generateBlockedRandomMaze-maze'
 }

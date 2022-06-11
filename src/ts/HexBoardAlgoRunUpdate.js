@@ -20,6 +20,7 @@ export const updatePathNodes = (pathIDs, pathToRemove, i) => {
             currentState.changeRun();
     }, 50 * updateSpeed());
 };
+// BUG
 export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, bomb, i) => {
     if (currentState.run() === false)
         return;
@@ -38,6 +39,7 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, visitedToRem
                     nodeHoverAnimation(propsID);
                 if (++i < visitedID1.length)
                     updateVisitedNodes(visitedID1, visitedID1, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, false, i);
+                // FIXME
                 else if (pathIDs === null || pathIDs.length === 0) {
                     alert("No Path Found! :(");
                     return;
