@@ -17,6 +17,8 @@ import Edge from './Edge';
  *
  * This class can also deal with any type of "node", in our project it is
  * a number.
+ *
+ * @author aditya , <adityavikramsinha19@gmail.com>
  */
 export default class Node<T> {
 

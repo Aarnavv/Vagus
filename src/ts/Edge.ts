@@ -6,6 +6,8 @@ import Node from "./Node";
  *
  * The logical representation of this class is :
  * src -> cost -> dest.
+ * 
+ * @author aditya , <adityavikramsinha19@gmail.com>
  */
 export default class Edge<T> {
 
@@ -50,7 +52,7 @@ export default class Edge<T> {
    * Function returns a string representation of this Edge.
    * The representation looks like :
    * {dest:xxxx , cost:xxxx}
-   * 
+   *
    * @returns a string representation of this Edge.
    */
   toString(): string {

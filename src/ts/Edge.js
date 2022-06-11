@@ -4,6 +4,8 @@
  *
  * The logical representation of this class is :
  * src -> cost -> dest.
+ *
+ * @author aditya , <adityavikramsinha19@gmail.com>
  */
 export default class Edge {
     // the dest node
