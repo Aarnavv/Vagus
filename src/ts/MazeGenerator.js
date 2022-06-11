@@ -72,8 +72,7 @@ export class MazeGenerator {
                 }
             });
         });
-      console.log(currentState.graph());
-      return ridges;
+        return ridges;
     }
     /**
      * Generates a random maze with both a mixture of weights and walls.
