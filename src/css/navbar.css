@@ -139,6 +139,12 @@
   margin-right: 0;
 }
 
+.weighted-cp-border {
+    border-left: 1px solid var(--cmd-border);
+    margin-left: 5px;
+    margin-right: 0;
+}
+
 .advanced-cp-comp {
   margin-left: 4px;
 }

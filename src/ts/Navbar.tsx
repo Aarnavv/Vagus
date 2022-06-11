@@ -44,14 +44,28 @@ export default class Navbar extends React.Component {
                 <div className="advanced-cp-border">
                   <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
                     <div className="folder-drop-inner">
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="dijkstrasSearch.tsx" divID="tsx-2" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bellmanFord.tsx" divID="tsx-3" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-4" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-5" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" divID="tsx-6" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="randomWalk.tsx" divID="tsx-7" />
-                      <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-8" />
+                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="heuristic" divClassName="folder advanced-cp-comp" arrowID="heuristic-arrow">
+                        <div className="folder-drop-inner">
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-2" />
+                        </div>
+                      </FolderComponent>
+                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="un-weighted" divClassName="folder advanced-cp-comp" arrowID="un-weighted-arrow">
+                        <div className="folder-drop-inner">
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-3" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-4" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="randomWalk.tsx" divID="tsx-5" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-6" />
+                        </div>
+                      </FolderComponent>
+                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
+                        <div className="folder-drop-inner">
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-7" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="dijkstrasSearch.tsx" divID="tsx-8" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bellmanFord.tsx" divID="tsx-9" />
+                          <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="biDirectionalSearch.tsx" divID="tsx-10" />
+                        </div>
+                      </FolderComponent>
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.BLUE} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">
@@ -67,11 +81,19 @@ export default class Navbar extends React.Component {
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRandomMaze.bat" divID="bat-2" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateLeastCostPathBlocker.bat" divID="bat-3" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRidges.bat" divID="bat-4" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRidges.bat" divID="bat-5" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRandomMaze.bat" divID="bat-6" />
-                      <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRandomMaze.bat" divID="bat-7"/>
+                      <FolderComponent colorOfFolder={cssConstants.GREEN} text="wall" divClassName="folder advanced-cp-comp" arrowID="wall-arrow">
+                        <div className="folder-drop-inner">
+                          <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateLeastCostPathBlocker.bat" divID="bat-3" />
+                          <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRidges.bat" divID="bat-4" />
+                          <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRandomMaze.bat" divID="bat-5" />
+                        </div>
+                      </FolderComponent>
+                      <FolderComponent colorOfFolder={cssConstants.GREEN} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
+                        <div className="folder-drop-inner">
+                          <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRidges.bat" divID="bat-6" />
+                          <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRandomMaze.bat" divID="bat-7" />
+                        </div>
+                      </FolderComponent>
                     </div>
                   </FolderComponent>
                   <FolderComponent colorOfFolder={cssConstants.YELLOW} text="speeds" divClassName="folder advanced-cp-comp" arrowID="speeds-arrow">
