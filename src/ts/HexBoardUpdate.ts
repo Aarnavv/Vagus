@@ -200,10 +200,14 @@ type displayMazeOptions  ={
 
 const displayMaze = (options: displayMazeOptions): void => {
 
+  // created a function since the same code was getting
+  // repeated again and again.
   function updateNodeState(id: number , type: string ) {
     updateNodeUtil(`props-${id}`, ['no-node'], [type]);
     updateNodeUtil(`svg-${id}` , ['no-node'], [`svg-${type}`]);
   }
+
+
   if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
     for (let [id, state] of options.randomMap) {
       if (state) updateNodeState(id, 'wall-node');

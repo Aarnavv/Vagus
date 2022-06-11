@@ -178,6 +178,8 @@ const updateNodeUtil = (id, classesRM, classesADD) => {
     document.getElementById(id).classList.add(...classesADD);
 };
 const displayMaze = (options) => {
+    // created a function since the same code was getting
+    // repeated again and again.
     function updateNodeState(id, type) {
         updateNodeUtil(`props-${id}`, ['no-node'], [type]);
         updateNodeUtil(`svg-${id}`, ['no-node'], [`svg-${type}`]);
