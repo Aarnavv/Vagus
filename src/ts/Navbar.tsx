@@ -23,7 +23,6 @@ export default class Navbar extends React.Component {
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => {
               StopButtonClick();
-              // StartButtonClick(null);
             }} />
             <ActionIcons.PrevButtonIcon onClick={() => {
               PrevButtonClick();

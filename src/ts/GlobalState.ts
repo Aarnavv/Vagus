@@ -133,7 +133,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeAddableNode(toThis: NodeType) {
+  changeAddableNode(toThis: NodeType): void{
     this.AddableNode = toThis;
   }
 
@@ -142,7 +142,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeAlgorithm(toThis: AlgoType) {
+  changeAlgorithm(toThis: AlgoType): void{
     this.Algorithm = toThis;
   }
 
@@ -151,7 +151,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeMaze(toThis: MazeGenerationType) {
+  changeMaze(toThis: MazeGenerationType): void{
     this.Maze = toThis;
   }
 
@@ -160,7 +160,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeSpeed(toThis: SpeedType) {
+  changeSpeed(toThis: SpeedType): void{
     this.Speed = toThis;
   }
 
@@ -169,7 +169,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeStartNode(toThis: T) {
+  changeStartNode(toThis: T): void{
     this.StartNode = toThis;
   }
 
@@ -178,7 +178,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeEndNode(toThis: T) {
+  changeEndNode(toThis: T): void{
     this.EndNode = toThis;
   }
 
@@ -187,7 +187,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeBombNode(toThis: T | null) {
+  changeBombNode(toThis: T | null): void{
     this.BombNode = toThis;
   }
 
@@ -196,7 +196,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeGraph(toThis: Graph<T>) {
+  changeGraph(toThis: Graph<T>): void{
     this.PRES_GRAPH = toThis;
   }
 

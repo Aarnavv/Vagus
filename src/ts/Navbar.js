@@ -19,7 +19,6 @@ export default class Navbar extends React.Component {
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => {
                             StopButtonClick();
-                            // StartButtonClick(null);
                         } }),
                     React.createElement(ActionIcons.PrevButtonIcon, { onClick: () => {
                             PrevButtonClick();
