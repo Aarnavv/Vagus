@@ -37,7 +37,7 @@ export default class Settings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="settings-outer" style={{ display: 'block' }}>
+        <div className="settings-outer" style={{ display: 'none' }}>
           <div className="settings-inner">
             <div className="settings-master-header">
               <div className="settings-buttons">

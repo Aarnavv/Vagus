@@ -35,7 +35,7 @@ export default class Settings extends React.Component {
     };
     render() {
         return (React.createElement(React.Fragment, null,
-            React.createElement("div", { className: "settings-outer", style: { display: 'block' } },
+            React.createElement("div", { className: "settings-outer", style: { display: 'none' } },
                 React.createElement("div", { className: "settings-inner" },
                     React.createElement("div", { className: "settings-master-header" },
                         React.createElement("div", { className: "settings-buttons" },

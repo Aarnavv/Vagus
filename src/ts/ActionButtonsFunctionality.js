@@ -28,7 +28,7 @@ const StopButtonClick = () => {
 };
 const StartButtonClick = (currentNode, running) => {
     if (!running) {
-        let remAlgo = [AlgoType.aStarSearch, AlgoType.bellmanFord, AlgoType.bestFirstSearch, AlgoType.breadthFirstSearch, AlgoType.depthFirstSearch, AlgoType.depthFirstSearch];
+        let remAlgo = [AlgoType.aStarSearch, AlgoType.bellmanFord, AlgoType.bestFirstSearch, AlgoType.breadthFirstSearch, AlgoType.depthFirstSearch, AlgoType.depthFirstSearch, AlgoType.dijkstrasSearch];
         if (currentState.algorithm() === null)
             alert('Please select an algorithm before continuing!');
         else if (currentState.algorithm() === 'bd-algo') {
