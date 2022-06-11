@@ -225,8 +225,7 @@ const displayMaze = (options) => {
 const updateMaze = () => {
     if (currentState.run() === true)
         return;
-    RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node', 'bomb-node']);
-    currentState.changeBombNode(null);
+    RemoveAllClasses(1, ['start-node', 'end-node', 'wall-node', 'weight-node']);
     Graph.copy(currentState.initGraph(), currentState.graph(), 1);
     setInitialNodes();
     setTimeout(() => {
@@ -260,4 +259,4 @@ const updateMaze = () => {
         }
     }, 5);
 };
-export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, };
+export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, updateNodeUtil, };

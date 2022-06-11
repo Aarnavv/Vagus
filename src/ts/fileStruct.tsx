@@ -19,6 +19,7 @@ import currentState from "./GlobalState";
 import cssConstants from "./cssConstants";
 import { AlgoType, MazeGenerationType, NodeType, SpeedType } from "./Types";
 import { updateMaze } from "./HexBoardUpdate"
+import Settings from './Settings';
 
 /**
  * Makes the changes in the Global States for the algorithm, node type, maze type, and speed.
@@ -139,7 +140,9 @@ export function SYSFile(props: any) {
 
 export function MDFile(props: any) {
   return (
-    <div className={props.divClassName} id={props.divID}>
+    <div className={props.divClassName} id={props.divID}  onClick={() => {
+      Settings.toggleDisplay();
+    }}>
       <MDIcon />
       <p className={props.pClassName}>{props.text}</p>
     </div>

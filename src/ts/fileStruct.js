@@ -5,6 +5,7 @@ import currentState from "./GlobalState";
 import cssConstants from "./cssConstants";
 import { AlgoType, MazeGenerationType, NodeType, SpeedType } from "./Types";
 import { updateMaze } from "./HexBoardUpdate";
+import Settings from './Settings';
 /**
  * Makes the changes in the Global States for the algorithm, node type, maze type, and speed.
  * Also makes the required the changes in the visual representation of the command board.
@@ -103,7 +104,9 @@ export function SYSFile(props) {
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
 export function MDFile(props) {
-    return (React.createElement("div", { className: props.divClassName, id: props.divID },
+    return (React.createElement("div", { className: props.divClassName, id: props.divID, onClick: () => {
+            Settings.toggleDisplay();
+        } },
         React.createElement(MDIcon, null),
         React.createElement("p", { className: props.pClassName }, props.text)));
 }
