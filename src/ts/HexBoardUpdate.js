@@ -1,10 +1,11 @@
 import currentState from './GlobalState';
-import { updateState } from './fileStruct';
 import HexBoardInitializer from './HexBoardInitializer';
+import Graph from "./Graph";
+import { updateState } from './fileStruct';
 import { MazeGenerator } from './MazeGenerator';
 import { MazeGenerationType } from './Types';
-import Graph from "./Graph";
 import { RemoveAllClasses } from './ActionButtonsFunctionality';
+import { updateIDClass, updateBiIDClass } from './Utility';
 const updateHexIcon = (propID, id) => {
     document.onmousemove = null;
     document.onmousedown = null;
@@ -57,12 +58,11 @@ const multiNodeUpdate = (propID, node, toRemove) => {
     document.onmousemove = null;
     document.onmousedown = null;
     if (document.getElementById(propID).classList.contains('no-node')) {
-        document.getElementById(propID).classList.remove('no-node');
-        document.getElementById(propID).classList.add(node);
+        updateIDClass(propID, ['no-node'], [node]);
         multiNodeGraphUpdate(node, Number(propID.substring(propID.lastIndexOf('-') + 1)), 10, false);
         let svgID = propID.replace('props', 'svg');
         toRemove.forEach(element => document.getElementById(svgID).classList.remove(element));
-        document.getElementById(svgID).classList.add(`svg-${node}`);
+        updateIDClass(svgID, [], [`svg-${node}`]);
         document.onmousedown = () => {
             document.onmousemove = (e) => {
                 if (e.buttons === 1) {
@@ -72,9 +72,8 @@ const multiNodeUpdate = (propID, node, toRemove) => {
                         let HoverPropsID = svg.id.replace('svg', 'props');
                         if (document.getElementById(HoverPropsID).classList.contains('no-node')) {
                             toRemove.forEach(element => document.getElementById(SVG_ID).classList.remove(element));
-                            document.getElementById(SVG_ID).classList.add(`svg-${node}`);
-                            document.getElementById(HoverPropsID).classList.remove('no-node');
-                            document.getElementById(HoverPropsID).classList.add(node);
+                            updateIDClass(SVG_ID, [], [`svg-${node}`]);
+                            updateIDClass(HoverPropsID, ['no-node'], [node]);
                             multiNodeGraphUpdate(node, Number(HoverPropsID.substring(HoverPropsID.lastIndexOf('-') + 1)), 10, false);
                         }
                         nodeHoverAnimation(HoverPropsID);
@@ -97,16 +96,13 @@ const updateNode = (propID, node) => {
             svgEle.classList.remove(`svg-${node}`);
             svgEle.classList.add('no-node');
         }
-        document.getElementById(propID).classList.remove('no-node');
-        document.getElementById(propID).classList.add(node);
-        document.getElementById(svgID).classList.remove('no-node');
-        document.getElementById(svgID).classList.add(`svg-${node}`);
+        updateIDClass(propID, ['no-node'], [node]);
+        updateIDClass(svgID, ['no-node'], [`svg-${node}`]);
     }
 };
 const multiNodeGraphUpdate = (node, id, cost, add) => {
-    if (node === 'weight-node') {
+    if (node === 'weight-node')
         currentState.graph().updateCostOfIncoming(id, cost);
-    }
     else if (node === 'wall-node') {
         if (add)
             Graph.revertNode(id, currentState.initGraph(), currentState.graph());
@@ -131,13 +127,10 @@ const updateStateOnClick = (propID) => {
 };
 const removeOnClick = (propID, nodeClass, id) => {
     let svgID = propID.replace('props', 'svg');
-    document.getElementById(propID).classList.remove(nodeClass, 'node-hover');
-    document.getElementById(propID).classList.add('no-node');
-    document.getElementById(svgID).classList.remove(`svg-${nodeClass}`);
-    document.getElementById(svgID).classList.add('no-node');
+    updateIDClass(propID, [nodeClass, 'node-hover'], ['no-node']);
+    updateIDClass(svgID, [`svg-${nodeClass}`], ['no-node']);
     if (nodeClass === 'wall-node' || nodeClass === 'weight-node') {
-        document.getElementById(svgID).classList.remove(nodeClass);
-        document.getElementById(svgID).classList.add('no-node', 'icon');
+        updateIDClass(svgID, [nodeClass], ['no-node', 'icon']);
         multiNodeGraphUpdate(nodeClass, id, 1, true);
     }
 };
@@ -159,68 +152,36 @@ const setInitialNodes = () => {
             setTimeout(() => {
                 let startCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25);
                 let endCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75);
-                document.getElementById(`props-${startCalculator}`).classList.remove('no-node');
-                document.getElementById(`props-${startCalculator}`).classList.add('start-node');
-                document.getElementById(`svg-${startCalculator}`).classList.remove('no-node');
-                document.getElementById(`svg-${startCalculator}`).classList.add('svg-start-node');
+                updateIDClass(`props-${startCalculator}`, ['no-node'], ['start-node']);
+                updateIDClass(`svg-${startCalculator}`, ['no-node'], ['svg-start-node']);
+                updateIDClass(`props-${endCalculator}`, ['no-node'], ['end-node']);
+                updateIDClass(`svg-${endCalculator}`, ['no-node'], ['svg-end-node']);
                 currentState.changeStartNode(startCalculator);
-                document.getElementById(`props-${endCalculator}`).classList.remove('no-node');
-                document.getElementById(`props-${endCalculator}`).classList.add('end-node');
-                document.getElementById(`svg-${endCalculator}`).classList.remove('no-node');
-                document.getElementById(`svg-${endCalculator}`).classList.add('svg-end-node');
                 currentState.changeEndNode(endCalculator);
             }, 1);
         }
     }
 };
-const updateNodeUtil = (id, classesRM, classesADD) => {
-    document.getElementById(id).classList.remove(...classesRM);
-    document.getElementById(id).classList.add(...classesADD);
-};
 const displayMaze = (options) => {
-    // created a function since the same code was getting
-    // repeated again and again.
-    function updateNodeState(id, type) {
-        updateNodeUtil(`props-${id}`, ['no-node'], [type]);
-        updateNodeUtil(`svg-${id}`, ['no-node'], [`svg-${type}`]);
-    }
     if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
         for (let [id, state] of options.randomMap) {
             if (state)
-                updateNodeState(id, 'wall-node');
+                updateBiIDClass(id, 'no-node', 'wall-node');
             else
-                updateNodeState(id, 'weight-node');
+                updateBiIDClass(id, 'no-node', 'weight-node');
+            ;
         }
     }
-    else if (currentState.maze() === MazeGenerationType.generateLeastCostPathBlocker) {
-        options.mazeLeastCostArray.forEach(id => {
-            updateNodeState(id, 'wall-node');
-        });
-    }
-    else if (currentState.maze() === MazeGenerationType.generateBlockedRidges) {
-        options.blockedRidges.forEach(ridge => {
-            ridge.forEach(id => {
-                updateNodeState(id, 'wall-node');
-            });
-        });
-    }
-    else if (currentState.maze() === MazeGenerationType.generateWeightedRidges) {
-        options.weightedRidges.forEach(ridge => {
-            ridge.forEach(id => {
-                updateNodeState(id, 'weight-node');
-            });
-        });
-    }
-    else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze) {
-        options.weightedSet.forEach(id => {
-            updateNodeState(id, 'weight-node');
-        });
-    }
-    else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze) {
-        options.blockedSet.forEach(id => {
-            updateNodeState(id, 'wall-node');
-        });
-    }
+    else if (currentState.maze() === MazeGenerationType.generateLeastCostPathBlocker)
+        options.mazeLeastCostArray.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node'));
+    else if (currentState.maze() === MazeGenerationType.generateBlockedRidges)
+        options.blockedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node')));
+    else if (currentState.maze() === MazeGenerationType.generateWeightedRidges)
+        options.weightedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, 'no-node', 'weight-node')));
+    else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze)
+        options.weightedSet.forEach(id => updateBiIDClass(id, 'no-node', 'weight-node'));
+    else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze)
+        options.blockedSet.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node'));
 };
 const updateMaze = () => {
     if (currentState.run() === true)
@@ -259,4 +220,4 @@ const updateMaze = () => {
         }
     }, 5);
 };
-export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, updateNodeUtil, };
+export { updateHexIcon, setInitialNodes, nodeHoverAnimation, updateMaze, };
