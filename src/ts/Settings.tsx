@@ -24,9 +24,9 @@ export default class Settings extends React.Component {
     let keyJSX = []
     for (let j = 0; j < keys.length; j++) {
       keyJSX.push(
-        <div className="key-value" id={`key-value-${j}`}>
+        <div className="key-value" id={`key-value-${j}`} key={j}>
           <div className="keys-div"><span className="blue" id={`key-${j}`}> {`"${keys[j]}"`}</span>: </div>
-          <div className="values-div"><span className="blue">"#<span className="blue" id={`value-${j}`} contentEditable="true">{`${values[j]}`}</span>"</span>,</div>
+          <div className="values-div"><span className="blue">"#<span className="blue" id={`value-${j}`} contentEditable="true" suppressContentEditableWarning={true}>{`${values[j]}`}</span>"</span>,</div>
         </div>
       )
     }

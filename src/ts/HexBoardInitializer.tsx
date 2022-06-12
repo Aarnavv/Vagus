@@ -30,6 +30,11 @@ export default class HexBoardInitializer extends React.Component {
         for (let i = 0; i < HexBoardInitializer.rows; i++) {
           content.push(<Hex x={xVar} y={yVar} id={HexBoardInitializer.idVar.toString()} key={HexBoardInitializer.idVar.toString()} />)
           yVar += HEX_HEIGHT;
+          currentState.graph().addNode(HexBoardInitializer.idVar);
+          currentState.graph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
+          currentState.initGraph().addNode(HexBoardInitializer.idVar);
+          currentState.initGraph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
+          HexBoardInitializer.idVar++;
         }
       }
       else {
@@ -37,13 +42,13 @@ export default class HexBoardInitializer extends React.Component {
         for (let i = 0; i < HexBoardInitializer.rows; i++) {
           content.push(<Hex x={xVar} y={yVar} id={HexBoardInitializer.idVar.toString()} key={HexBoardInitializer.idVar.toString()} />)
           yVar += HEX_HEIGHT;
+          currentState.graph().addNode(HexBoardInitializer.idVar);
+          currentState.graph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
+          currentState.initGraph().addNode(HexBoardInitializer.idVar);
+          currentState.initGraph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
+          HexBoardInitializer.idVar++;
         }
       }
-      currentState.graph().addNode(HexBoardInitializer.idVar);
-      currentState.graph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
-      currentState.initGraph().addNode(HexBoardInitializer.idVar);
-      currentState.initGraph().setNodeCoords(HexBoardInitializer.idVar, { x: xVar, y: yVar });
-      HexBoardInitializer.idVar++;
       xVar += HEX_WIDTH;
     }
 

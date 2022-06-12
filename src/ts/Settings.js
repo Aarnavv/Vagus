@@ -21,7 +21,7 @@ export default class Settings extends React.Component {
     static renderKey = (keys, values) => {
         let keyJSX = [];
         for (let j = 0; j < keys.length; j++) {
-            keyJSX.push(React.createElement("div", { className: "key-value", id: `key-value-${j}` },
+            keyJSX.push(React.createElement("div", { className: "key-value", id: `key-value-${j}`, key: j },
                 React.createElement("div", { className: "keys-div" },
                     React.createElement("span", { className: "blue", id: `key-${j}` },
                         " ",
@@ -30,7 +30,7 @@ export default class Settings extends React.Component {
                 React.createElement("div", { className: "values-div" },
                     React.createElement("span", { className: "blue" },
                         "\"#",
-                        React.createElement("span", { className: "blue", id: `value-${j}`, contentEditable: "true" }, `${values[j]}`),
+                        React.createElement("span", { className: "blue", id: `value-${j}`, contentEditable: "true", suppressContentEditableWarning: true }, `${values[j]}`),
                         "\""),
                     ",")));
         }
