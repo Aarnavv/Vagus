@@ -6,3 +6,6 @@ export const updateBiIDClass = (id, classToRM, classToAdd) => {
     updateIDClass(`props-${id}`, [classToRM], [classToAdd]);
     updateIDClass(`svg-${id}`, [classToRM], [`svg-${classToAdd}`]);
 };
+export const extractIDs = (rawID) => {
+    return [`props-${rawID}`, `svg-${rawID}`];
+};
