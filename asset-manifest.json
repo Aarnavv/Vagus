@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Vagus/static/css/main.6bed45a8.css",
-    "main.js": "/Vagus/static/js/main.0171da47.js",
+    "main.css": "/Vagus/static/css/main.a00c64f9.css",
+    "main.js": "/Vagus/static/js/main.6002d478.js",
     "static/media/bombNode.svg": "/Vagus/static/media/bombNode.c5558f4f57a9baa41f9f.svg",
     "static/media/weightNode.svg": "/Vagus/static/media/weightNode.e6f6fd1b79c92c283027.svg",
     "index.html": "/Vagus/index.html",
@@ -9,7 +9,7 @@
     "static/media/endNode.svg": "/Vagus/static/media/endNode.45a1e50024e4e7fa58a8.svg"
   },
   "entrypoints": [
-    "static/css/main.6bed45a8.css",
-    "static/js/main.0171da47.js"
+    "static/css/main.a00c64f9.css",
+    "static/js/main.6002d478.js"
   ]
 }
