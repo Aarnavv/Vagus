@@ -2,11 +2,10 @@ import { nodeHoverAnimation } from "./HexBoardUpdate";
 import currentState from "./GlobalState";
 import { RemoveAllClasses } from './ActionButtonsFunctionality'
 
-export const updatePathNodes = (pathIDs: number[], pathToRemove: number[], i: number): void => {
+export const updatePathNodes = (pathIDs: number[], i: number): void => {
   if (currentState.run() === false) return;
   setTimeout(() => {
     let id = pathIDs[i];
-    pathToRemove.push(id);
     let svgID = `svg-${id}`;
     let propsID = `props-${id}`;
     document.getElementById(svgID).classList.remove('no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb');
@@ -15,19 +14,18 @@ export const updatePathNodes = (pathIDs: number[], pathToRemove: number[], i: nu
     document.getElementById(propsID).classList.remove('no-node', 'visited-node', 'visited-node-bomb');
     document.getElementById(propsID).classList.add('path-node');
     if (++i < pathIDs.length) {
-      updatePathNodes(pathIDs, pathToRemove, i);
+      updatePathNodes(pathIDs, i);
     }
     if (i === pathIDs.length)
       currentState.changeRun();
   }, 50 * updateSpeed())
 }
 // BUG
-export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], pathIDs: number[], visitedToRemove: number[], visitedToRemoveBomb: number[], pathToRemove: number[], bomb: boolean, i: number): void => {
+export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], pathIDs: number[], bomb: boolean, i: number): void => {
   if (currentState.run() === false) return;
   setTimeout(() => {
     if (!bomb) {
       let id = visitedID1[i];
-      visitedToRemove.push(id);
       let svgID = `svg-${id}`;
       let propsID = `props-${id}`;
       if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -40,20 +38,18 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
         if (document.getElementById(propsID).classList.contains('weight-node'))
           nodeHoverAnimation(propsID);
         if (++i < visitedID1.length)
-          updateVisitedNodes(visitedID1, visitedID1, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, false, i);
-        // FIXME
+          updateVisitedNodes(visitedID1, visitedID1, pathIDs, false, i);
         else if (pathIDs === null || pathIDs.length === 0) {
           alert("No Path Found! :(");
           currentState.changeRun();
           return;
         }
         else if (i === visitedID1.length)
-          updatePathNodes(pathIDs, pathToRemove, 0);
+          updatePathNodes(pathIDs, 0);
       }
     }
     else {
       let id1 = visitedID1[i];
-      visitedToRemove.push(id1);
       let svgID = `svg-${id1}`;
       let propsID = `props-${id1}`;
       if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -66,24 +62,23 @@ export const updateVisitedNodes = (visitedID1: number[], visitedID2: number[], p
         if (document.getElementById(propsID).classList.contains('weight-node'))
           nodeHoverAnimation(propsID);
         if (++i < visitedID1.length)
-          updateVisitedNodes(visitedID1, visitedID2, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, true, i);
+          updateVisitedNodes(visitedID1, visitedID2, pathIDs, true, i);
         else if (pathIDs === null || pathIDs.length === 0) {
           alert("No Path Found! :(");
           currentState.changeRun();
           return;
         }
         else if (i === visitedID1.length)
-          updateBombNode(visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, 0);
+          updateBombNode(visitedID2, pathIDs, 0);
       }
     }
   }, 1 * updateSpeed())
 }
 
-export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: number[], visitedToRemove: number[], pathToRemove: number[], waitOrNoWait: boolean, i: number) => {
+export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: number[], waitOrNoWait: boolean, i: number) => {
   if (currentState.run() === false) return;
   setTimeout(() => {
     let id = visitedIDs[i];
-    visitedToRemove.push(id);
     let svgID = `svg-${id}`;
     let propsID = `props-${id}`;
     if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -96,14 +91,14 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs: number[], pathIDs: n
       if (document.getElementById(propsID).classList.contains('weight-node'))
         nodeHoverAnimation(propsID);
       if (++i < visitedIDs.length)
-        updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, visitedToRemove, pathToRemove, waitOrNoWait, i);
+        updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, waitOrNoWait, i);
       else if (pathIDs === null && waitOrNoWait) {
         alert("No Path Found! :(");
         currentState.changeRun();
         return;
       }
       else if (i === visitedIDs.length && waitOrNoWait)
-        updatePathNodes(pathIDs, pathToRemove, 0);
+        updatePathNodes(pathIDs, 0);
     }
   }, 1 * updateSpeed())
 }
@@ -128,11 +123,10 @@ export const updateRandomVisitedNodes = (pathID: number): void => {
   }, 50 * updateSpeed())
 }
 
-const updateBombNode = (visitedID2: number[], pathIDs: number[], visitedToRemoveBomb: number[], pathToRemove: number[], i) => {
+const updateBombNode = (visitedID2: number[], pathIDs: number[], i) => {
   if (currentState.run() === false) return;
   setTimeout(() => {
     let id2 = visitedID2[i];
-    visitedToRemoveBomb.push(id2);
     let svgID = `svg-${id2}`;
     let propsID = `props-${id2}`;
     if (!document.getElementById(svgID).classList.contains('svg-path-node')) {
@@ -145,14 +139,14 @@ const updateBombNode = (visitedID2: number[], pathIDs: number[], visitedToRemove
       if (document.getElementById(propsID).classList.contains('weight-node'))
         nodeHoverAnimation(propsID);
       if (++i < visitedID2.length)
-        updateBombNode(visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, i);
+        updateBombNode(visitedID2, pathIDs, i);
       else if (pathIDs === null || pathIDs.length === 0) {
         alert("No Path Found! :(");
         currentState.changeRun();
         return;
       }
       else if (i === visitedID2.length)
-        updatePathNodes(pathIDs, pathToRemove, 0);
+        updatePathNodes(pathIDs, 0);
     }
   }, 1 * updateSpeed())
 }
