@@ -42,6 +42,7 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, visitedToRem
                 // FIXME
                 else if (pathIDs === null || pathIDs.length === 0) {
                     alert("No Path Found! :(");
+                    currentState.changeRun();
                     return;
                 }
                 else if (i === visitedID1.length)
@@ -64,6 +65,7 @@ export const updateVisitedNodes = (visitedID1, visitedID2, pathIDs, visitedToRem
                     updateVisitedNodes(visitedID1, visitedID2, pathIDs, visitedToRemove, visitedToRemoveBomb, pathToRemove, true, i);
                 else if (pathIDs === null || pathIDs.length === 0) {
                     alert("No Path Found! :(");
+                    currentState.changeRun();
                     return;
                 }
                 else if (i === visitedID1.length)
@@ -91,6 +93,7 @@ export const updateBiDirectionalVisitedNodes = (visitedIDs, pathIDs, visitedToRe
                 updateBiDirectionalVisitedNodes(visitedIDs, pathIDs, visitedToRemove, pathToRemove, waitOrNoWait, i);
             else if (pathIDs === null && waitOrNoWait) {
                 alert("No Path Found! :(");
+                currentState.changeRun();
                 return;
             }
             else if (i === visitedIDs.length && waitOrNoWait)
@@ -137,6 +140,7 @@ const updateBombNode = (visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, 
                 updateBombNode(visitedID2, pathIDs, visitedToRemoveBomb, pathToRemove, i);
             else if (pathIDs === null || pathIDs.length === 0) {
                 alert("No Path Found! :(");
+                currentState.changeRun();
                 return;
             }
             else if (i === visitedID2.length)
