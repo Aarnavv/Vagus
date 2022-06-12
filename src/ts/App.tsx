@@ -10,7 +10,7 @@ export default class App extends React.Component {
       <React.Fragment>
         <div className="App">
           <div className="content">
-            <div className="left-cmd">
+            <div className="left-cmd" id="left-cmd">
               <Navbar />
             </div>
             <HexBoard />

@@ -1,23 +1,19 @@
 import * as React from "react";
 import * as ActionIcons from '../svgIcons/actionButtons';
 import '../css/settings.css';
+import { updateIDClass } from './Utility';
 export default class Settings extends React.Component {
-    static updateClasses = (id, classesRM, classesADD) => {
-        let element = document.querySelector(id);
-        element.classList.remove(...classesRM);
-        element.classList.add(...classesADD);
-    };
     static toggleDisplay = () => {
         let settings = document.querySelector(".settings-outer");
         if (settings.style.display === "none") {
             settings.style.display = "block";
-            Settings.updateClasses('.left-cmd', [], ['blur-ele']);
-            Settings.updateClasses('.hex-board', [], ['blur-ele']);
+            updateIDClass('left-cmd', [], ['blur-ele']);
+            updateIDClass('hex-board', [], ['blur-ele']);
         }
         else {
             settings.style.display = "none";
-            Settings.updateClasses('.left-cmd', ['blur-ele'], []);
-            Settings.updateClasses('.hex-board', ['blur-ele'], []);
+            updateIDClass('left-cmd', ['blur-ele'], []);
+            updateIDClass('hex-board', ['blur-ele'], []);
         }
     };
     static braceOpen = () => { return '{'; };
