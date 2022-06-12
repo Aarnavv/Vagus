@@ -6,9 +6,9 @@ export function FolderComponent(props) {
     const [isExpanded, setIsExpanded] = useState(true);
     let topLevel = false;
     let InsideText = () => {
-        return (React.createElement("b", null, "[vagus]"));
+        return (React.createElement("b", null, "[master]"));
     };
-    if (props.text === 'Vagus-master') {
+    if (props.text === 'graphs') {
         topLevel = true;
     }
     const changeState = (id, value) => {

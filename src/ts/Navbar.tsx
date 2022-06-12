@@ -19,7 +19,7 @@ export default class Navbar extends React.Component {
         </div>
         <div className="project">
           <ProjectIcon />
-          <p className="project-title">Project</p>
+          <p className="project-title">Vagus</p>
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => {
               StopButtonClick();
@@ -38,7 +38,7 @@ export default class Navbar extends React.Component {
           </div>
         </div>
         <div className="folder-panel">
-          <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="Vagus-master" divClassName="folder" arrowID="vagus-master-arrow">
+          <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="graphs" divClassName="folder" arrowID="vagus-master-arrow">
             <div className="advanced-cp-border">
               <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="advanced-control-panel" divClassName="folder advanced-cp-comp" arrowID="advanced-cp-arrow" >
                 <div className="advanced-cp-border">

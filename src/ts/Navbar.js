@@ -15,7 +15,7 @@ export default class Navbar extends React.Component {
                 React.createElement("div", { className: "description" }, "{\"Latin\":\"wandering\",\"purpose\":\"algorithms\"}")),
             React.createElement("div", { className: "project" },
                 React.createElement(ProjectIcon, null),
-                React.createElement("p", { className: "project-title" }, "Project"),
+                React.createElement("p", { className: "project-title" }, "Vagus"),
                 React.createElement("div", { className: "buttons" },
                     React.createElement(ActionIcons.StopButtonIcon, { onClick: () => {
                             StopButtonClick();
@@ -33,7 +33,7 @@ export default class Navbar extends React.Component {
                             }
                         } }))),
             React.createElement("div", { className: "folder-panel" },
-                React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "Vagus-master", divClassName: "folder", arrowID: "vagus-master-arrow" },
+                React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "graphs", divClassName: "folder", arrowID: "vagus-master-arrow" },
                     React.createElement("div", { className: "advanced-cp-border" },
                         React.createElement(FolderComponent, { colorOfFolder: cssConstants.SOLID_RED, text: "advanced-control-panel", divClassName: "folder advanced-cp-comp", arrowID: "advanced-cp-arrow" },
                             React.createElement("div", { className: "advanced-cp-border" },
