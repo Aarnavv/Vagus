@@ -5,6 +5,8 @@ import { updateBiDirectionalVisitedNodes, updateRandomVisitedNodes, updateVisite
 import { setInitialNodes } from "./HexBoardUpdate";
 import Graph from "./Graph";
 
+import { AlgoType } from "./Types";
+
 let pathToRemove: number[] = [];
 let pathToRemoveRandom: Set<number> = new Set();
 let visitedToRemove: number[] = [];
@@ -30,6 +32,7 @@ const StopButtonClick = (): void => {
 
 const StartButtonClick = (currentNode, running): void => {
   if (!running) {
+    let remAlgo: AlgoType[] = [AlgoType.aStarSearch, AlgoType.bellmanFord, AlgoType.bestFirstSearch, AlgoType.breadthFirstSearch, AlgoType.depthFirstSearch, AlgoType.depthFirstSearch]
     if (currentState.algorithm() === null)
       alert('Please select an algorithm before continuing!');
     else if (currentState.algorithm() === 'bd-algo') {
@@ -50,7 +53,7 @@ const StartButtonClick = (currentNode, running): void => {
         updateBiDirectionalVisitedNodes(visitedFromEndArray, pathFromStart, visitedToRemove, pathToRemove, true, 0);
       }
     }
-    else if (currentState.algorithm() === 'rand-algo') {
+    else if (currentState.algorithm() === 'rand-algo' && currentState.run()) {
       let endNode: number = currentState.endNode();
       setTimeout(() => {
         updateRandomVisitedNodes(currentNode.getData())
@@ -71,7 +74,7 @@ const StartButtonClick = (currentNode, running): void => {
           updateRandomVisitedNodes(endNode);
       }, 10)
     }
-    else {
+    else if(remAlgo.includes(currentState.algorithm())){
       RemoveAllClasses(1, []);
       if (currentState.bombNode() === null) {
         let path: number[] = Algorithms.runAlgoFromGlobalStateNoBomb().path;

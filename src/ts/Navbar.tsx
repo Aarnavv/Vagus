@@ -7,6 +7,7 @@ import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct
 import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
+import { RemoveAllClasses } from './ActionButtonsFunctionality';
 import Node from "./Node";
 
 export default class Navbar extends React.Component {
@@ -29,6 +30,7 @@ export default class Navbar extends React.Component {
             }} />
             <ActionIcons.RunButtonIcon onClick={() => {
               let currentNode: Node<number> = currentState.graph().nodes().get(currentState.startNode())
+              RemoveAllClasses(1, []);
               if (currentState.run()) StartButtonClick(currentNode, true);
               else if (!currentState.run()) {
                 currentState.changeRun();
@@ -77,7 +79,7 @@ export default class Navbar extends React.Component {
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes [Works! somewhat...]" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
+                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRandomMaze.bat" divID="bat-2" />
@@ -117,7 +119,7 @@ export default class Navbar extends React.Component {
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
                 </div>
               </FolderComponent>
-              {/* <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="README.md [Work in Progress!]" divID="md-1" /> */}
+              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="settings.json [Work in Progress!]" divID="md-1"/>
             </div>
           </FolderComponent>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import HexBoard from "./HexBoard";
 import Navbar from "./Navbar";
+import Settings from "./Settings";
 import '../css/app.css';
 
 export default class App extends React.Component {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
               <Navbar />
             </div>
             <HexBoard />
+            <Settings />
           </div>
         </div>
       </React.Fragment >
