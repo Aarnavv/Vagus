@@ -6,40 +6,118 @@ import currentState from "./GlobalState";
 import { Queue } from "queue-typescript";
 import Node from "./Node";
 
+/**
+ * Main backbone of the whole backend.
+ * This class contains the various algorithms which are required to
+ * give their outputs so as to visualise.
+ *
+ * @author aditya , <adityavikramsinha19@gmail.com>
+ */
 export default class Algorithms<T> {
+
+  // the graph which the algorithms
+  // get to work with
   graph: Graph<T>;
-  comparator;
+
+  // comparator
+  comparator: (a: T, b: T) => number;
+
+  // Epsilon to weight the aStar algorithm.
   public static EPS: number;
 
+  /**
+   * Constructs an Algorithm instance with the comparator as
+   * the comparator of the graph input to the _assignGraph parameter.
+   * EPS[Epsilon weightage] is also put to 10^-5.
+   *
+   * @param _assignGraph the graph on which the algorithms
+   * will work
+   */
   constructor(_assignGraph: Graph<T>) {
     this.graph = _assignGraph;
     this.comparator = this.graph.comparator;
     Algorithms.EPS = 1e-5;
   }
 
+  /**
+   * Classic Breadth-first search algorithm which
+   * is unweighted.
+   *
+   * @param start the starting ID on the graph
+   * @param end the end ID on the graph
+   * @returns an array containing the path | null [path is given if it is found, else null] and a Set of
+   * visited nodes inorder while trying to find the path.
+   */
   bfs(start: T, end: T): [T[] | null, Set<T>] {
+
+    // first initialise all the variables
+    // visited is the nodes that are visited in the process
+    // prev is to keep track of the path
+    // path is the actual path
+    // Q is a queue which performs the FIFO operation
     const visited: Set<T> = new Set();
     const prev: Map<T, T> = new Map();
     const path: T[] = [];
     const Q = new Queue<T>();
+
+    // Enqueue the first one
     Q.enqueue(start);
-    visited.add(start);
+
+    // While the length of the Queue is not 0
+    // We keep on going.
     while (Q.length !== 0) {
+
+      // We first get the present node instance from the graph.
       let node: Node<T> = this.graph.nodes().get(Q.dequeue());
+
+      // then we add that node to visited.
       visited.add(node.getData());
+
+      // if the nodes data is the same as end id,
+      // we know we have reached a path
+      // therfore we just give it out as is and
+      // stop the function
       if (node.getData() === end) {
+
+        // construct the path
         for (let at = end; at !== undefined; at = prev.get(at))
           path.unshift(at);
+
+        // return path and visited inorder
         return [path, visited];
       }
+
+      // if end has not been found
+      // we keep going over all the neighbours of this noe
+      // in order
+      // this is the reason it is called breadth-first-search
+      // we keep opening all the neighbours, gives the search
+      // a cyclic effect.
       node.getAdjNodes().forEach((edge) => {
+
+        // if we have already visited it, we do not need to
+        // because it means that it is already added to the visited section
+        // and was a part of the queue.
         if (!visited.has(edge.dest.getData())) {
+
+          // added it to visited.
           visited.add(edge.dest.getData());
+
+          // set prev
           prev.set(edge.dest.getData(), node.getData());
+
+          // add it to the queue since this means that
+          // we have to open this node again smtime later.
           Q.enqueue(edge.dest.getData());
         }
       });
     }
+
+    // if the code has reached here then
+    // we can safely assume that end was not a
+    // neighbour of any node
+    // thus, no path should exist
+    // hence, we return null and just visited set 
     return [null, visited];
   }
 
