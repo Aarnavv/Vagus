@@ -157,14 +157,31 @@ export default class Algorithms {
         // else not
         return [(path.length > 0 ? path : null), visited];
     }
+    /**
+     * Classic implementation of Dijkstras algorithm
+     * which opens the nodes using BFS but is weighted.
+     * We can call it a weighted BFS in some context.
+     *
+     * @param start the id of the starting node
+     * @param end the id of the end node
+     * @returns a path | null [path if found, else null] and visited inorder Set.
+     */
     dijkstras(start, end) {
+        // first get everything from the internal Dijkstra function
         const [dist, prev, visited] = this.internalDijkstras(start, end);
         // the rest is just finding the path to use.
         let path = [];
+        // if distance if Infinity then,
+        // we know path is not found.
+        // directly return
         if (dist.get(end) === Infinity)
             return [null, visited];
+        // if it not null,
+        // we know there must be a path that exists
+        // so reconstruct it.
         for (let at = end; at !== undefined; at = prev.get(at))
             path.unshift(at);
+        // return reconstructed path.
         return [path, visited];
     }
     aStar(start, end) {
@@ -296,33 +313,88 @@ export default class Algorithms {
         }
         return [dist, prev, visited];
     }
+    /**
+     * Internal implementation of the dijkstras algorithm.
+     *
+     * @param start the starting node ID
+     * @param end the ending node ID
+     * @returns a dist Map to show the distances between the nodes, a Map which has the prev nodes and, a Set for visited nodes inorder.
+     */
     internalDijkstras(start, end) {
+        // Priority Queue for total ordering through the
+        // minDist property.
         let PQ = new MinPriorityQueue((promisingNode) => promisingNode.minDist);
+        // dist map for shortest distance between
+        // a node [A] and the Start node [S]
         let dist = new Map(), prev = new Map();
+        // Set of all visited nodes
         let visited = new Set();
+        // First we set the value of distances from node [S]
+        // to any node [A] to infinity
         this.graph.nodes().forEach((node) => {
             node.getData() !== start ? dist.set(node.getData(), Infinity) : dist.set(start, 0);
         });
+        // Enqueue the first node,
+        // this way we have a length of 1
+        // and least distance of 0.
         PQ.enqueue({ label: start, minDist: 0 });
+        // While it is not empty,
+        // nodes should be dequeued from the
+        // PQ.
         while (!PQ.isEmpty()) {
+            // get the Priority Object and deconstruct it
             const { label, minDist } = PQ.dequeue();
+            // add it to visited so that
+            // we do not keep opening it.
             visited.add(label);
+            // if the dist > minDist then
+            // we know that we can open it
+            // since we get a better route.
             if (dist.get(label) < minDist)
                 continue;
+            // follow the BFS pattern
+            // we open every neighbour
+            // and explore it
+            // the ordering is based on their min dist
+            // hence a priority queue.
             this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
+                // first get the destination node
                 const dest = edge.dest.getData();
+                // if visited does not have destination
+                // then it means that it has not been explorerd
+                // hence there is merit in the fact that it might be
+                // helpful to open it.
                 if (!visited.has(dest)) {
+                    // new Dist will be the dist till now + the cost of moving from
+                    // the prev node to this node
                     let newDist = dist.get(label) + edge.cost;
+                    // if new Dist < the current dist of the destination
+                    // then we add
+                    // this is bound to hit every node once
+                    // since starting value in distance for every node is
+                    // infinity.
                     if (newDist < dist.get(dest)) {
+                        // we reference this node incase it is a part of the
+                        // path
                         prev.set(dest, label);
+                        // update the distance from [S] to this node [A]
                         dist.set(dest, newDist);
+                        // enquee this for opening in terms of minDist.
                         PQ.enqueue({ label: dest, minDist: newDist });
                     }
                 }
             });
+            // if label is the same as end
+            // then we know that, there is a path
+            // and return all the items for reconstruction.
             if (label === end)
                 return [dist, prev, visited];
         }
+        // at this point, the end dist is Infinity
+        // thus we know that it has not been relaxed
+        // hence, we need to go about and just return everything to caller
+        // the caller has the ability to understand if
+        // the given end dist is Infinity or not.
         return [dist, prev, visited];
     }
     static runAlgoFromGlobalStateNoBomb() {
