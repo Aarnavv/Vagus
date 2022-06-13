@@ -117,34 +117,78 @@ export default class Algorithms<T> {
     // we can safely assume that end was not a
     // neighbour of any node
     // thus, no path should exist
-    // hence, we return null and just visited set 
+    // hence, we return null and just visited set
     return [null, visited];
   }
 
+  /**
+   * Classic DFS which uses an internal function
+   * to do recursion
+   *
+   * @param start starting id of the path
+   * @param end ending id of the path
+   * @returns a path | null [path if found, else null] and a inorder Set of visited nodes.
+   */
   dfs(start: T, end: T): [T[] | null, Set<T>] {
-    let path: T[] = [];
+
+    // path is for the path to be returned
+    // visited is for the Set of visited nodes in order
+    // prev is to construct a path.
+    const path: T[] = [];
     const visited: Set<T> = new Set();
-    const internalDfs = (at: T) => {
+    const prev: Map<T, T> = new Map();
+
+    /**
+     * Internal function which recurses again and again,
+     * thus helping in DFS.
+     * This modifies the parent level variables and hence,
+     * has no return
+     *
+     * @param at the present node id for iteration
+     */
+    const internalDfs = (at: T , parent :T ): void => {
+
+      // First check if visited has this or not
+      // because if it does then it means that
+      // we have already opened this node and explored
+      // it in-depth.
       if (!visited.has(at)) {
+
+        // add the node if not visited
         visited.add(at);
-        path.push(at);
+
+        // setting prev for the path stuff
+        prev.set(at, parent);
+
+        // if not found then keep opening
+        // descendent
         if (at !== end) {
           this.graph.nodes().get(at).getAdjNodes().forEach((edge) => {
-            internalDfs(edge.dest.getData())
+            internalDfs(edge.dest.getData(), at);
           });
         }
-        return;
+
+        // if found then we just construct the path
+        // and leave
+        else {
+          // reconstruct path from the given prev Set
+          for (let at = end; at !== undefined; at = prev.get(at))
+            path.unshift(at);
+          return;
+        }
       }
     }
 
-    internalDfs(start);
-    const endIndex = path.indexOf(end);
-    if (endIndex < 0)
-      return [null, visited];
-    else {
-      path.splice(endIndex + 1)
-      return [path, new Set(path)];
-    }
+    // call function once to start
+    // with undefined as starts "ancestor"
+    // this may help in reconstructing path
+    internalDfs(start, undefined);
+
+    // just do a simple ternary
+    // to check for length
+    // if length ge 1, we know that there is a route
+    // else not
+    return [(path.length>0 ? path : null ) , visited];
   }
 
   dijkstras(start: T, end: T): [T[] | null, Set<T>] {
