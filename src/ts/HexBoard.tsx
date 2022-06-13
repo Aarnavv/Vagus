@@ -5,7 +5,7 @@ export default class HexBoard extends React.Component {
 
   render() {
     return (
-      <div className="hex-board">
+      <div className="hex-board" id="hex-board">
         {HexBoardInitializer.renderHex()}
       </div>
     );
