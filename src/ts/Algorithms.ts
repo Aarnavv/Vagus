@@ -865,7 +865,7 @@ export default class Algorithms<T> {
         console.error("Internal error, the algorithm selected does not match with the algorithms possible");
     }
 
-    // return the whole object right in the end 
+    // return the whole object right in the end
     return {
       path,
       visitedP1,
