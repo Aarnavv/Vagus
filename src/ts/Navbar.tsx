@@ -4,13 +4,16 @@ import { ProjectIcon } from '../svgIcons/projectSVGIconComponent';
 import * as ActionIcons from '../svgIcons/actionButtons';
 import { FolderComponent } from "./folderStruct";
 import { TSXFile, IOFile, BATFile, SYSFile, MDFile, GUIFile } from "./fileStruct";
-import cssConstants from "./cssConstants";
 import { StopButtonClick, StartButtonClick, PrevButtonClick } from "./ActionButtonsFunctionality";
 import currentState from './GlobalState';
 import { RemoveAllClasses } from './ActionButtonsFunctionality';
 import Node from "./Node";
 
 export default class Navbar extends React.Component {
+
+  getColor(identifier : string): string{
+    return `#${currentState.cssVariables().get(identifier)}`
+  }
   render() {
     return (
       <div className="navbar">
@@ -20,7 +23,7 @@ export default class Navbar extends React.Component {
         </div>
         <div className="project">
           <ProjectIcon />
-          <p className="project-title">Project</p>
+          <p className="project-title">Vagus</p>
           <div className="buttons">
             <ActionIcons.StopButtonIcon onClick={() => {
               StopButtonClick();
@@ -40,19 +43,19 @@ export default class Navbar extends React.Component {
           </div>
         </div>
         <div className="folder-panel">
-          <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="Vagus-master" divClassName="folder" arrowID="vagus-master-arrow">
+          <FolderComponent colorOfFolder={this.getColor('solid-red')} text="graphs" divClassName="folder" arrowID="vagus-master-arrow">
             <div className="advanced-cp-border">
-              <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="advanced-control-panel" divClassName="folder advanced-cp-comp" arrowID="advanced-cp-arrow" >
+              <FolderComponent colorOfFolder={this.getColor('solid-red')} text="advanced-control-panel" divClassName="folder advanced-cp-comp" arrowID="advanced-cp-arrow" >
                 <div className="advanced-cp-border">
-                  <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
+                  <FolderComponent colorOfFolder={this.getColor('light-red')} text="algorithms" divClassName="folder advanced-cp-comp" arrowID="algorithms-arrow" >
                     <div className="folder-drop-inner">
-                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="heuristic" divClassName="folder advanced-cp-comp" arrowID="heuristic-arrow">
+                      <FolderComponent colorOfFolder={this.getColor('light-red')} text="heuristic" divClassName="folder advanced-cp-comp" arrowID="heuristic-arrow">
                         <div className="folder-drop-inner">
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-1" />
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-2" />
                         </div>
                       </FolderComponent>
-                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="un-weighted" divClassName="folder advanced-cp-comp" arrowID="un-weighted-arrow">
+                      <FolderComponent colorOfFolder={this.getColor('light-red')} text="un-weighted" divClassName="folder advanced-cp-comp" arrowID="un-weighted-arrow">
                         <div className="folder-drop-inner">
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="breadthFirstSearch.tsx" divID="tsx-3" />
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="depthFirstSearch.tsx" divID="tsx-4" />
@@ -60,7 +63,7 @@ export default class Navbar extends React.Component {
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="bestFirstSearch.tsx" divID="tsx-6" />
                         </div>
                       </FolderComponent>
-                      <FolderComponent colorOfFolder={cssConstants.LIGHT_RED} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
+                      <FolderComponent colorOfFolder={this.getColor('light-red')} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
                         <div className="folder-drop-inner">
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="aStarSearch.tsx" divID="tsx-7" />
                           <TSXFile divClassName="file tsx-file" pClassName="tsx-name file-name" text="dijkstrasSearch.tsx" divID="tsx-8" />
@@ -70,7 +73,7 @@ export default class Navbar extends React.Component {
                       </FolderComponent>
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.BLUE} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">
+                  <FolderComponent colorOfFolder={this.getColor('blue')} text="addableNodes" divClassName="folder advanced-cp-comp" arrowID="addable-arrow">
                     <div className="folder-drop-inner">
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="startNode.io" divID="io-1" />
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="endNode.io" divID="io-2" />
@@ -79,18 +82,18 @@ export default class Navbar extends React.Component {
                       <IOFile divClassName="file io-file" pClassName="node-name file-name" text="wallNode.io" divID="io-5" />
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.GREEN} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
+                  <FolderComponent colorOfFolder={this.getColor('green')} text="mazes" divClassName="folder advanced-cp-comp" arrowID="mazes-arrow">
                     <div className="folder-drop-inner">
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="none.bat" divID="bat-1" />
                       <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateRandomMaze.bat" divID="bat-2" />
-                      <FolderComponent colorOfFolder={cssConstants.GREEN} text="wall" divClassName="folder advanced-cp-comp" arrowID="wall-arrow">
+                      <FolderComponent colorOfFolder={this.getColor('green')} text="wall" divClassName="folder advanced-cp-comp" arrowID="wall-arrow">
                         <div className="folder-drop-inner">
                           <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateLeastCostPathBlocker.bat" divID="bat-3" />
                           <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRidges.bat" divID="bat-4" />
                           <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateBlockedRandomMaze.bat" divID="bat-5" />
                         </div>
                       </FolderComponent>
-                      <FolderComponent colorOfFolder={cssConstants.GREEN} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
+                      <FolderComponent colorOfFolder={this.getColor('green')} text="weighted" divClassName="folder advanced-cp-comp" arrowID="weighted-arrow" >
                         <div className="folder-drop-inner">
                           <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRidges.bat" divID="bat-6" />
                           <BATFile divClassName="file bat-file" pClassName="maze-name file-name" text="generateWeightedRandomMaze.bat" divID="bat-7" />
@@ -98,7 +101,7 @@ export default class Navbar extends React.Component {
                       </FolderComponent>
                     </div>
                   </FolderComponent>
-                  <FolderComponent colorOfFolder={cssConstants.YELLOW} text="speeds" divClassName="folder advanced-cp-comp" arrowID="speeds-arrow">
+                  <FolderComponent colorOfFolder={this.getColor('yellow')} text="speeds" divClassName="folder advanced-cp-comp" arrowID="speeds-arrow">
                     <div className="folder-drop-inner">
                       <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="25percent.sys" divID="sys-1" />
                       <SYSFile divClassName="file sys-file" pClassName="speed-name file-name" text="50percent.sys" divID="sys-2" />
@@ -107,7 +110,7 @@ export default class Navbar extends React.Component {
                   </FolderComponent>
                 </div>
               </FolderComponent>
-              <FolderComponent colorOfFolder={cssConstants.SOLID_RED} text="legend" divClassName="folder advanced-cp-comp" arrowID="legend-arrow">
+              <FolderComponent colorOfFolder={this.getColor('solid-red')} text="legend" divClassName="folder advanced-cp-comp" arrowID="legend-arrow">
                 <div className="folder-drop-inner">
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="bombNode.gui" type="bomb" divID="gui-1" />
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="shortestPathNode.gui" type="shortest-path" divID="gui-2" />

@@ -8,10 +8,10 @@ export function FolderComponent(props: any) {
   let topLevel: boolean = false;
   let InsideText = () => {
     return (
-      <b>[vagus]</b>
+      <b>[master]</b>
     )
   }
-  if (props.text === 'Vagus-master') {
+  if (props.text === 'graphs') {
     topLevel = true;
   }
   const changeState = (id: string, value: string) => {

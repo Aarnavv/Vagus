@@ -16,7 +16,6 @@ import {
   WEIGHTNode
 } from "../svgIcons/fileSVGIconComponent";
 import currentState from "./GlobalState";
-import cssConstants from "./cssConstants";
 import { AlgoType, MazeGenerationType, NodeType, SpeedType } from "./Types";
 import { updateMaze } from "./HexBoardUpdate"
 import Settings from './Settings';
@@ -34,11 +33,11 @@ export const updateState = (divClass: string, id: string, text: string): void =>
   let files = document.querySelectorAll(divClass);
   for (let i = 0; i < files.length; i++) {
     const ele = files[i] as HTMLElement;
-    ele.style.backgroundColor = cssConstants.FILE_BG;
+    ele.style.backgroundColor = `#${ currentState.cssVariables().get('file-bg') }`;
     ele.style.borderLeft = "";
   }
-  document.getElementById(id).style.backgroundColor = cssConstants.FILE_BG_SELECTED;
-  document.getElementById(id).style.borderLeft = `2.5px solid ${cssConstants.FILE_BORDER}`;
+  document.getElementById(id).style.backgroundColor = `#${currentState.cssVariables().get('file-bg-selected')}`;
+  document.getElementById(id).style.borderLeft = `2.5px solid #${currentState.cssVariables().get('file-border')}`;
   let ext: string = text.substring(text.lastIndexOf(".") + 1);
   let textAdd: string = text.substring(0, text.lastIndexOf("."));
   switch (ext) {

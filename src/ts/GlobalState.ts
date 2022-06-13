@@ -47,6 +47,87 @@ class State<T> {
   // Permission for execution
   private Run: boolean;
 
+  // holds the global state for css settings.
+  private CSSvariables: Map<string, string>;
+
+  // all the identifiers ready to be mapped
+  private CSSIdentifiers = [
+    'solid-red',
+    'light-red',
+    'blue',
+    'green',
+    'yellow',
+    'file-bg',
+    'file-bg-selected',
+    'file-border',
+    'cmd-bg',
+    'cmd-border',
+    'project-bg',
+    'moz-sb-color',
+    'sb-color',
+    'sb-color-hover',
+    'sb-color-track',
+    'file-hover',
+    'algo-folder',
+    'node-folder',
+    'maze-folder',
+    'speed-folder',
+    'legend-folder',
+    'hex-color',
+    'hex-color-hover',
+    'wall-node-color',
+    'path-node-color-1',
+    'path-node-color-2',
+    'path-node-color-3',
+    'path-node-color-4',
+    'path-node-color-5',
+    'visited-node-color-1',
+    'visited-node-color-2',
+    'visited-node-color-3',
+    'visited-node-color-11',
+    'visited-node-color-21',
+    'visited-node-color31'
+  ];
+
+  // values of all the identifiers
+  private CSSValues = [
+    'EF5350',
+    'D5756C',
+    '67BBFF',
+    '4CAF50',
+    'E5C07B',
+    '21252B',
+    '4B4E5578',
+    '67BBFF',
+    '21252B',
+    '434B57',
+    '323844',
+    '4B4E5578',
+    'FFFFFF42',
+    'FFFFFF60',
+    '7F808200',
+    '2C313A',
+    'D5756C',
+    '67BBFF',
+    '4CAF50',
+    'E5C07B',
+    'EF5350',
+    '282C34',
+    '1B8BCD',
+    '484E5B',
+    'FFA500',
+    'FF9000',
+    'FF7B00',
+    'FF6702',
+    'FF5000',
+    '175AB5',
+    '1B8BCD',
+    '25C8CF',
+    'BF4286',
+    'D15FDA',
+    '85404F'
+  ];
+
   /**
    * Constructs a graph will all values set to null.
    * Unless, the start , end and graph values are given.
@@ -66,6 +147,12 @@ class State<T> {
     this.INIT_GRAPH = _graph;
     this.PRES_GRAPH = _graph;
     this.Run = false;
+    this.CSSvariables = new Map();
+
+    // get the values of the identifiers
+    // create a new Map;
+    for (let i: number = 0; i < Math.min(this.CSSValues.length, this.CSSIdentifiers.length); i++)
+      this.CSSvariables.set(this.CSSIdentifiers[i], this.CSSValues[i]);
   }
 
   /**
@@ -127,6 +214,12 @@ class State<T> {
    * @returns run permission [true for running, false for not].
    */
   run(): boolean { return this.Run; }
+
+  /**
+   *
+   * @returns the Map of Css variables in the form [identifier : value ]
+   */
+  cssVariables() : Map<string , string> { return this.CSSvariables ;  }
 
   /**
    * Updates the addable node state.
@@ -205,7 +298,7 @@ class State<T> {
    *
    * @param toThis the state to be updated to
    */
-  changeInitGraph(toThis: Graph<T>) {
+  changeInitGraph(toThis: Graph<T>):void{
     this.INIT_GRAPH = toThis;
   }
 
@@ -214,8 +307,27 @@ class State<T> {
    * If true, makes it to false.
    * If false, makes it to true.
    */
-  changeRun() {
+  changeRun() : void{
     this.Run = !this.Run;
+  }
+
+  /**
+   * Changes the value of a CSS Variable identifier.
+   * @param property the property of the identifier to be changed
+   * @param identifier the name of the identifier
+   * @param value the new value of that identifier
+   * @returns true if there is a change, else false.
+   */
+  changeCSSVariable(property: string, identifier: string, value: string): boolean {
+
+    // first check if css supports
+    // if it does
+    // return change and return true
+    // else return false.
+    if (!CSS.supports(property, value))
+      return false;
+    document.documentElement.style.setProperty(identifier, value);
+    return true;
   }
 }
 
@@ -233,7 +345,5 @@ currentState.changeInitGraph(new Graph<number>((a, b): number => {
   return a === b ? 0 : a < b ? -1 : 1;
 }));
 
-
 // in the beginning,both init and pres are the same graphs.
-
 export default currentState;

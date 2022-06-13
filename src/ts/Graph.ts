@@ -249,7 +249,7 @@ export default class Graph<T> {
    */
   static copy<T>(_initial: Graph<T>, _present: Graph<T>, cost: number):void{
 
-    //first reset all actove connections
+    //first reset all active connections
     _initial.nodes().forEach((initNode) => {
       if (!_present.nodes().has(initNode.getData())) {
         this.revertNode(initNode.getData(), _initial, _present);

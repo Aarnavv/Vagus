@@ -222,7 +222,7 @@ export default class Graph {
      * @param cost the cost of edges.
      */
     static copy(_initial, _present, cost) {
-        //first reset all actove connections
+        //first reset all active connections
         _initial.nodes().forEach((initNode) => {
             if (!_present.nodes().has(initNode.getData())) {
                 this.revertNode(initNode.getData(), _initial, _present);
