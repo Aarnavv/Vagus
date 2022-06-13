@@ -568,11 +568,27 @@ export default class Algorithms {
         // the given end dist is Infinity or not.
         return [dist, prev, visited];
     }
+    /**
+     * Is a helper function on required for this project
+     * It helps simplify front end by doing everything internally
+     * It returns the relevant algorithm [ @see AlgoType ] for the startNode and endNode from global state
+     * but without bomb. Does not take care of random walk or bidirectional algorithm.
+     *
+     * @returns an object containing the path and visitedInOrder properties.
+     * the path contains the path from start->end for currentState and visitedInOrder contains
+     * the nodes that were visited [inorder] to reach to that path
+     */
     static runAlgoFromGlobalStateNoBomb() {
+        // first getting a path array
         let path = [];
+        // getting a new algorithm instance to run the functions from
         let algo = new Algorithms(currentState.graph());
+        // visitedInOrder set
         let visitedInOrder = new Set();
+        // getting the algorithm type from the global state
         let algoType = currentState.algorithm();
+        // using if else and enums to return an output in the form of [path , visitedInOrder] which
+        // is later turned directly into an object and given as return from the function
         if (algoType === AlgoType.dijkstrasSearch)
             [path, visitedInOrder] = algo.dijkstras(currentState.startNode(), currentState.endNode());
         else if (algoType === AlgoType.aStarSearch)
@@ -586,7 +602,7 @@ export default class Algorithms {
         else if (algoType === AlgoType.bestFirstSearch) {
             [path, visitedInOrder] = algo.bestFirstSearch(currentState.startNode(), currentState.endNode());
         }
-        //else //something regarding bidirectional search needs to be done.
+        // return that object.
         return { path, visitedInOrder };
     }
     static runAlgorithmGlobalStateYesBomb() {

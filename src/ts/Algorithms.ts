@@ -731,27 +731,57 @@ export default class Algorithms<T> {
     return [dist, prev, visited];
   }
 
+  /**
+   * Is a helper function on required for this project
+   * It helps simplify front end by doing everything internally
+   * It returns the relevant algorithm [ @see AlgoType ] for the startNode and endNode from global state
+   * but without bomb. Does not take care of random walk or bidirectional algorithm.
+   *
+   * @returns an object containing the path and visitedInOrder properties.
+   * the path contains the path from start->end for currentState and visitedInOrder contains
+   * the nodes that were visited [inorder] to reach to that path
+   */
   static runAlgoFromGlobalStateNoBomb(): { path: number[], visitedInOrder: Set<number> } {
+
+    // first getting a path array
     let path: number[] = [];
+
+    // getting a new algorithm instance to run the functions from
     let algo: Algorithms<number> = new Algorithms<number>(currentState.graph());
+
+    // visitedInOrder set
     let visitedInOrder: Set<number> = new Set();
+
+    // getting the algorithm type from the global state
     let algoType: AlgoType = currentState.algorithm();
+
+    // using if else and enums to return an output in the form of [path , visitedInOrder] which
+    // is later turned directly into an object and given as return from the function
+
     if (algoType === AlgoType.dijkstrasSearch)
       [path, visitedInOrder] = algo.dijkstras(currentState.startNode(), currentState.endNode());
+
     else if (algoType === AlgoType.aStarSearch)
       [path, visitedInOrder] = algo.aStar(currentState.startNode(), currentState.endNode());
+
     else if (algoType === AlgoType.breadthFirstSearch)
       [path, visitedInOrder] = algo.bfs(currentState.startNode(), currentState.endNode());
+
     else if (algoType === AlgoType.depthFirstSearch)
       [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
+
     else if (algoType === AlgoType.bellmanFord)
       [path, visitedInOrder] = algo.bellmanFord(currentState.startNode(), currentState.endNode());
+
     else if (algoType === AlgoType.bestFirstSearch) {
       [path, visitedInOrder] = algo.bestFirstSearch(currentState.startNode(), currentState.endNode());
     }
-    //else //something regarding bidirectional search needs to be done.
+
+    // return that object.
     return { path, visitedInOrder };
   }
+
+  
   static runAlgorithmGlobalStateYesBomb(): { path: number[] | null, visitedP1: Set<number>, visitedP2: Set<number> } {
     let path: number[] = [], pathP1: number[] = [], pathP2: number[] = [];
     let visitedP1: Set<number> = new Set(), visitedP2: Set<number> = new Set();
