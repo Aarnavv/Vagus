@@ -4,8 +4,8 @@ export const updateIDClass = (id, classesRM, classesADD) => {
     document.getElementById(id).classList.add(...classesADD);
 };
 export const updateBiIDClass = (id, classToRM, classToAdd) => {
-    updateIDClass(`props-${id}`, [classToRM], [classToAdd]);
-    updateIDClass(`svg-${id}`, [classToRM], [`svg-${classToAdd}`]);
+    updateIDClass(`props-${id}`, [...classToRM], [classToAdd]);
+    updateIDClass(`svg-${id}`, [...classToRM], [`svg-${classToAdd}`]);
 };
 export const extractIDs = (rawID) => {
     return [`props-${rawID}`, `svg-${rawID}`];

@@ -180,20 +180,20 @@ type displayMazeOptions = {
 const displayMaze = (options: displayMazeOptions): void => {
   if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
     for (let [id, state] of options.randomMap) {
-      if (state) updateBiIDClass(id, 'no-node', 'wall-node');
-      else updateBiIDClass(id, 'no-node', 'weight-node');;
+      if (state) updateBiIDClass(id, ['no-node', 'icon'], 'wall-node');
+      else updateBiIDClass(id, ['no-node', 'icon'], 'weight-node');;
     }
   }
   else if (currentState.maze() === MazeGenerationType.generateLeastCostPathBlocker)
-    options.mazeLeastCostArray.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node'));
+    options.mazeLeastCostArray.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'wall-node'));
   else if (currentState.maze() === MazeGenerationType.generateBlockedRidges)
-    options.blockedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node')));
+    options.blockedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'wall-node')));
   else if (currentState.maze() === MazeGenerationType.generateWeightedRidges)
-    options.weightedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, 'no-node', 'weight-node')));
+    options.weightedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'weight-node')));
   else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze)
-    options.weightedSet.forEach(id => updateBiIDClass(id, 'no-node', 'weight-node'));
+    options.weightedSet.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'weight-node'));
   else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze)
-    options.blockedSet.forEach(id => updateBiIDClass(id, 'no-node', 'wall-node'));
+    options.blockedSet.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'wall-node'));
 }
 
 const updateMaze = (): void => {

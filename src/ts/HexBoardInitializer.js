@@ -159,8 +159,8 @@ export default class HexBoardInitializer extends React.Component {
                 setTimeout(() => {
                     let startCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.25);
                     let endCalculator = Math.floor((HexBoardInitializer.rows * HexBoardInitializer.cols) * 0.75);
-                    updateBiIDClass(startCalculator, 'no-node', 'start-node');
-                    updateBiIDClass(endCalculator, 'no-node', 'end-node');
+                    updateBiIDClass(startCalculator, ['no-node'], 'start-node');
+                    updateBiIDClass(endCalculator, ['no-node'], 'end-node');
                     currentState.changeStartNode(startCalculator);
                     currentState.changeEndNode(endCalculator);
                 }, 1);

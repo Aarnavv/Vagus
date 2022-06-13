@@ -69,6 +69,7 @@ export const updateRandomVisitedNodes = (pathID) => {
             updateIDClass(propsID, ['path-node'], ['visited-node-bomb']);
             updateIDClass(svgID, ['svg-path-node'], ['svg-visited-node-bomb']);
             updateRandomVisitedNodes(pathID);
+            return;
         }
         updateIDClass(propsID, ['no-node', 'visited-node', 'visited-node-bomb'], ['path-node']);
         updateIDClass(svgID, ['no-node', 'icon', 'svg-visited-node', 'svg-visited-node-bomb'], ['svg-path-node']);
