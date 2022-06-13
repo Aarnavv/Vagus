@@ -398,39 +398,118 @@ export default class Algorithms<T> {
     return [pathFromStart, visitedFromStart, visitedFromEnd];
   }
 
-
+  /**
+   * A classic greedy algorithm which only uses heuristic approach
+   * it is an unguided and unweighted a-star algorithm
+   * and cannot guarantee best or shortest path in tough situations.
+   *
+   * @param start starting node ID
+   * @param end ending node ID
+   * @returns a path | null [path if found, else null] and a Set of visited nodes inorder.
+   */
   bestFirstSearch(start: T, end: T): [T[] | null, Set<T>] {
+
+    // first get all the internal information from the implementation
+    // prev is for path deconstruction and ,
+    // visited in order is for
+    // visualisation
     let [prev, visited] = this.internalBestFirstSearch(start, end);
-    if (prev === null) return [null, visited];
+
+    // if prev is null then we know that
+    // there is no path
+    if (prev === null)
+      return [null, visited];
+
+    // path array
     let path: T[] = [];
+
+    // reconstruct path
     for (let at = end; at !== undefined; at = prev.get(at))
       path.unshift(at);
+
+    // return the path since it exists.
     return [path, visited];
   }
 
+  /**
+   * Implementation of best first search greedy mechanism
+   *
+   * @param start starting node id
+   * @param end ending node id
+   * @returns a Map for path reconstruction and a Set of visited nodes inorder
+   */
   private internalBestFirstSearch(start: T, end: T): [Map<T, T>, Set<T>] {
+
+    // creating a type
+    // for priority queue
+    // and other sortings
     type Priority = {
+
+      // name of the node or its ID
       label: T,
+
+      // min heuristic cost to end node [end]
       minHeuristic: number
     }
+
+    // Getting a priority queue for ordering of nodes.
     let PQ = new MinPriorityQueue<Priority>((promisingNode) => promisingNode.minHeuristic);
+
+    // prev is to reconstruct path
     let prev: Map<T, T> = new Map();
+
+    // visited is for remembering which nodes
+    // have been visited
     let visited: Set<T> = new Set();
+
+    // start and end nodes have been given values
     let dest = this.graph.nodes().get(start), endNode = this.graph.nodes().get(end);
+
+    // we enqueue the starting node
     PQ.enqueue({ label: start, minHeuristic: this.graph.distBw(dest, endNode) });
+
+    // while PQ is not empty
+    // we keep running till we have
+    // exhausted all the possible
+    // expandable nodes
     while (!PQ.isEmpty()) {
+
+      // get the ID of the node
       const { label } = PQ.dequeue();
+
+      // add it to visited since it has been explored now
       visited.add(label);
+
+      // get ready to explore all the edges going out of it
       this.graph.nodes().get(label).getAdjNodes().forEach((edge) => {
+
+        // getting the data or id of the destination nodes
         let destData = edge.dest.getData();
+
+        // if visited does not have those nodes
+        // it means there is a possibility of a better path
+        // hence we should enqueue them
         if (!visited.has(destData)) {
+
+          // we get a new heuristic approach
           let newHeuristic = this.graph.distBw(edge.dest, endNode);
+
+          // we enqueue and then set the nodees as required
           PQ.enqueue({ label: destData, minHeuristic: newHeuristic });
           prev.set(destData, label);
         }
       });
+
+      // if the id or lable is end
+      // then there has to be a path
+      // hence we return prev and visited
       if (label === end) return [prev, visited];
     }
+
+    // if till here also the function has come
+    // that means end is not reachable
+    // hence we return null and visited
+    // to signify no path
     return [null, visited];
   }
 
