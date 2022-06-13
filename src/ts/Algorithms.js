@@ -289,31 +289,39 @@ export default class Algorithms {
                 });
             });
         }
-        // return everything that was promised. 
+        // return everything that was promised.
         return [dist, prev, visited];
     }
-    randomWalk(start, end) {
-        let visited = new Map();
-        let src = start;
-        let path = [];
-        while (src !== end) {
-            let node = this.graph.nodes().get(src);
-            path.push(src);
-            visited.set(src, true);
-            src = node.getAdjNodes()[Math.floor(Math.random() * node.getAdjNodes().length)].dest.getData();
-        }
-        return path;
-    }
+    /**
+     * Starts a weighted , bidirectional ,dijkstras search
+     * to find a path
+     *
+     * @param start the startting node ID
+     * @param end target/end node ID
+     * @returns a path | null [path if present, else null] and two sets, first is of a search
+     * from the Start till some point X and second is from the end till the same point X where
+     * both of these algorithms meet.
+     */
     biDirectional(start, end) {
-        const [pathFromStart] = this.dijkstras(start, end);
+        // get the path from start
+        const pathFromStart = this.dijkstras(start, end)[0];
+        // if it is null , we automatically know
+        // the there is no path possible
         if (pathFromStart === null) {
+            // we just get visited from start and visited from end Sets
             let visitedFromStart = this.dijkstras(start, end)[1];
             let visitedFromEnd = this.dijkstras(end, start)[1];
+            // we return the path from start [or null] and the two sets as promised.
             return [pathFromStart, visitedFromStart, visitedFromEnd];
         }
+        // else, we splice the path
+        // at mid point >>1
         let spliceNode = pathFromStart[pathFromStart.length >> 1];
+        // we get from this splicepoint a visited from start
+        // and a visited from end
         let visitedFromStart = this.dijkstras(start, spliceNode)[1];
         let visitedFromEnd = this.dijkstras(end, spliceNode)[1];
+        // then we return the whole thing as promised.
         return [pathFromStart, visitedFromStart, visitedFromEnd];
     }
     bestFirstSearch(start, end) {
@@ -524,10 +532,6 @@ export default class Algorithms {
             [path, visitedInOrder] = algo.dfs(currentState.startNode(), currentState.endNode());
         else if (algoType === AlgoType.bellmanFord)
             [path, visitedInOrder] = algo.bellmanFord(currentState.startNode(), currentState.endNode());
-        else if (algoType === AlgoType.randomWalk) {
-            path = algo.randomWalk(currentState.startNode(), currentState.endNode());
-            visitedInOrder = null;
-        }
         else if (algoType === AlgoType.bestFirstSearch) {
             [path, visitedInOrder] = algo.bestFirstSearch(currentState.startNode(), currentState.endNode());
         }
