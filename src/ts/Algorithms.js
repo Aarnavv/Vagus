@@ -605,12 +605,32 @@ export default class Algorithms {
         // return that object.
         return { path, visitedInOrder };
     }
+    /**
+     * Static function to help out in getting the output when bomb is being used on the website
+     * Gets all the algorithms together and helps maintain a level of anonymity and cleanliness.
+     *
+     * @returns an object containing the path | null [depending of if it is found], and two Sets [one for visited from start -> bomb and the other for bomb->end]
+     */
     static runAlgorithmGlobalStateYesBomb() {
+        // three paths
+        // one is the main return path
+        // the other 2 are from start->bomb and bomb->end respectively.
         let path = [], pathP1 = [], pathP2 = [];
+        // visited sets for start->bomb and bomb->end respectively
         let visitedP1 = new Set(), visitedP2 = new Set();
+        // getting an algorithm instance for ease of running
         let algo = new Algorithms(currentState.graph());
+        // getting the current algorithm type.
         let algoType = currentState.algorithm();
+        // using switch case for equality
         switch (algoType) {
+            // Basic logic for all the cases is simple
+            // we first get path from start-> bomb and bomb-> end
+            // if either are null then it means that it is not possible to have a path from
+            // start-end with bomb also present in path
+            // so we return null along with the visited in order from both start->bomb and bomb->end
+            // else we concat both paths and return
+            // a full total last path right in the end.
             case AlgoType.aStarSearch:
                 [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
                 [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
@@ -662,6 +682,7 @@ export default class Algorithms {
             default:
                 console.error("Internal error, the algorithm selected does not match with the algorithms possible");
         }
+        // return the whole object right in the end 
         return {
             path,
             visitedP1,

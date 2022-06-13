@@ -741,7 +741,7 @@ export default class Algorithms<T> {
    * the path contains the path from start->end for currentState and visitedInOrder contains
    * the nodes that were visited [inorder] to reach to that path
    */
-  static runAlgoFromGlobalStateNoBomb(): { path: number[], visitedInOrder: Set<number> } {
+  static runAlgoFromGlobalStateNoBomb(): { path: number[] | null , visitedInOrder: Set<number> } {
 
     // first getting a path array
     let path: number[] = [];
@@ -781,13 +781,38 @@ export default class Algorithms<T> {
     return { path, visitedInOrder };
   }
 
-  
+  /**
+   * Static function to help out in getting the output when bomb is being used on the website
+   * Gets all the algorithms together and helps maintain a level of anonymity and cleanliness.
+   *
+   * @returns an object containing the path | null [depending of if it is found], and two Sets [one for visited from start -> bomb and the other for bomb->end]
+   */
   static runAlgorithmGlobalStateYesBomb(): { path: number[] | null, visitedP1: Set<number>, visitedP2: Set<number> } {
+
+    // three paths
+    // one is the main return path
+    // the other 2 are from start->bomb and bomb->end respectively.
     let path: number[] = [], pathP1: number[] = [], pathP2: number[] = [];
+
+    // visited sets for start->bomb and bomb->end respectively
     let visitedP1: Set<number> = new Set(), visitedP2: Set<number> = new Set();
+
+    // getting an algorithm instance for ease of running
     let algo = new Algorithms(currentState.graph());
+
+    // getting the current algorithm type.
     let algoType: AlgoType = currentState.algorithm();
+
+    // using switch case for equality
     switch (algoType) {
+
+      // Basic logic for all the cases is simple
+      // we first get path from start-> bomb and bomb-> end
+      // if either are null then it means that it is not possible to have a path from
+      // start-end with bomb also present in path
+      // so we return null along with the visited in order from both start->bomb and bomb->end
+      // else we concat both paths and return
+      // a full total last path right in the end.
       case AlgoType.aStarSearch:
         [pathP1, visitedP1] = algo.aStar(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.aStar(currentState.bombNode(), currentState.endNode());
@@ -795,6 +820,7 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       case AlgoType.breadthFirstSearch:
         [pathP1, visitedP1] = algo.bfs(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.bfs(currentState.bombNode(), currentState.endNode());
@@ -802,6 +828,7 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       case AlgoType.bellmanFord:
         [pathP1, visitedP1] = algo.bellmanFord(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.bellmanFord(currentState.bombNode(), currentState.endNode());
@@ -809,6 +836,7 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       case AlgoType.dijkstrasSearch:
         [pathP1, visitedP1] = algo.dijkstras(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.dijkstras(currentState.bombNode(), currentState.endNode());
@@ -816,6 +844,7 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       case AlgoType.depthFirstSearch:
         [pathP1, visitedP1] = algo.dfs(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.dfs(currentState.bombNode(), currentState.endNode());
@@ -823,6 +852,7 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       case AlgoType.bestFirstSearch:
         [pathP1, visitedP1] = algo.bestFirstSearch(currentState.startNode(), currentState.bombNode());
         [pathP2, visitedP2] = algo.bestFirstSearch(currentState.bombNode(), currentState.endNode());
@@ -830,9 +860,12 @@ export default class Algorithms<T> {
           path = pathP1.concat(pathP2.slice(1));
         else path = null
         break;
+
       default:
         console.error("Internal error, the algorithm selected does not match with the algorithms possible");
     }
+
+    // return the whole object right in the end 
     return {
       path,
       visitedP1,
