@@ -39,13 +39,31 @@ export default class Settings extends React.Component {
         });
         return keyJSX;
     };
+    static updateCSS = () => {
+        let keyEle, valueEle;
+        let key, value;
+        let keyValueMapFresh = new Map();
+        for (let i = 0; i < 35; i++) {
+            keyEle = document.getElementById(`key-${i}`);
+            valueEle = document.getElementById(`value-${i}`);
+            key = keyEle.textContent.substring(2, keyEle.textContent.length - 1);
+            value = valueEle.textContent;
+            keyValueMapFresh.set(key, value);
+        }
+        keyValueMapFresh.forEach((value, key) => {
+            currentState.changeCSSVariable("color", `--${key}`, `#${value}`);
+        });
+    };
     render() {
         return (React.createElement(React.Fragment, null,
             React.createElement("div", { className: "settings-outer", style: { display: 'none' } },
                 React.createElement("div", { className: "settings-inner" },
                     React.createElement("div", { className: "settings-master-header" },
                         React.createElement("div", { className: "settings-buttons" },
-                            React.createElement(ActionIcons.StopButtonIcon, { onClick: () => { Settings.toggleDisplay(); }, className: "cross-icon" })),
+                            React.createElement(ActionIcons.StopButtonIcon, { className: "cross-icon", onClick: () => {
+                                    Settings.toggleDisplay();
+                                    Settings.updateCSS();
+                                } })),
                         React.createElement("div", { className: "settings-header" },
                             React.createElement("p", null, "settings.json"))),
                     React.createElement("div", { className: "settings-content" },

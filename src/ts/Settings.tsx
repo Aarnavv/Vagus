@@ -21,9 +21,9 @@ export default class Settings extends React.Component {
   static braceOpen = () => { return '{' }
   static braceClosed = () => { return '}' }
 
-  static renderKey = (mapper : Map<string, string>): Array<JSX.Element> => {
-    let keyJSX : Array<JSX.Element> = [];
-    let i : number = 0;
+  static renderKey = (mapper: Map<string, string>): Array<JSX.Element> => {
+    let keyJSX: Array<JSX.Element> = [];
+    let i: number = 0;
     mapper.forEach((value, key) => {
       keyJSX.push(
         <div className="key-value" id={`key-value-${i}`} key={i}>
@@ -36,6 +36,22 @@ export default class Settings extends React.Component {
     return keyJSX;
   }
 
+  static updateCSS = () => {
+    let keyEle: HTMLElement, valueEle: HTMLElement;
+    let key: string, value: string;
+    let keyValueMapFresh: Map<string, string> = new Map<string, string>();
+    for (let i = 0; i < 35; i++) {
+      keyEle = document.getElementById(`key-${i}`) as HTMLElement;
+      valueEle = document.getElementById(`value-${i}`) as HTMLElement;
+      key = keyEle.textContent.substring(2, keyEle.textContent.length - 1);
+      value = valueEle.textContent;
+      keyValueMapFresh.set(key, value);
+    }
+    keyValueMapFresh.forEach((value, key) => {
+      currentState.changeCSSVariable("color", `--${key}`, `#${value}`);
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -43,7 +59,10 @@ export default class Settings extends React.Component {
           <div className="settings-inner">
             <div className="settings-master-header">
               <div className="settings-buttons">
-                <ActionIcons.StopButtonIcon onClick={() => { Settings.toggleDisplay(); }} className="cross-icon" />
+                <ActionIcons.StopButtonIcon className="cross-icon" onClick={() => {
+                  Settings.toggleDisplay();
+                  Settings.updateCSS();
+                }} />
               </div>
               <div className="settings-header">
                 <p>settings.json</p>
