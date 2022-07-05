@@ -189,9 +189,9 @@ const displayMaze = (options: displayMazeOptions): void => {
   else if (currentState.maze() === MazeGenerationType.generateBlockedRidges)
     options.blockedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'wall-node')));
   else if (currentState.maze() === MazeGenerationType.generateWeightedRidges)
-    options.weightedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'weight-node')));
+    options.weightedRidges.forEach(ridge => ridge.forEach(id => updateBiIDClass(id, ['no-node'], 'weight-node')));
   else if (currentState.maze() === MazeGenerationType.generateWeightedRandomMaze)
-    options.weightedSet.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'weight-node'));
+    options.weightedSet.forEach(id => updateBiIDClass(id, ['no-node'], 'weight-node'));
   else if (currentState.maze() === MazeGenerationType.generateBlockedRandomMaze)
     options.blockedSet.forEach(id => updateBiIDClass(id, ['no-node', 'icon'], 'wall-node'));
 }

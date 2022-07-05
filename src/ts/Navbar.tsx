@@ -122,7 +122,7 @@ export default class Navbar extends React.Component {
                   <GUIFile divClassName="file gui-file" pClassName="legend-name file-name" text="weightNode.gui" type="weight" divID="gui-8" />
                 </div>
               </FolderComponent>
-              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="settings.json [Work in Progress!]" divID="md-1"/>
+              <MDFile divClassName="folder-less-file file md-file advanced-cp-comp" pClassName="file-name" text="settings.json" divID="md-1"/>
             </div>
           </FolderComponent>
         </div>
