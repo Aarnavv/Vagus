@@ -10,4 +10,5 @@ This is basically in a sense, a "maze solver" .However, it does not strive to ta
 Thus, it is a tool through which one can **visualise** the algorithms used to find optimal or sub-optimal or required paths joiining a number of points.
 
 The wiki page where more information is held is : https://github.com/Aarnavv/Vagus/wiki
+
 The website where this is hosted is : https://aarnavv.github.io/Vagus/
