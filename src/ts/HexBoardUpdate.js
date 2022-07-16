@@ -168,7 +168,7 @@ const displayMaze = (options) => {
             if (state)
                 updateBiIDClass(id, ['no-node', 'icon'], 'wall-node');
             else
-                updateBiIDClass(id, ['no-node', 'icon'], 'weight-node');
+                updateBiIDClass(id, ['no-node'], 'weight-node');
             ;
         }
     }

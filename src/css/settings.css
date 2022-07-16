@@ -40,13 +40,37 @@
   text-decoration: underline;
 }
 
+.settings-content::-webkit-scrollbar{
+  width:5px;
+}
+
+.settings-content::-webkit-scrollbar-thumb{
+  background: var(--sb-color);
+  border-radius: 100vw;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover{
+  background: var(--sb-color-hover);
+}
+
+.settings-content::-webkit-scrollbar-track{
+  background: var(--sb-color-track);
+}
+
+.settings-content::-webkit-scrollbar-corner{
+  background: var(--sb-color-track);
+}
+
 .settings-content {
   padding: 0 1rem;
   display: flex;
   height: 85%;
   flex-direction: column;
   overflow: scroll;
+  scrollbar-color: var(--moz-sb-color) transparent;
+  background-color: #21252B;
 }
+
 
 .braces {
   font-size: 1rem;

@@ -181,7 +181,7 @@ const displayMaze = (options: displayMazeOptions): void => {
   if (currentState.maze() === MazeGenerationType.generateRandomMaze) {
     for (let [id, state] of options.randomMap) {
       if (state) updateBiIDClass(id, ['no-node', 'icon'], 'wall-node');
-      else updateBiIDClass(id, ['no-node', 'icon'], 'weight-node');;
+      else updateBiIDClass(id, ['no-node'], 'weight-node');;
     }
   }
   else if (currentState.maze() === MazeGenerationType.generateLeastCostPathBlocker)
