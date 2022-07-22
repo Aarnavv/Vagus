@@ -324,6 +324,7 @@ class State<T> {
     // if it does
     // return change and return true
     // else return false.
+    this.CSSvariables.set(identifier.substring(2), value);
     if (!CSS.supports(property, value))
       return false;
     document.documentElement.style.setProperty(identifier, value);

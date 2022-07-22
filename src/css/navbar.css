@@ -124,6 +124,7 @@
 .file {
   padding: 3px 0 3px 18px;
   display: flex;
+  background-color: var(--file-bg);
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 5px;
