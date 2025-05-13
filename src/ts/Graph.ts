@@ -241,6 +241,12 @@ export default class Graph<T> {
   }
 
   /**
+   * Clears the nodes of the Graph
+   */
+  clear() {
+    this.Nodes.clear();
+  }
+  /**
    * Copies the state of one graph to another graph and then changes the cost as specified.
    *
    * @param _initial the initial graph whose state needs to be copied
@@ -248,19 +254,15 @@ export default class Graph<T> {
    * @param cost the cost of edges.
    */
   static copy<T>(_initial: Graph<T>, _present: Graph<T>, cost: number):void{
-
-    //first reset all active connections
-    _initial.nodes().forEach((initNode) => {
-      if (!_present.nodes().has(initNode.getData())) {
-        this.revertNode(initNode.getData(), _initial, _present);
-      }
+    _present.clear();
+    _initial.nodes().forEach((node) => {
+      const addedNode = _present.addNode(node.getData());
+      addedNode.setCoords(node.x(), node.y());
     });
 
-    //then reset all active costs.
-    _present.nodes().forEach((initNode)=>{
-      initNode.getAdjNodes().forEach((edge) => {
-        if (edge.dest.getData() !== initNode.getData() && edge.cost > 1)
-          edge.changeCost(cost);
+    _initial.nodes().forEach((vertex) => {
+      vertex.getAdjNodes().forEach((edge) => {
+        _present.addEdge(vertex.getData(), edge.dest.getData(), edge.cost);
       });
     });
   }
